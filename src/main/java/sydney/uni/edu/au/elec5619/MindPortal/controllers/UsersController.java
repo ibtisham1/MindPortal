@@ -24,6 +24,7 @@ public class UsersController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+
     @PostMapping
     public ResponseEntity<User> addUser(@Valid @RequestBody User newUser){
         userRepo.save(newUser);
