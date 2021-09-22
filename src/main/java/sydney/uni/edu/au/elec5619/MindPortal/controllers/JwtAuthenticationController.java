@@ -12,14 +12,20 @@ import sydney.uni.edu.au.elec5619.MindPortal.config.JwtTokenUtil;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.JwtRequest;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.JwtResponse;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
 
 public class JwtAuthenticationController {
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -40,7 +46,19 @@ public class JwtAuthenticationController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+
+
+        Map<String, Object> response = new HashMap<String, Object>();
+        User user = userRepo.findByEmail(authenticationRequest.getUsername());
+        if(user != null){
+            response.put("user", user);
+            response.put("token", new JwtResponse(token));
+        } else {
+            System.out.println("Somehow we got here and the user is null....");
+        }
+
+
+        return ResponseEntity.ok(response);
     }
 
     @RequestMapping(value="/register")

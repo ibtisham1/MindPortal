@@ -24,12 +24,12 @@ public class UsersController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-
-    @PostMapping
-    public ResponseEntity<User> addUser(@Valid @RequestBody User newUser){
-        userRepo.save(newUser);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-    }
+// Don't need this anymore
+//    @PostMapping
+//    public ResponseEntity<User> addUser(@Valid @RequestBody User newUser){
+//        userRepo.save(newUser);
+//        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Integer id){
