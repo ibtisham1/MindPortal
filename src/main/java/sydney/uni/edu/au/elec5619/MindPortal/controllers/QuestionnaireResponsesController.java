@@ -50,7 +50,7 @@ public class QuestionnaireResponsesController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteQuestionnaireResponses(@PathVariable("id") Integer id){
         try {
-            QuestionnaireResponses questionnaireResponsesToDelete = questionnaireResponsesRepo.findById(id).orElseThrow(() -> new QuestionnaireResponsesNotFoundException("Media of id:" + id + " not found"));
+            QuestionnaireResponses questionnaireResponsesToDelete = questionnaireResponsesRepo.findById(id).orElseThrow(() -> new QuestionnaireResponsesNotFoundException("QuestionnaireResponses of id:" + id + " not found"));
             questionnaireResponsesRepo.delete(questionnaireResponsesToDelete);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch(QuestionnaireResponsesNotFoundException ex){

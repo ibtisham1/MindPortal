@@ -2,10 +2,11 @@ package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "media")
-public class Media {
+public class Media implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer mediaId;
@@ -16,12 +17,17 @@ public class Media {
     @NotBlank(message = "media type is mandatory")
     private String mediaType;
 
+    @ManyToOne
+    @JoinColumn(name = "diagnosis_id", nullable = false)
+    private Diagnosis diagnosis;
+
     public Media(){}
 
-    public Media(Integer mediaId, String mediaURL, String mediaType){
+    public Media(Integer mediaId, String mediaURL, String mediaType, Diagnosis diagnosis){
         this.mediaId = mediaId;
         this.mediaURL = mediaURL;
         this.mediaType = mediaType;
+        this.diagnosis = diagnosis;
     }
 
 
