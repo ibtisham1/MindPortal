@@ -1,12 +1,12 @@
 package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 
 public class HomeController {
-    @GetMapping
-    public String index(){
-        return "index";
-    }
+
+//    @RequestMapping(value = {"/", "/authenticate", "/register"})
+//    public String index(){
+//        return "";
+////        return "${project.basedir}/src/main/frontend/";
+//    }
 
 }
