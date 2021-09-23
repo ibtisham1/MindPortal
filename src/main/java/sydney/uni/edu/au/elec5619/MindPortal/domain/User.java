@@ -1,9 +1,5 @@
 package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -24,18 +20,16 @@ public class User {
     private String email;
 
     @NotBlank(message = "password is mandatory")
-    private @JsonIgnore String password;
+    private String password;
 
     public User(){}
-
-    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     public User(Integer id, String firstName, String lastName, String email, String password){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.setPassword(password);
+        this.password = password;
     }
 
 
