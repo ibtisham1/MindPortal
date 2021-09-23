@@ -6,21 +6,22 @@ import javax.validation.constraints.NotBlank;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "diagnoses")
-public class Diagnosis implements Serializable {
+public class Diagnosis{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer diagnosisId;
 
-    @OneToMany(mappedBy = "diagnosis")
-    private Set<Media> mediaSet;
 
     @NotBlank(message = "diagnosis type is mandatory")
     private String diagnosisType;
 
+    @OneToMany(mappedBy = "diagnosis", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Media> medias = new HashSet<>();
 
     public Diagnosis(){}
 

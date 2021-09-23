@@ -8,5 +8,5 @@ import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 import java.util.List;
 
 public interface MediaRepository extends JpaRepository<Media, Integer> {
-//    List<Media> findByDiagnosis(Diagnosis diagnosis, Sort sort);
+
 }
