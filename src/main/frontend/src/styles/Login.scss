@@ -1,0 +1,28 @@
+.Login {
+    &.banner {
+        background-color: rgb(29, 28, 28);
+        height: 100vh;
+
+        padding-top: 4em;
+        text-align: center;
+
+        &__title {
+            color: white;
+            text-decoration: none;
+        }
+    }
+
+    &.form {
+        padding-top: 10vh;
+        padding-left: 10em;
+
+        &__label {
+            font-weight: bold;
+            margin-top: 1em;
+        }
+
+        &__btn {
+            margin-top: 0.5em;
+        }
+    }
+}
