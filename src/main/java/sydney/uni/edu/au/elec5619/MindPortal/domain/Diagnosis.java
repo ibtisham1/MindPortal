@@ -3,6 +3,7 @@ package sydney.uni.edu.au.elec5619.MindPortal.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 
 import java.io.Serializable;
@@ -14,14 +15,18 @@ import java.util.Set;
 public class Diagnosis{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "diagnosis_id")
     private Integer diagnosisId;
 
 
-    @NotBlank(message = "diagnosis type is mandatory")
+
     private String diagnosisType;
 
-    @OneToMany(mappedBy = "diagnosis", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Media> medias = new HashSet<>();
+    @JsonIgnore
+    @OneToMany()
+    @JoinColumn(name = "diagnosis_id")
+    private Set<Media> medias;
+
 
     public Diagnosis(){}
 

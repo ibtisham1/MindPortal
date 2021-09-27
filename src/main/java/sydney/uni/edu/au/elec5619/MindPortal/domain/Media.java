@@ -17,7 +17,8 @@ public class Media {
     @NotBlank(message = "media type is mandatory")
     private String mediaType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 
     public Media(){}
@@ -51,5 +52,13 @@ public class Media {
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public Diagnosis getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(Diagnosis diagnosis) {
+        this.diagnosis = diagnosis;
     }
 }
