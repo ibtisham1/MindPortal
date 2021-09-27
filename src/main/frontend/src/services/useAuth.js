@@ -88,8 +88,8 @@ function useProvideAuth() {
         // setUser(false);
         setUser(null);
         setToken(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("refresh");
+        localStorage.removeItem("jwt-token");
+        localStorage.removeItem("user");
         if (cb) {
             cb();
         } else {
