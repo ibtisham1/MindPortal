@@ -9,7 +9,7 @@ import java.util.Date;
 @Table( name = "COVID")
 public class Covid {
     @Id
-    private Date date;
+    private Date date; //  ' YYYY-MM-DD ' format.
     private Integer covidCases;
     private Double vaccinationRates;
 
