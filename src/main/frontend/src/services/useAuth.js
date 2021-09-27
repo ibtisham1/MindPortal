@@ -88,6 +88,8 @@ function useProvideAuth() {
         // setUser(false);
         setUser(null);
         setToken(null);
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh");
         if (cb) {
             cb();
         } else {
