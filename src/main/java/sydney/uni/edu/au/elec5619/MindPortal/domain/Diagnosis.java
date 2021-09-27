@@ -17,16 +17,13 @@ public class Diagnosis{
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "diagnosis_id")
     private Integer diagnosisId;
-
-
-
+    @NotBlank(message = "diagnosisType is mandatory")
     private String diagnosisType;
 
     @JsonIgnore
     @OneToMany()
     @JoinColumn(name = "diagnosis_id")
     private Set<Media> medias;
-
 
     public Diagnosis(){}
 
