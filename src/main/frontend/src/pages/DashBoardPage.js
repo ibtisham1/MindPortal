@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../services/useAuth";
 // import AuthButton from "../components/AuthButton";
 import "../styles/Login.scss";
-import { Row, Container, Button, Col, Form } from "react-bootstrap";
+import { Row, Container, Button, Col, Form, Card } from "react-bootstrap";
 import DashBoardHeader from "../components/DashBoardHeader";
 
 const DashBoardPage = () => {
@@ -15,7 +15,7 @@ const DashBoardPage = () => {
 
 
     return (
-        <Container fluid className="Login">
+        <Container fluid className="Dashboard">
             <DashBoardHeader />
             <Row>
                 <Col lg={4} className="Login banner">
@@ -24,13 +24,21 @@ const DashBoardPage = () => {
                             MindPortal
                         </Link>
                     </h2>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>
+                                Covid update in your area
+                            </Card.Title>
+                            <Card.Text>
+                                Covid updates explained here ...
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
                 </Col>
 
-                <Col className="Login form">
+                <Col className="mb-3">
                     <h1>Welcome to Dashboard</h1>
-                    <Form>
-
-                    </Form>
+                    <h2>Hello Kurt!</h2>
                 </Col>
             </Row>
         </Container>
