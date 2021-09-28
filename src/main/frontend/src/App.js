@@ -14,6 +14,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+import DashBoardPage from "./pages/DashBoardPage"
 
 function App() {
     return (
@@ -21,9 +22,9 @@ function App() {
             <Router>
                 <Switch>
                     {/* Protected routes */}
-                    <PrivateRoute path="/dashboard">
-                        <HomePage />
-                    </PrivateRoute>
+                    {/*<PrivateRoute path="/dashboard">*/}
+                    {/*    <HomePage />*/}
+                    {/*</PrivateRoute>*/}
                     <PrivateRoute path="/profile">
                         <ProfilePage />
                     </PrivateRoute>
@@ -36,9 +37,12 @@ function App() {
                         {/* <h1>Sign up</h1> */}
                         <SignUpPage />
                     </Route>
+                    <Route path="/dashboard">
+                        <DashBoardPage />
+                    </Route>
 
                     <Route path="/">
-                        <Redirect to="/dashboard" />
+                        <Redirect to="/login" />
                         {/* <Route path="/">
                         <HomePage /> */}
                     </Route>
