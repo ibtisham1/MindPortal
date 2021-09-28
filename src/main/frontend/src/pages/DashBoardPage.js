@@ -27,7 +27,7 @@ const DashBoardPage = () => {
                 </Col>
 
                 <Col className="Login form">
-                    <h1>Welcome to MindPortal Dashboard</h1>
+                    <h1>Welcome to Dashboard</h1>
                     <Form>
 
                     </Form>
