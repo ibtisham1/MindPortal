@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @NotBlank(message = "First name is mandatory")
@@ -17,6 +17,7 @@ public class User {
     private String lastName;
 
     @NotBlank(message = "email is mandatory")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "password is mandatory")

@@ -28,12 +28,6 @@ public class UsersController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-// Don't need this anymore as it's handled in authentication routing '/register'
-//    @PostMapping
-//    public ResponseEntity<User> addUser(@Valid @RequestBody User newUser){
-//        userRepo.save(newUser);
-//        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Integer id){
