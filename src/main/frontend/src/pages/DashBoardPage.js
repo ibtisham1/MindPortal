@@ -38,7 +38,9 @@ const DashBoardPage = () => {
 
                 <Col className="mb-3">
                     <h1>Welcome to Dashboard</h1>
+                    <p></p>
                     <h2>Hello Kurt!</h2>
+                    <p></p>
                     <h3>
                         <Card>
                             <Card.Body>
@@ -58,6 +60,53 @@ const DashBoardPage = () => {
                     </h3>
                     <p></p>
                     <h2>Suggested Actions</h2>
+                    <p></p>
+                    <h3>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>
+                                    Moments To Appreciate
+                                </Card.Title>
+                                <p></p>
+                                <Card.Title>
+                                    feature description ...
+                                </Card.Title>
+                                <Button variant={"secondary"}>
+                                    Go
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                        <p></p>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>
+                                    Moments To Appreciate
+                                </Card.Title>
+                                <p></p>
+                                <Card.Title>
+                                    feature description ...
+                                </Card.Title>
+                                <Button variant={"secondary"}>
+                                    Go
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                        <p></p>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>
+                                    Other Suggestion
+                                </Card.Title>
+                                <p></p>
+                                <Card.Title>
+                                    feature description ...
+                                </Card.Title>
+                                <Button variant={"secondary"}>
+                                    Go
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    </h3>
                 </Col>
             </Row>
         </Container>
