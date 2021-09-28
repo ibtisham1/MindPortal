@@ -39,6 +39,25 @@ const DashBoardPage = () => {
                 <Col className="mb-3">
                     <h1>Welcome to Dashboard</h1>
                     <h2>Hello Kurt!</h2>
+                    <h3>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>
+                                    Mental Health Test
+                                </Card.Title>
+                                <p></p>
+                                <Card.Title>
+                                    You have not taken a mental health test yet, click 'Take Test' to continue
+                                </Card.Title>
+                                <p></p>
+                                <Button variant={"primary"}>
+                                    Take Test
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    </h3>
+                    <p></p>
+                    <h2>Suggested Actions</h2>
                 </Col>
             </Row>
         </Container>
