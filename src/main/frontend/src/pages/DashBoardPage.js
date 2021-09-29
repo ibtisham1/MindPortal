@@ -18,12 +18,8 @@ const DashBoardPage = () => {
         <Container fluid className="Dashboard page">
             <DashBoardHeader />
             <Row>
-                <Col lg={4} className="Login banner">
-                    <h2>
-                        <Link to="/" className="Login banner__title">
-                            MindPortal
-                        </Link>
-                    </h2>
+                <Col lg={3} className="DashBoard card">
+                    <p></p>
                     <Card>
                         <Card.Body>
                             <Card.Title>
@@ -32,6 +28,7 @@ const DashBoardPage = () => {
                             <Card.Text>
                                 Covid updates explained here ...
                             </Card.Text>
+                            <Card.Img src={"https://imageresizer.static9.net.au/JoiR0Yy7d3c-sKWPOZs74n1WrGA=/1600x0/https%3A%2F%2Fprod.static9.net.au%2Ffs%2Fb329d945-649a-41e0-89a2-6f4ea7aa821c"}/>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -54,7 +51,7 @@ const DashBoardPage = () => {
                             </Card.Body>
                         </Card>
                     </h3>
-                    <h2>Suggested Actions</h2>
+                    <h4>Suggested Actions</h4>
                     <h3>
                         <Card>
                             <Card.Body>
