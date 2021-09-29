@@ -15,7 +15,7 @@ const DashBoardPage = () => {
 
 
     return (
-        <Container fluid className="Dashboard">
+        <Container fluid className="Dashboard page">
             <DashBoardHeader />
             <Row>
                 <Col lg={4} className="Login banner">
@@ -36,38 +36,31 @@ const DashBoardPage = () => {
                     </Card>
                 </Col>
 
-                <Col className="mb-3">
+                <Col className="DashBoard card">
                     <h1>Welcome to Dashboard</h1>
-                    <p></p>
                     <h2>Hello Kurt!</h2>
-                    <p></p>
                     <h3>
                         <Card>
                             <Card.Body>
                                 <Card.Title>
                                     Mental Health Test
                                 </Card.Title>
-                                <p></p>
                                 <Card.Title>
                                     You have not taken a mental health test yet, click 'Take Test' to continue
                                 </Card.Title>
-                                <p></p>
                                 <Button variant={"primary"}>
                                     Take Test
                                 </Button>
                             </Card.Body>
                         </Card>
                     </h3>
-                    <p></p>
                     <h2>Suggested Actions</h2>
-                    <p></p>
                     <h3>
                         <Card>
                             <Card.Body>
                                 <Card.Title>
                                     Moments To Appreciate
                                 </Card.Title>
-                                <p></p>
                                 <Card.Title>
                                     feature description ...
                                 </Card.Title>
@@ -76,13 +69,11 @@ const DashBoardPage = () => {
                                 </Button>
                             </Card.Body>
                         </Card>
-                        <p></p>
                         <Card>
                             <Card.Body>
                                 <Card.Title>
                                     Moments To Appreciate
                                 </Card.Title>
-                                <p></p>
                                 <Card.Title>
                                     feature description ...
                                 </Card.Title>
@@ -91,13 +82,11 @@ const DashBoardPage = () => {
                                 </Button>
                             </Card.Body>
                         </Card>
-                        <p></p>
                         <Card>
                             <Card.Body>
                                 <Card.Title>
                                     Other Suggestion
                                 </Card.Title>
-                                <p></p>
                                 <Card.Title>
                                     feature description ...
                                 </Card.Title>
