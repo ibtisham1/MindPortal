@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.Diagnosis;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.UserNotFoundException;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/users")
@@ -18,6 +21,11 @@ public class UsersController {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    DiagnosisRepository diagnosisRepository;
+
+    @Autowired
+    MediaRepository mediaRepository;
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userRepo.findAll();
@@ -58,6 +66,22 @@ public class UsersController {
         }
 
 
+    }
+
+    @GetMapping("/get_media_for_user/{id}")
+    public @ResponseBody List<Media> getMediaByUserId(@PathVariable("id") Integer id){
+
+        Set<Diagnosis> diagnosisSet = diagnosisRepository.findAllByUserId(id);
+        final Iterator<Diagnosis> iterator = diagnosisSet.iterator();
+        Diagnosis lastItem = iterator.next();
+        while (iterator.hasNext()){
+            lastItem = iterator.next();
+        }
+
+        List<Media> mediaList = new ArrayList<Media>(mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId()));
+
+        System.out.println(mediaList);
+        return mediaList ;
     }
 
 
