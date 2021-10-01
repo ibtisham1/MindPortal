@@ -239,7 +239,7 @@ const TestPage = () => {
                 <row>
                     <Container>
                         <center>
-                            <bt><Button as="input" type="submit" value="Submit" />{' '}</bt>
+                            <bt><Button variant="primary" size="lg" as="input" type="submit" value="Submit" />{' '}</bt>
                         </center>
                         </Container>
                 </row>
