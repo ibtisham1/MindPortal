@@ -25,6 +25,10 @@ public class Diagnosis{
     @JoinColumn(name = "diagnosis_id")
     private Set<Media> medias;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User user;
+
     public Diagnosis(){}
 
     public Diagnosis(Integer diagnosisId, String diagnosisType){
@@ -47,5 +51,13 @@ public class Diagnosis{
 
     public void setDiagnosisType(String diagnosisType) {
         this.diagnosisType = diagnosisType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
