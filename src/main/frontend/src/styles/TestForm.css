@@ -8,6 +8,21 @@ h1{
     padding-top: 20px;
     text-align: center;
 }
+h3 {
+    position: fixed;
+    color: navajowhite;
+    text-align: center;
+    padding-top: 200px;
+}
+st{
+    position: fixed;
+    padding-left: 60px;
+    padding-top: 280px;
+
+}
+p{
+    text-align: center;
+}
 span{
 
     padding-left: 90px;
@@ -18,16 +33,8 @@ span{
 .second-box {
     column-width: 200px;
 }
-h3 {
-    textAlign: 'center';
-    fontWeight: 'bold';
-    fontSize: 18;
-    marginTop: 0;
-    width: 200px;
-    backgroundColor: 'yellow',
-}
-button{
-    text-align: center;
-    justify-content: center;
-    align-content: center;
+
+bt{
+    padding-top: 100px;
+
 }
