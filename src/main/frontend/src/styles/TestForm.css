@@ -1,0 +1,33 @@
+h4{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-left: 80px;
+    color: #223473;
+}
+h1{
+    padding-top: 20px;
+    text-align: center;
+}
+span{
+
+    padding-left: 90px;
+}
+.content-box {
+    column-width: 50px;
+}
+.second-box {
+    column-width: 200px;
+}
+h3 {
+    textAlign: 'center';
+    fontWeight: 'bold';
+    fontSize: 18;
+    marginTop: 0;
+    width: 200px;
+    backgroundColor: 'yellow',
+}
+button{
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
