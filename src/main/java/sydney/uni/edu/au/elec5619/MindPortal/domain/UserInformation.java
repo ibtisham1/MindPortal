@@ -10,7 +10,9 @@ public class UserInformation {
     @Column(name="user_information_id")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userInformation" )
+    @MapsId
+    @OneToOne
+    @JoinColumn( name = "user_id")
     private User user;
 
 
