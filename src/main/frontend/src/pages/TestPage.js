@@ -87,9 +87,9 @@ const TestPage = () => {
             });
         }
         if(counter<10){
-            return <p>Please fill up all the questions in the form</p>;
+            return <p style={{color: "red"}}>Please fill up all the questions in the form</p>;
         }
-        return <p></p>;
+        return <p style={{color: "green"}}>Eligible for submission</p>;
     }
 
 
