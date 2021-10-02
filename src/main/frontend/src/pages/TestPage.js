@@ -75,12 +75,37 @@ const TestPage = () => {
         setAnswers(newAnswers);
     }
 
+
+
+    function checkSubmission(){
+        let counter=0;
+        for(let i=0;i<questionIDs.length;i++){
+            answers[i].map((item) => {
+                if (item.isChecked==true){
+                    counter++;
+                }
+            });
+        }
+        if(counter<10){
+            return <p>Please fill up all the questions in the form</p>;
+        }
+        return <p></p>;
+    }
+
+
+
+
     return (
         <div>
 
             <Header />
                 <Row>
+                    <Col xs={2} style={{backgroundColor: 'black'}}>
+                        <h3> What is the K10 Test </h3>
+                        <st><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></st>
+                    </Col>
             <Col>
+                <Container>
 
                 <h1>K10 TEST</h1>
                 <row>
@@ -95,7 +120,7 @@ const TestPage = () => {
                             onChange={(e) => record(e, 0)}
                             checked={item.isChecked}
                         />
-                        {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
 
@@ -111,7 +136,7 @@ const TestPage = () => {
                             onChange={(e) => record(e, 1)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -126,7 +151,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,2)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -141,7 +166,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,3)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -156,7 +181,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,4)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -171,7 +196,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,5)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -186,7 +211,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,6)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -201,7 +226,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,7)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -216,7 +241,7 @@ const TestPage = () => {
                             onChange={(e) => record(e,8)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
@@ -231,23 +256,24 @@ const TestPage = () => {
                             onChange={(e) => record(e,9)}
                             checked={item.isChecked}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
                     ))}
                 </row>
+                    <row>
+                        <h4></h4>
+                    </row>
+
                 <row>
-                    <Container>
-                        <center>
-                            <bt><Button variant="primary" size="lg" as="input" type="submit" value="Submit" />{' '}</bt>
-                        </center>
-                        </Container>
+
+                    <bt><Button onClick={checkSubmission} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</bt>
                 </row>
+                    <row>
+                        {checkSubmission()}
+                    </row>
+                </Container>
             </Col>
-                    <Col xs={2} style={{backgroundColor: 'black'}}>
-                        <h3> What is the K10 Test </h3>
-                            <st><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></st>
-                    </Col>
                 </Row>
         </div>
     );

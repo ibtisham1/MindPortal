@@ -21,7 +21,8 @@ st{
 
 }
 p{
-    text-align: center;
+
+    padding-left: 520px;
 }
 span{
 
@@ -35,6 +36,11 @@ span{
 }
 
 bt{
-    padding-top: 100px;
+    padding-left: 620px;
 
+}
+.special-class{
+    position: absolute;
+    right: 600px;
+    padding-top: 100px;
 }
