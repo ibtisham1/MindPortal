@@ -1,11 +1,49 @@
 import React from "react";
-import { useAuth } from "../services/useAuth";
+import { useState } from "react";
 import Header from "../components/Header";
 import {Col, Container, Row,Carousel, Card} from "react-bootstrap";
 import "../styles/Result.scss";
 
 
 const ResultPage = () => {
+
+    function ControlledCarousel() {
+        const [index, setIndex] = useState(0);
+
+        const handleSelect = (selectedIndex, e) => {
+            var carouselScope = document.getElementById("videos")
+            var videos = carouselScope.getElementsByTagName("iframe");
+            videos[index].src = videos[index].src;
+            setIndex(selectedIndex);
+        };
+
+        return (
+            <Carousel id="videos" activeIndex={index} onSelect={handleSelect} interval={null}>
+                <Carousel.Item>
+                    <iframe id = "test"
+                            width="100%" height="315" src = "https://www.youtube.com/embed/XyNlqQId-nk"
+                            title="YouTube video player" frameBorder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen>
+                    </iframe>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/DXUAyRRkI6k"
+                            title="YouTube video player" frameBorder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen>
+                    </iframe>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/eX2qFMC8cFo"
+                            title="YouTube video player" frameBorder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen>
+                    </iframe>
+                </Carousel.Item>
+            </Carousel>
+        );
+    }
 
     return (
         <div>
@@ -48,29 +86,7 @@ const ResultPage = () => {
                     </Col>
                     <Col className="Result video">
                         <h2>We are here to help you!</h2>
-                        <Carousel interval={null}>
-                            <Carousel.Item>
-                                <iframe width="100%" height="315" src = "https://www.youtube.com/embed/XyNlqQId-nk"
-                                        title="YouTube video player" frameBorder="0"
-                                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen>
-                                </iframe>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <iframe width="100%" height="315" src="https://www.youtube.com/embed/DXUAyRRkI6k"
-                                        title="YouTube video player" frameBorder="0"
-                                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen>
-                                </iframe>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <iframe width="100%" height="315" src="https://www.youtube.com/embed/eX2qFMC8cFo"
-                                        title="YouTube video player" frameBorder="0"
-                                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen>
-                                </iframe>
-                            </Carousel.Item>
-                        </Carousel>
+                        <ControlledCarousel />
                     </Col>
                 </Row>
             </Container>
