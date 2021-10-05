@@ -3,6 +3,7 @@ package sydney.uni.edu.au.elec5619.MindPortal.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 
@@ -20,7 +21,7 @@ public class Diagnosis{
     @NotBlank(message = "diagnosisType is mandatory")
     private String diagnosisType;
 
-    @JsonIgnore
+
     @OneToMany()
     @JoinColumn(name = "diagnosis_id")
     private Set<Media> medias;

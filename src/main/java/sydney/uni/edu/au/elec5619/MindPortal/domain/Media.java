@@ -1,5 +1,7 @@
 package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -17,7 +19,8 @@ public class Media {
     @NotBlank(message = "media type is mandatory")
     private String mediaType;
 
-    @ManyToOne
+
+    @ManyToOne()
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 

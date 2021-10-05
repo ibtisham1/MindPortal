@@ -69,7 +69,9 @@ public class UsersController {
     }
 
     @GetMapping("/get_media_for_user/{id}")
-    public @ResponseBody List<Media> getMediaByUserId(@PathVariable("id") Integer id){
+    public @ResponseBody List<String> getMediaByUserId(@PathVariable("id") Integer id){
+
+        List<Media> mediaList = new ArrayList<Media>();
 
         Set<Diagnosis> diagnosisSet = diagnosisRepository.findAllByUserId(id);
         final Iterator<Diagnosis> iterator = diagnosisSet.iterator();
@@ -78,10 +80,30 @@ public class UsersController {
             lastItem = iterator.next();
         }
 
-        List<Media> mediaList = new ArrayList<Media>(mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId()));
+        Set<Media> mediaSet = mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId());
+        final Iterator<Media> mediaIterator = mediaSet.iterator();
+        Media toStore;
+        while (mediaIterator.hasNext()){
+            toStore = mediaIterator.next();
+            mediaList.add(toStore);
+        }
 
-        System.out.println(mediaList);
-        return mediaList ;
+
+
+
+//        List<Media> mediaList = new ArrayList<Media>(mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId()));
+//
+       // System.out.println(mediaList);
+       // System.out.println(lastItem.getDiagnosisId());
+//        for (Media media:mediaList){
+//            System.out.println(media.getMediaURL());
+//        }
+
+        List<String> mediaUrls = new ArrayList<>();
+        for (Media media: mediaList){
+            mediaUrls.add(media.getMediaURL());
+        }
+        return mediaUrls ;
     }
 
 
