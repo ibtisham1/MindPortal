@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useAuth } from "../services/useAuth";
 // import AuthButton from "../components/AuthButton";
-import "../styles/Login.scss";
+import "../styles/DashBoard.scss";
 import { Row, Container, Button, Col, Form, Card } from "react-bootstrap";
 import DashBoardHeader from "../components/DashBoardHeader";
 
@@ -15,7 +15,7 @@ const DashBoardPage = () => {
 
 
     return (
-        <Container fluid className="Dashboard page">
+        <Container fluid className="DashBoard page">
             <DashBoardHeader />
             <Row>
                 <Col lg={3} className="DashBoard card">
