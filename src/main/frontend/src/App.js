@@ -23,9 +23,9 @@ function App() {
             <Router>
                 <Switch>
                     {/* Protected routes */}
-                    {/*<PrivateRoute path="/dashboard">*/}
-                    {/*    <HomePage />*/}
-                    {/*</PrivateRoute>*/}
+                    <PrivateRoute path="/dashboard">
+                        <DashBoardPage />
+                    </PrivateRoute>
                     <PrivateRoute path="/profile">
                         <ProfilePage />
                     </PrivateRoute>
@@ -43,11 +43,9 @@ function App() {
                         {/* <h1>Sign up</h1> */}
                         <TestPage />
                     </Route>
-                    <Route path="/dashboard">
-                        <DashBoardPage />
-
-
-                    </Route>
+                    {/*<Route path="/dashboard">*/}
+                    {/*    <DashBoardPage />*/}
+                    {/*</Route>*/}
 
                     <Route path="/">
                         <Redirect to="/login" />
