@@ -5,13 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.Diagnosis;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.UserNotFoundException;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,6 +23,10 @@ public class UsersController {
     UserRepository userRepo;
 
     @Autowired
+    DiagnosisRepository diagnosisRepository;
+
+    @Autowired
+    MediaRepository mediaRepository;
     private PasswordEncoder bcryptEncoder;
 
     @GetMapping
@@ -62,6 +69,44 @@ public class UsersController {
         }
 
 
+    }
+
+    @GetMapping("/get_media_for_user/{id}")
+    public @ResponseBody List<String> getMediaByUserId(@PathVariable("id") Integer id){
+
+        List<Media> mediaList = new ArrayList<Media>();
+
+        Set<Diagnosis> diagnosisSet = diagnosisRepository.findAllByUserId(id);
+        final Iterator<Diagnosis> iterator = diagnosisSet.iterator();
+        Diagnosis lastItem = iterator.next();
+        while (iterator.hasNext()){
+            lastItem = iterator.next();
+        }
+
+        Set<Media> mediaSet = mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId());
+        final Iterator<Media> mediaIterator = mediaSet.iterator();
+        Media toStore;
+        while (mediaIterator.hasNext()){
+            toStore = mediaIterator.next();
+            mediaList.add(toStore);
+        }
+
+
+
+
+//        List<Media> mediaList = new ArrayList<Media>(mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId()));
+//
+       // System.out.println(mediaList);
+       // System.out.println(lastItem.getDiagnosisId());
+//        for (Media media:mediaList){
+//            System.out.println(media.getMediaURL());
+//        }
+
+        List<String> mediaUrls = new ArrayList<>();
+        for (Media media: mediaList){
+            mediaUrls.add(media.getMediaURL());
+        }
+        return mediaUrls ;
     }
 
 
