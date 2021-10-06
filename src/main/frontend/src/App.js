@@ -1,46 +1,50 @@
-import Button from "./components/Button/Button";
-import { Switch, Route, Link, BrowserRouter as Router } from "react-router-dom";
+import {
+    Switch,
+    Route,
+    Redirect,
+    Link,
+    HashRouter as Router,
+    // BrowserRouter as Router,
+} from "react-router-dom";
 import { ProvideAuth } from "./services/useAuth";
 import { useEffect, useState } from "react";
 import axiosConfig from "./services/axiosConfig";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
-    const [loading, setLoading] = useState(false);
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        setLoading(true);
-        axiosConfig
-            .get("/users")
-            .then((result) => {
-                console.log(result.data);
-                setUsers(result.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setLoading(false);
-            });
-    }, []);
-
     return (
-        <div>
-            <header>
-                <h1>Mind Portal App</h1>
+        <ProvideAuth>
+            <Router>
+                <Switch>
+                    {/* Protected routes */}
+                    <PrivateRoute path="/dashboard">
+                        <HomePage />
+                    </PrivateRoute>
+                    <PrivateRoute path="/profile">
+                        <ProfilePage />
+                    </PrivateRoute>
 
-                <h2>Current Users</h2>
+                    {/* Public routes */}
+                    <Route path="/login">
+                        <LoginPage />
+                    </Route>
+                    <Route path="/signup">
+                        {/* <h1>Sign up</h1> */}
+                        <SignUpPage />
+                    </Route>
 
-                {loading ? (
-                    <div>loading....</div>
-                ) : (
-                    users.map((user) => {
-                        return <div>{user.name}</div>;
-                    })
-                )}
-
-                <Button>Fantastic button</Button>
-            </header>
-        </div>
+                    <Route path="/">
+                        <Redirect to="/dashboard" />
+                        {/* <Route path="/">
+                        <HomePage /> */}
+                    </Route>
+                </Switch>
+            </Router>
+        </ProvideAuth>
     );
 }
 
