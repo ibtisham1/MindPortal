@@ -13,7 +13,11 @@ const SignoutButton = ({ callback }) => {
 
     return (
         <>
-            <Button variant="outline-light" onClick={() => setShowModal(true)}>
+            <Button
+                variant="outline-light"
+                style={{ marginLeft: 3 }}
+                onClick={() => setShowModal(true)}
+            >
                 Sign out
             </Button>
 

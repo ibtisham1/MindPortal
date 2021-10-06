@@ -22,7 +22,7 @@ function App() {
         <ProvideAuth>
             <Router>
                 <Switch>
-                    {/* Protected routes */}
+                    {/* Private routes, all pages should be a private route, only login/signup are not */}
                     <PrivateRoute path="/dashboard">
                         <DashBoardPage />
                     </PrivateRoute>
@@ -43,14 +43,10 @@ function App() {
                         {/* <h1>Sign up</h1> */}
                         <TestPage />
                     </Route>
-                    {/*<Route path="/dashboard">*/}
-                    {/*    <DashBoardPage />*/}
-                    {/*</Route>*/}
 
+                    {/* Redirect to dashboard when user is logged in */}
                     <Route path="/">
-                        <Redirect to="/login" />
-                        {/* <Route path="/">
-                        <HomePage /> */}
+                        <Redirect to="/dashboard" />
                     </Route>
                 </Switch>
             </Router>
