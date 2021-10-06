@@ -14,11 +14,8 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
-<<<<<<< HEAD
 import TestPage from "./pages/TestPage";
-=======
-import DashBoardPage from "./pages/DashBoardPage"
->>>>>>> e50951fb97b6a03526e532f202447ca5c4272b22
+import DashBoardPage from "./pages/DashBoardPage";
 
 function App() {
     return (
@@ -45,9 +42,10 @@ function App() {
                     <Route path="/test">
                         {/* <h1>Sign up</h1> */}
                         <TestPage />
-
+                    </Route>
                     <Route path="/dashboard">
                         <DashBoardPage />
+
 
                     </Route>
 
