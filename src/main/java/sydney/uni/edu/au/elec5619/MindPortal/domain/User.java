@@ -1,7 +1,10 @@
 package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -23,10 +26,19 @@ public class User {
     @NotBlank(message = "password is mandatory")
     private String password;
 
+    @JsonIgnore
+    @OneToMany()
+    @JoinColumn(name = "id")
+    private Set<Diagnosis> diagnoses;
+
+    @JsonIgnore
+    @OneToMany()
+    @JoinColumn(name = "id")
+    private Set<QuestionnaireResponses> questionnaireResponses;
+
     public User(){}
 
-    public User(Integer id, String firstName, String lastName, String email, String password){
-        this.id = id;
+    public User( String firstName, String lastName, String email, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -72,5 +84,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Diagnosis> getDiagnoses() {
+        return diagnoses;
+    }
+
+    public void setDiagnoses(Set<Diagnosis> diagnoses) {
+        this.diagnoses = diagnoses;
+    }
+
+    public Set<QuestionnaireResponses> getQuestionnaireResponses() {
+        return questionnaireResponses;
+    }
+
+    public void setQuestionnaireResponses(Set<QuestionnaireResponses> questionnaireResponses) {
+        this.questionnaireResponses = questionnaireResponses;
     }
 }
