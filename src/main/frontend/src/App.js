@@ -14,7 +14,11 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+<<<<<<< HEAD
+import TestPage from "./pages/TestPage";
+=======
 import DashBoardPage from "./pages/DashBoardPage"
+>>>>>>> e50951fb97b6a03526e532f202447ca5c4272b22
 
 function App() {
     return (
@@ -37,8 +41,14 @@ function App() {
                         {/* <h1>Sign up</h1> */}
                         <SignUpPage />
                     </Route>
+
+                    <Route path="/test">
+                        {/* <h1>Sign up</h1> */}
+                        <TestPage />
+
                     <Route path="/dashboard">
                         <DashBoardPage />
+
                     </Route>
 
                     <Route path="/">
