@@ -24,13 +24,13 @@ const Header = (props) => {
     };
 
     return (
-        <div>
             <Navbar
                 fluid
                 className="header"
                 bg="dark"
                 variant="dark"
                 expand="lg"
+                sticky="top"
             >
                 <Container fluid>
                     <Nav>
@@ -67,7 +67,6 @@ const Header = (props) => {
                     </Nav>
                 </Container>
             </Navbar>
-        </div>
     );
 };
 
