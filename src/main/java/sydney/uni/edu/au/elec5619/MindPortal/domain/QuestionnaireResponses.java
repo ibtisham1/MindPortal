@@ -13,6 +13,11 @@ public class QuestionnaireResponses {
     @NotBlank(message = "responses are mandatory")
     private String responses;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User user;
+
+
     public QuestionnaireResponses(){}
 
     public QuestionnaireResponses(Integer questionnaireResponsesId, String responses){
@@ -35,5 +40,13 @@ public class QuestionnaireResponses {
 
     public void setResponses(String responses) {
         this.responses = responses;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
