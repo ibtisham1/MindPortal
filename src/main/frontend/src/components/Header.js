@@ -14,7 +14,6 @@ import {
     Container,
 } from "react-bootstrap";
 import SignoutButton from "./SignoutButton";
-import ProfileIcon from "./ProfileIcon";
 
 const Header = (props) => {
     const auth = useAuth();
