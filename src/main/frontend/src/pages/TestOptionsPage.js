@@ -5,7 +5,7 @@ import {Col, Container, Row,Carousel, Button, Card} from "react-bootstrap";
 import { useState } from "react";
 import ReactDOM from 'react-dom';
 import "../styles/TestOp.scss";
-
+import { Link, useHistory } from "react-router-dom";
 
 
 
@@ -33,7 +33,7 @@ const TestOptionsPage = () => {
                     An anxiety and depression checklist.
                     Together, these ten questions measure how distressed you’ve been recently, by signs of depression and anxiety.
                 </Card.Text>
-                <Button variant="primary">Continue</Button>
+                <Link to="/test" className="btn btn-primary">Continue</Link>
             </Card.Body>
         </Card>
             </Container>

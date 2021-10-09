@@ -48,7 +48,7 @@ const DashBoardPage = () => {
                                     You have not taken a mental health test yet,
                                     click 'Take Test' to continue
                                 </Card.Title>
-                                <Button variant={"primary"}>Take Test</Button>
+                                <Link to="/testOptions" className="btn btn-primary">Take Test</Link>
                             </Card.Body>
                         </Card>
                     </h3>
