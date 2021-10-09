@@ -13,7 +13,6 @@ import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 
-import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -47,15 +46,21 @@ public class UsersController {
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@Valid @RequestBody User user){
+    public ResponseEntity<User> updateUser(@RequestBody User user){
         // add some validation on this.
-        User updatedUser = new User();
-        updatedUser.setEmail(user.getEmail());
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setLastName(user.getLastName());
-        updatedUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        userRepo.save(updatedUser);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        // user find by email or id
+        Optional<User> updatedUserOpt = userRepo.findById(user.getId());
+        if(updatedUserOpt.isPresent()){
+            User oldUser = updatedUserOpt.get();
+            oldUser.setFirstName(user.getFirstName());
+            oldUser.setLastName(user.getLastName());
+            oldUser.setEmail(user.getEmail());
+            userRepo.save(oldUser);
+            return new ResponseEntity<>(oldUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
     }
 
     @DeleteMapping("/{id}")

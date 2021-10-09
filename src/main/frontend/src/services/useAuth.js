@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 import axiosConfig from "../services/axiosConfig";
 
@@ -30,6 +31,34 @@ function useProvideAuth() {
     const [user, setUser] = useState(userStorage || null);
     const [token, setToken] = useState(tokenStorage || null);
 
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+
+    const updateDetails = (firstName, lastName, email, success, failure) => {
+        axiosConfig
+            .put(
+                "/api/users",
+                {
+                    id: user.id,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                },
+                config
+            )
+            .then((result) => {
+                console.log(result);
+                setUser(result.data);
+                localStorage.setItem("user", JSON.stringify(result.data));
+                success();
+            })
+            .catch((err) => {
+                console.log(err);
+                failure();
+            });
+    };
+
     const signin = (email, password, success, failure) => {
         // do sign in functionality and return user
         axiosConfig
@@ -41,8 +70,11 @@ function useProvideAuth() {
                 console.log(result);
                 // setUser(dummy_user);
                 setUser(result.data.user);
-                setToken(result.data.token);
-                localStorage.setItem("jwt-token", result.data.token);
+                setToken(result.data.token.token);
+                localStorage.setItem(
+                    "jwt-token",
+                    JSON.stringify(result.data.token.token)
+                );
                 localStorage.setItem("user", JSON.stringify(result.data.user));
                 success();
             })
@@ -70,10 +102,10 @@ function useProvideAuth() {
             })
             .then((result) => {
                 console.log(result);
-                setUser(dummy_user);
-                // setUser(result.data.user);
-                // setToken(result.data.token);
-                // localStorage.setItem("jwt-token", result.data.token);
+                // setUser(dummy_user);
+                setUser(result.data.user);
+                setToken(result.data.token.token);
+                localStorage.setItem("jwt-token", result.data.token.token);
                 success();
             })
             .catch((err) => {
@@ -99,7 +131,7 @@ function useProvideAuth() {
 
     useEffect(() => {}, [user]);
 
-    return { user, signin, signup, signout, token };
+    return { user, signin, signup, signout, updateDetails, token };
 }
 
 export default useAuth;

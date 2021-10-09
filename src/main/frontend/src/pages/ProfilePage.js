@@ -5,7 +5,11 @@ import useAuth from "../services/useAuth";
 import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
 import "../styles/Profile.scss";
 import axios from "axios";
-import { BsFillPencilFill } from "react-icons/bs";
+import {
+    BsFillPencilFill,
+    BsFillPersonFill,
+    BsFillShieldLockFill,
+} from "react-icons/bs";
 
 const ProfilePage = () => {
     const auth = useAuth();
@@ -26,7 +30,14 @@ const ProfilePage = () => {
                 >
                     <Tab
                         eventKey="profile"
-                        title="Profile"
+                        title={
+                            <>
+                                <span className="profile__tab__icon">
+                                    <BsFillPersonFill />
+                                </span>
+                                Profile
+                            </>
+                        }
                         className="profile__tab"
                     >
                         <Profile user={user} />
@@ -34,17 +45,27 @@ const ProfilePage = () => {
                     <Tab
                         eventKey="edit"
                         title={
-                            <span>
-                                <BsFillPencilFill /> Edit Profile
-                            </span>
+                            <>
+                                <span className="profile__tab__icon">
+                                    <BsFillPencilFill />
+                                </span>
+                                Edit Profile
+                            </>
                         }
                         className="profile__tab"
                     >
-                        <EditProfile />
+                        <EditProfile user={user} />
                     </Tab>
                     <Tab
                         eventKey="reset"
-                        title="Reset Password"
+                        title={
+                            <>
+                                <span className="profile__tab__icon">
+                                    <BsFillShieldLockFill />
+                                </span>
+                                Reset Password
+                            </>
+                        }
                         className="profile__tab"
                     >
                         <ResetPassword />
@@ -83,8 +104,39 @@ const Profile = (props) => {
     );
 };
 
-const EditProfile = () => {
-    return <div>Edit profile</div>;
+const EditProfile = (props) => {
+    const [loading, setLoading] = useState(false);
+    const auth = useAuth();
+    const { updateDetails } = auth;
+    const user = props.user ? props.user : null;
+
+    const update = () => {
+        setLoading(true);
+        updateDetails(
+            user.firstName,
+            user.lastName,
+            user.email,
+            onSuccess,
+            onFailure
+        );
+    };
+
+    const onSuccess = () => {
+        setLoading(false);
+        console.log("success");
+    };
+
+    const onFailure = () => {
+        setLoading(false);
+        console.log("failure");
+    };
+
+    return (
+        <div>
+            Edit profile
+            <button onClick={update}>update</button>
+        </div>
+    );
 };
 
 const ResetPassword = () => {
