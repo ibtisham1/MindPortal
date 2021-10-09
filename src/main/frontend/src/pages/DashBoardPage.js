@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useAuth } from "../services/useAuth";
 // import AuthButton from "../components/AuthButton";
-import "../styles/DashBoard.scss";
+import "../styles/Login.scss";
 import { Row, Container, Button, Col, Form, Card } from "react-bootstrap";
 import Header from "../components/Header";
 
@@ -16,13 +16,8 @@ const DashBoardPage = () => {
     let { from } = location.state || { from: { pathname: "/" } };
 
     return (
-// <<<<<<< HEAD
         <Container fluid className="Dashboard page p-0">
             <Header />
-{/*=======*/}
-{/*        <Container fluid className="DashBoard page">*/}
-{/*            <DashBoardHeader />*/}
-{/*>>>>>>> UI-Screen-3-and-4*/}
             <Row>
                 <Col lg={3} className="DashBoard card">
                     <p></p>
