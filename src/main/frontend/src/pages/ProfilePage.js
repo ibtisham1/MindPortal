@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import Header from "../components/Header";
 import Header from "../components/Header";
 import useAuth from "../services/useAuth";
-import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
+import { Tabs, Tab, Container, Row, Col, Form } from "react-bootstrap";
 import "../styles/Profile.scss";
 import axios from "axios";
 import {
@@ -109,16 +109,19 @@ const EditProfile = (props) => {
     const auth = useAuth();
     const { updateDetails } = auth;
     const user = props.user ? props.user : null;
+    const [email, setEmail] = useState(user.email || "");
+    const [firstName, setFirstName] = useState(user.firstName || "");
+    const [lastName, setLastName] = useState(user.lastName || "");
+    const [errors, setErrors] = useState({});
 
     const update = () => {
-        setLoading(true);
-        updateDetails(
-            user.firstName,
-            user.lastName,
-            user.email,
-            onSuccess,
-            onFailure
-        );
+        const newErrors = findErrors();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+        } else {
+            setLoading(true);
+            updateDetails(firstName, lastName, email, onSuccess, onFailure);
+        }
     };
 
     const onSuccess = () => {
@@ -131,9 +134,76 @@ const EditProfile = (props) => {
         console.log("failure");
     };
 
+    const findErrors = () => {
+        const errors = {};
+        if (firstName === "") errors.firstName = "First name cannot be blank";
+        if (lastName === "") errors.lastName = "Last name cannot be blank";
+        if (email === "") errors.email = "Username cannot be blank";
+        else if (email.length < 3) errors.email = "Enter a valid email";
+
+        const re =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test(email)) {
+            errors.email = "Enter a valid email";
+        }
+        // if (password === "") errors.password = "Password cannot be blank";
+        // else if (password.length < 4)
+        //     errors.password = "Password should be a minimum of 4 characters";
+
+        return errors;
+    };
+
+    function isValidEmailFormat() {
+        return false;
+    }
+
     return (
         <div>
             Edit profile
+            {loading ? <div>Loading</div> : ""}
+            <Form.Group as={Row}>
+                <Form.Label className="signup form__label">
+                    First Name
+                </Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    isInvalid={!!errors.firstName}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.firstName}
+                </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Row}>
+                <Form.Label className="signup form__label">
+                    Last Name
+                </Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    isInvalid={!!errors.lastName}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.lastName}
+                </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Row}>
+                <Form.Label className="signup form__label">Email</Form.Label>
+                <Form.Control
+                    type="email"
+                    placeholder={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    isInvalid={!!errors.email}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                </Form.Control.Feedback>
+            </Form.Group>
+            <div>firstname: {firstName}</div>
+            <div>lastName: {lastName}</div>
+            <div>email: {email}</div>
             <button onClick={update}>update</button>
         </div>
     );

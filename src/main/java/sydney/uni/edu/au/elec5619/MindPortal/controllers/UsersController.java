@@ -3,15 +3,19 @@ package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import sydney.uni.edu.au.elec5619.MindPortal.config.JwtTokenUtil;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.Diagnosis;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.JwtResponse;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.UserNotFoundException;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
+import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
 import java.util.*;
 
@@ -27,6 +31,12 @@ public class UsersController {
     @Autowired
     MediaRepository mediaRepository;
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
@@ -46,8 +56,8 @@ public class UsersController {
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user){
-        // add some validation on this.
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+        // create custom validation as we can't use the @Valid annotation with password field missing.
         // user find by email or id
         Optional<User> updatedUserOpt = userRepo.findById(user.getId());
         if(updatedUserOpt.isPresent()){
@@ -56,7 +66,16 @@ public class UsersController {
             oldUser.setLastName(user.getLastName());
             oldUser.setEmail(user.getEmail());
             userRepo.save(oldUser);
-            return new ResponseEntity<>(oldUser, HttpStatus.OK);
+
+            // Must refresh JWT in case email has changed.
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(oldUser.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("user", oldUser);
+            response.put("token", new JwtResponse(token));
+
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
