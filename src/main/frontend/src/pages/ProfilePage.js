@@ -68,7 +68,7 @@ const ProfilePage = () => {
                         }
                         className="profile__tab"
                     >
-                        <ResetPassword />
+                        <ResetPassword user={user} />
                     </Tab>
                 </Tabs>
             </Container>
@@ -177,6 +177,7 @@ const EditProfile = (props) => {
                         placeholder={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         isInvalid={!!errors.firstName}
+                        value={firstName}
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.firstName}
@@ -195,6 +196,7 @@ const EditProfile = (props) => {
                         placeholder={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         isInvalid={!!errors.lastName}
+                        value={lastName}
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.lastName}
@@ -211,6 +213,7 @@ const EditProfile = (props) => {
                         placeholder={email}
                         onChange={(e) => setEmail(e.target.value)}
                         isInvalid={!!errors.email}
+                        value={email}
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.email}
@@ -228,8 +231,82 @@ const EditProfile = (props) => {
     );
 };
 
-const ResetPassword = () => {
-    return <div>Reset password</div>;
+const ResetPassword = (props) => {
+    const user = props.user;
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const auth = useAuth();
+    const { changePassword } = auth;
+    const [userFeedback, setUserFeedback] = useState(null);
+    const [isEnabled, setIsEnabled] = useState(true);
+
+    useEffect(() => {
+        if (loading) {
+            setIsEnabled(false);
+        } else {
+            setIsEnabled(true);
+        }
+    }, [loading]);
+
+    const savePassword = () => {
+        setLoading(true);
+        setUserFeedback(null);
+        changePassword(oldPassword, newPassword, onSuccess, onFailure);
+    };
+
+    const onSuccess = () => {
+        setLoading(false);
+        // display a success message
+        setUserFeedback("Successful change");
+        console.log("YAY changed");
+    };
+
+    const onFailure = () => {
+        setLoading(false);
+        // set any errors
+        setUserFeedback("Unsuccesful change");
+        console.log("NOPE");
+    };
+
+    return (
+        <div>
+            {loading ? (
+                <div>loading...</div>
+            ) : (
+                <Form>
+                    <Form.Group as={Row}>
+                        <Col sm={2}>
+                            <Form.Label className="">Old Password</Form.Label>
+                        </Col>
+                        <Col sm={{ span: 3 }}>
+                            <Form.Control
+                                className=""
+                                type="password"
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                value={oldPassword}
+                            />
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row}>
+                        <Col sm={2}>
+                            <Form.Label className="">New Password</Form.Label>
+                        </Col>
+                        <Col sm={{ span: 3 }}>
+                            <Form.Control
+                                className=""
+                                type="password"
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                value={newPassword}
+                            />
+                        </Col>
+                    </Form.Group>
+                    <button onClick={savePassword}>confirm</button>
+                    {userFeedback ?? <div>{userFeedback}</div>}
+                </Form>
+            )}
+        </div>
+    );
 };
 
 export default ProfilePage;

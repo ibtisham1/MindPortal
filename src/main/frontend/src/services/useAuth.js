@@ -65,6 +65,23 @@ function useProvideAuth() {
             });
     };
 
+    const changePassword = (oldPassword, newPassword, success, failure) => {
+        axiosConfig
+            .put(
+                `/api/users/${user.id}/changePassword`,
+                { oldPassword: oldPassword, newPassword: newPassword },
+                config
+            )
+            .then((result) => {
+                console.log(result);
+                success();
+            })
+            .catch((error) => {
+                console.log(error);
+                failure();
+            });
+    };
+
     const signin = (email, password, success, failure) => {
         // do sign in functionality and return user
         axiosConfig
@@ -137,7 +154,15 @@ function useProvideAuth() {
 
     useEffect(() => {}, [user]);
 
-    return { user, signin, signup, signout, updateDetails, token };
+    return {
+        user,
+        signin,
+        signup,
+        signout,
+        updateDetails,
+        changePassword,
+        token,
+    };
 }
 
 export default useAuth;

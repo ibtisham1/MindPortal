@@ -1,16 +1,16 @@
 package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import sydney.uni.edu.au.elec5619.MindPortal.MindPortalApplication;
 import sydney.uni.edu.au.elec5619.MindPortal.config.JwtTokenUtil;
-import sydney.uni.edu.au.elec5619.MindPortal.domain.Diagnosis;
-import sydney.uni.edu.au.elec5619.MindPortal.domain.JwtResponse;
-import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
-import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.*;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.UserNotFoundException;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
@@ -30,6 +30,9 @@ public class UsersController {
 
     @Autowired
     MediaRepository mediaRepository;
+
+
+    @Autowired
     private PasswordEncoder bcryptEncoder;
 
     @Autowired
@@ -131,6 +134,32 @@ public class UsersController {
             mediaUrls.add(media.getMediaURL());
         }
         return mediaUrls ;
+    }
+
+
+
+    @PutMapping("/{id}/changePassword")
+    public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest){
+        User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
+        Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
+        logger.info("attemping password change");
+
+//        logger.info(passwordChangeRequest.getOldPassword());
+//        logger.info(passwordChangeRequest.getNewPassword());
+
+
+        if(bcryptEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())){
+            System.out.println("old password matches");
+            // update the passwords
+            user.setPassword(bcryptEncoder.encode(passwordChangeRequest.getNewPassword()));
+            userRepo.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            logger.warn("Password incorrect");
+            // bad response
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 
