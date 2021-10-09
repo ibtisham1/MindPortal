@@ -35,6 +35,8 @@ function useProvideAuth() {
         headers: { Authorization: `Bearer ${token}` },
     };
 
+    //TODO: add an axios interceptor that logs the user out when the JWT has expired.
+
     const updateDetails = (firstName, lastName, email, success, failure) => {
         axiosConfig
             .put(

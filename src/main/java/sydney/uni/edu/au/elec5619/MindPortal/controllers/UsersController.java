@@ -136,21 +136,14 @@ public class UsersController {
         return mediaUrls ;
     }
 
-
-
+    
     @PutMapping("/{id}/changePassword")
     public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest){
         User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
         Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
-        logger.info("attemping password change");
-
-//        logger.info(passwordChangeRequest.getOldPassword());
-//        logger.info(passwordChangeRequest.getNewPassword());
-
 
         if(bcryptEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())){
-            System.out.println("old password matches");
-            // update the passwords
+            // matching password, update the users password
             user.setPassword(bcryptEncoder.encode(passwordChangeRequest.getNewPassword()));
             userRepo.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
