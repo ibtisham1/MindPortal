@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import Header from "../components/Header";
 import Header from "../components/Header";
 import useAuth from "../services/useAuth";
-import { Tabs, Tab, Container, Row, Col, Form } from "react-bootstrap";
+import { Tabs, Tab, Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../styles/Profile.scss";
 import axios from "axios";
 import {
@@ -80,26 +80,26 @@ const Profile = (props) => {
     console.log(props.user);
     return (
         <div className="details">
-            <Row>
-                <Row className="details__row">
-                    <Col sm={2} className="details__label">
-                        First name
-                    </Col>
-                    <Col className="details__value">{props.user.firstName}</Col>
-                </Row>
-                <Row className="details__row">
-                    <Col sm={2} className="details__label">
-                        Last name
-                    </Col>
-                    <Col className="details__value">{props.user.lastName}</Col>
-                </Row>
-                <Row className="details__row">
-                    <Col sm={2} className="details__label">
-                        Email
-                    </Col>
-                    <Col className="details__value">{props.user.email}</Col>
-                </Row>
+            {/* <Row> */}
+            <Row className="details__row">
+                <Col sm={2} className="details__label">
+                    First name
+                </Col>
+                <Col className="details__value">{props.user.firstName}</Col>
             </Row>
+            <Row className="details__row">
+                <Col sm={2} className="details__label">
+                    Last name
+                </Col>
+                <Col className="details__value">{props.user.lastName}</Col>
+            </Row>
+            <Row className="details__row">
+                <Col sm={2} className="details__label">
+                    Email
+                </Col>
+                <Col className="details__value">{props.user.email}</Col>
+            </Row>
+            {/* </Row> */}
         </div>
     );
 };
@@ -113,6 +113,15 @@ const EditProfile = (props) => {
     const [firstName, setFirstName] = useState(user.firstName || "");
     const [lastName, setLastName] = useState(user.lastName || "");
     const [errors, setErrors] = useState({});
+    const [isEnabled, setIsEnabled] = useState(true);
+
+    useEffect(() => {
+        if (loading) {
+            setIsEnabled(false);
+        } else {
+            setIsEnabled(true);
+        }
+    }, [loading]);
 
     const update = () => {
         const newErrors = findErrors();
@@ -146,10 +155,6 @@ const EditProfile = (props) => {
         if (!re.test(email)) {
             errors.email = "Enter a valid email";
         }
-        // if (password === "") errors.password = "Password cannot be blank";
-        // else if (password.length < 4)
-        //     errors.password = "Password should be a minimum of 4 characters";
-
         return errors;
     };
 
@@ -158,53 +163,67 @@ const EditProfile = (props) => {
     }
 
     return (
-        <div>
-            Edit profile
-            {loading ? <div>Loading</div> : ""}
-            <Form.Group as={Row}>
-                <Form.Label className="signup form__label">
-                    First Name
-                </Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    isInvalid={!!errors.firstName}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.firstName}
-                </Form.Control.Feedback>
+        <div className="edit form">
+            <Form.Group as={Row} className="edit form__row align-items-center">
+                <Col sm={2}>
+                    <Form.Label className="edit form__label">
+                        First Name
+                    </Form.Label>
+                </Col>
+                <Col sm={{ span: 3 }}>
+                    <Form.Control
+                        className="edit form__input"
+                        type="text"
+                        placeholder={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        isInvalid={!!errors.firstName}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.firstName}
+                    </Form.Control.Feedback>
+                </Col>
             </Form.Group>
-            <Form.Group as={Row}>
-                <Form.Label className="signup form__label">
-                    Last Name
-                </Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    isInvalid={!!errors.lastName}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.lastName}
-                </Form.Control.Feedback>
+            <Form.Group as={Row} className="edit form__row align-items-center">
+                <Col sm={2}>
+                    <Form.Label className="edit form__label">
+                        Last Name
+                    </Form.Label>
+                </Col>
+                <Col sm={{ span: 3 }}>
+                    <Form.Control
+                        type="text"
+                        placeholder={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        isInvalid={!!errors.lastName}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.lastName}
+                    </Form.Control.Feedback>
+                </Col>
             </Form.Group>
-            <Form.Group as={Row}>
-                <Form.Label className="signup form__label">Email</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    isInvalid={!!errors.email}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.email}
-                </Form.Control.Feedback>
+            <Form.Group as={Row} className="edit form__row align-items-center">
+                <Col sm={2}>
+                    <Form.Label className="edit form__label">Email</Form.Label>
+                </Col>
+                <Col sm={{ span: 3 }}>
+                    <Form.Control
+                        type="email"
+                        placeholder={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        isInvalid={!!errors.email}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.email}
+                    </Form.Control.Feedback>
+                </Col>
             </Form.Group>
-            <div>firstname: {firstName}</div>
-            <div>lastName: {lastName}</div>
-            <div>email: {email}</div>
-            <button onClick={update}>update</button>
+            <div style={{ marginTop: "1rem" }}>
+                {/* {loading ? <div>Loading</div> : ""} */}
+                <Button onClick={update} disabled={!isEnabled}>
+                    {" "}
+                    Save{" "}
+                </Button>
+            </div>
         </div>
     );
 };
