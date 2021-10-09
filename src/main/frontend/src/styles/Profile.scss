@@ -1,0 +1,84 @@
+.profile {
+    background-color: #f7f7f7;
+    height: 100vh;
+
+    &__title {
+        margin-left: 2rem;
+        margin-top: 1rem;
+    }
+
+    &__tab__container {
+        margin-top: 3rem;
+        border-radius: 1em;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        min-height: 500px;
+        background-color: white;
+        padding: 0.5rem;
+    }
+
+    &__tabs {
+        background-color: white;
+        // margin-bottom: 3em;
+    }
+
+    &__tab {
+        background-color: white;
+
+        &__icon {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.details {
+    margin: 1rem;
+
+    &__avatar {
+        display: flex;
+        justify-content: center;
+        align-self: center;
+    }
+
+    &__row {
+        border-radius: 1rem;
+        padding: 1rem;
+    }
+
+    &__row:nth-child(odd) {
+        background-color: #f4f4f4;
+    }
+
+    &__label {
+        color: rgb(91, 90, 90);
+        font-weight: bold;
+    }
+
+    &__value {
+        // font-weight: bold;
+    }
+}
+
+.edit {
+    &.form {
+        margin: 1rem;
+
+        &__row {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            border-radius: 1rem;
+        }
+
+        &__row:nth-child(odd) {
+            background-color: #f4f4f4;
+        }
+
+        &__label {
+            font-weight: bold;
+        }
+    }
+}
+
+.reset-password {
+    margin: 1rem;
+}
