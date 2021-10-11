@@ -1,17 +1,23 @@
 package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
+import sydney.uni.edu.au.elec5619.MindPortal.MindPortalApplication;
+import sydney.uni.edu.au.elec5619.MindPortal.config.JwtTokenUtil;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.*;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.UserNotFoundException;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
+import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,7 +26,20 @@ public class UsersController {
     UserRepository userRepo;
 
     @Autowired
+    DiagnosisRepository diagnosisRepository;
+
+    @Autowired
+    MediaRepository mediaRepository;
+
+
+    @Autowired
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
@@ -40,15 +59,30 @@ public class UsersController {
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@Valid @RequestBody User user){
-        // add some validation on this.
-        User updatedUser = new User();
-        updatedUser.setEmail(user.getEmail());
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setLastName(user.getLastName());
-        updatedUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        userRepo.save(updatedUser);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+        // create custom validation as we can't use the @Valid annotation with password field missing.
+        // user find by email or id
+        Optional<User> updatedUserOpt = userRepo.findById(user.getId());
+        if(updatedUserOpt.isPresent()){
+            User oldUser = updatedUserOpt.get();
+            oldUser.setFirstName(user.getFirstName());
+            oldUser.setLastName(user.getLastName());
+            oldUser.setEmail(user.getEmail());
+            userRepo.save(oldUser);
+
+            // Must refresh JWT in case email has changed.
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(oldUser.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("user", oldUser);
+            response.put("token", new JwtResponse(token));
+
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
     }
 
     @DeleteMapping("/{id}")
@@ -61,6 +95,63 @@ public class UsersController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+
+    }
+
+    @GetMapping("/get_media_for_user/{id}")
+    public @ResponseBody List<String> getMediaByUserId(@PathVariable("id") Integer id){
+
+        List<Media> mediaList = new ArrayList<Media>();
+
+        Set<Diagnosis> diagnosisSet = diagnosisRepository.findAllByUserId(id);
+        final Iterator<Diagnosis> iterator = diagnosisSet.iterator();
+        Diagnosis lastItem = iterator.next();
+        while (iterator.hasNext()){
+            lastItem = iterator.next();
+        }
+
+        Set<Media> mediaSet = mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId());
+        final Iterator<Media> mediaIterator = mediaSet.iterator();
+        Media toStore;
+        while (mediaIterator.hasNext()){
+            toStore = mediaIterator.next();
+            mediaList.add(toStore);
+        }
+
+
+
+
+//        List<Media> mediaList = new ArrayList<Media>(mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId()));
+//
+       // System.out.println(mediaList);
+       // System.out.println(lastItem.getDiagnosisId());
+//        for (Media media:mediaList){
+//            System.out.println(media.getMediaURL());
+//        }
+
+        List<String> mediaUrls = new ArrayList<>();
+        for (Media media: mediaList){
+            mediaUrls.add(media.getMediaURL());
+        }
+        return mediaUrls ;
+    }
+
+    
+    @PutMapping("/{id}/changePassword")
+    public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest){
+        User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
+        Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
+
+        if(bcryptEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())){
+            // matching password, update the users password
+            user.setPassword(bcryptEncoder.encode(passwordChangeRequest.getNewPassword()));
+            userRepo.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            logger.warn("Password incorrect");
+            // bad response
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 
