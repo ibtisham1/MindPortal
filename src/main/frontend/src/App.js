@@ -16,6 +16,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import TestPage from "./pages/TestPage";
 import DashBoardPage from "./pages/DashBoardPage";
+import SmilePage from "./pages/SmilePage";
 
 function App() {
     return (
@@ -28,6 +29,9 @@ function App() {
                     </PrivateRoute>
                     <PrivateRoute path="/profile">
                         <ProfilePage />
+                    </PrivateRoute>
+                    <PrivateRoute path="/smile">
+                        <SmilePage />
                     </PrivateRoute>
 
                     {/* Public routes */}

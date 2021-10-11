@@ -51,6 +51,9 @@ const Header = (props) => {
                     <Nav.Link as={Link} to="/">
                         Moments-To-Appreciate
                     </Nav.Link>
+                    <Nav.Link as={Link} to="/smile">
+                        Smile Challenge
+                    </Nav.Link>
                     <Nav.Link as={Link} to="/profile">
                         Profile
                     </Nav.Link>
