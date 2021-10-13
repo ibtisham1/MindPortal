@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import Header from "../components/Header";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import "../styles/Smile.scss";
 
 const SmilePage = () => {
     const videoRef = useRef(null);
@@ -9,6 +10,7 @@ const SmilePage = () => {
     const capturedRef = useRef(null);
     const imageResultRef = useRef(null);
     const [isStreaming, setIsStreaming] = useState(false);
+    const [hasPhoto, setHasPhoto] = useState(false);
 
     useEffect(() => {
         getVideo();
@@ -96,19 +98,45 @@ const SmilePage = () => {
         let url =
             "https://mindportal.cognitiveservices.azure.com/face/v1.0/detect";
 
-        let imageUrl =
-            "https://en.wikipedia.org/wiki/Face#/media/File:Kulusuk,_Inuit_man_(6822268117).jpg";
-
         axios
             .post(url, toSend, { headers: headers, params: params })
             .then((result) => {
                 // console.log(result);
                 console.log(result.data[0]);
                 let imgResult = result.data[0];
-                let str = JSON.stringify(imgResult);
+
                 let txt = document.createElement("p");
+                txt.id = "image-result";
+                let str;
+
+                if (imgResult === undefined) {
+                    str = "please try again";
+                } else {
+                    let smileValue = Number(imgResult.faceAttributes.smile);
+                    console.log("smile value: " + smileValue);
+
+                    if (smileValue < 0.85 && smileValue >= 0.5) {
+                        str = "Almost there, little more smile";
+                    }
+
+                    if (smileValue < 0.5) {
+                        // more smile
+                        str = "more smile!";
+                    }
+
+                    if (smileValue >= 0.85) {
+                        // passed
+                        str = `Congratulations, smile value: ${smileValue}`;
+                    }
+                }
+
                 txt.innerHTML = `${str}`;
-                imageResultRef.current.appendChild(txt);
+                let old = document.getElementById("image-result");
+                if (old == null) {
+                    imageResultRef.current.appendChild(txt);
+                } else {
+                    imageResultRef.current.replaceChild(txt, old);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -139,7 +167,9 @@ const SmilePage = () => {
             .then((stream) => {
                 let video = videoRef.current;
                 video.srcObject = stream;
-                video.play();
+                video.play().catch((e) => {
+                    console.log(e);
+                });
                 setIsStreaming(true);
             })
             .catch((err) => {
@@ -153,7 +183,9 @@ const SmilePage = () => {
             .then((stream) => {
                 let video = videoRef.current;
                 video.srcObject = stream;
-                video.play();
+                video.play().catch((e) => {
+                    console.log(e);
+                });
                 setIsStreaming(true);
             })
             .catch((err) => {
@@ -164,51 +196,88 @@ const SmilePage = () => {
     return (
         <>
             <Header />
-            <Container>
+            <Container className="smile mt-3 px-5">
                 <Row>
-                    <h1>Smile challenge</h1>
+                    <h1 className="smile__title">Smile challenge</h1>
+                </Row>
+                <Row className="mb-3">
+                    <Col sm={8}>
+                        <div className="smile__description">
+                            Studies show that even fake smiles can release
+                            chemicals to help you feel happier.
+                        </div>
+                        <div className="smile__description">
+                            Take a photo and convince the smile cam for a daily
+                            happiness boost.
+                        </div>
+                    </Col>
+                    {/* <Col>
+                        <p className="smile__description">
+                            Take a photo and convince the smile cam for a daily
+                            happiness boost.
+                        </p>
+                    </Col> */}
+                </Row>
+
+                <Row className="justify-content-center">
+                    <Col sm={8}>
+                        <Row className="justify-content-center">
+                            <Col sm={8}>
+                                <video
+                                    className="smile__video"
+                                    ref={videoRef}
+                                    onCanPlay={() => paintToCanvas()}
+                                />
+                            </Col>{" "}
+                        </Row>
+                    </Col>
+                    <Col sm={4}>
+                        <div className="smile__captured">
+                            <div ref={capturedRef}></div>
+                            <div className="smile__result" ref={imageResultRef}>
+                                <div id="image-result">Press take a photo</div>
+                            </div>
+                        </div>
+
+                        <Row></Row>
+                    </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <p>
-                            Studies show that even fake smiles can release
-                            chemicals to help you feel happier.{" "}
-                        </p>
-                        <p>
-                            Press Take a photo and convince the smile box for a
-                            daily happiness booster
-                        </p>
+                        <div className="smile__controls">
+                            {isStreaming ? (
+                                <>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-primary"
+                                        className="smile__btn"
+                                        onClick={() => takePhoto()}
+                                    >
+                                        Take a photo
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-secondary"
+                                        className="smile__btn"
+                                        onClick={() => stop()}
+                                    >
+                                        Stop camera
+                                    </Button>
+                                </>
+                            ) : (
+                                <Button
+                                    size="sm"
+                                    variant="outline-primary"
+                                    className="smile__btn"
+                                    onClick={() => start()}
+                                >
+                                    Start Camera
+                                </Button>
+                            )}
+                        </div>
                     </Col>
                 </Row>
-
-                <Row>
-                    {isStreaming ? (
-                        <>
-                            <button onClick={() => stop()}>Stop camera</button>
-                            <button onClick={() => takePhoto()}>
-                                Take a photo
-                            </button>
-                        </>
-                    ) : (
-                        <button onClick={() => start()}>Start Camera</button>
-                    )}
-                </Row>
-                <Row className="justify-content-center">
-                    <Col sm={3}>
-                        <video
-                            ref={videoRef}
-                            onCanPlay={() => paintToCanvas()}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <div ref={capturedRef}>
-                        {/* <div ref={captureRef}></div> */}
-                    </div>
-                </Row>
-                <Row>
-                    <div ref={imageResultRef}></div>
-                </Row>
+                <Row></Row>
             </Container>
 
             <canvas hidden ref={photoRef} />
