@@ -1,11 +1,13 @@
 package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
+@JsonIgnoreProperties({"password", "diagnoses", "questionnaireResponses"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -78,6 +80,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -86,6 +89,7 @@ public class User {
         this.password = password;
     }
 
+    @JsonIgnore
     public Set<Diagnosis> getDiagnoses() {
         return diagnoses;
     }
@@ -94,6 +98,7 @@ public class User {
         this.diagnoses = diagnoses;
     }
 
+    @JsonIgnore
     public Set<QuestionnaireResponses> getQuestionnaireResponses() {
         return questionnaireResponses;
     }

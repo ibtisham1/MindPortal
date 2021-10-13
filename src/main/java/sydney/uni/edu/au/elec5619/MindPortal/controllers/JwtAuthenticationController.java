@@ -58,6 +58,7 @@ public class JwtAuthenticationController {
 
         Map<String, Object> response = new HashMap<String, Object>();
         User user = userRepo.findByEmail(authenticationRequest.getUsername());
+
         if(user != null){
             response.put("user", user);
             response.put("token", new JwtResponse(token));

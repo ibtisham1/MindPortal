@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import {Col, Container, Row,Carousel, Button} from "react-bootstrap";
 import { useState } from "react";
 import ReactDOM from 'react-dom';
-import "../styles/TestForm.css";
+import "../styles/TestForm.scss";
 
 
 
@@ -87,9 +87,9 @@ const TestPage = () => {
             });
         }
         if(counter<10){
-            return <p style={{color: "red"}}>Please fill up all the questions in the form</p>;
+            return <p className="Header message" style={{color: "red"}}>Please fill up all the questions in the form</p>;
         }
-        return <p style={{color: "green"}}>Eligible for submission</p>;
+        return <p className="Header secondMessage" style={{color: "green"}}>Eligible for submission</p>;
     }
 
 
@@ -101,19 +101,19 @@ const TestPage = () => {
             <Header />
                 <Row>
                     <Col xs={2} style={{backgroundColor: 'black'}}>
-                        <h3> What is the K10 Test </h3>
-                        <st><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></st>
+                        <h3 className="Header sideBar"> What is the K10 Test </h3>
+                        <p className="Header linker"><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></p>
                     </Col>
             <Col>
                 <Container>
 
-                <h1>K10 TEST</h1>
+                <h1 className="Header headings">K10 TEST</h1>
                 <row>
 
 
-                <h4>About how often did you feel tired out for no good reason?</h4>
+                <h4 className="Header supreme">About how often did you feel tired out for no good reason?</h4>
                 {answers[0].map((item, index) => (
-                    <span key={item.id}>
+                    <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -127,9 +127,9 @@ const TestPage = () => {
                 ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel nervous?</h4>
+                    <h4 className="Header supreme">About how often did you feel nervous?</h4>
                     {answers[1].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -142,9 +142,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel so nervous that nothing could calm you down?</h4>
+                    <h4 className="Header supreme">About how often did you feel so nervous that nothing could calm you down?</h4>
                     {answers[2].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -157,9 +157,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel hopeless?</h4>
+                    <h4 className="Header supreme">About how often did you feel hopeless?</h4>
                     {answers[3].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -172,9 +172,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel restless or fidgety?</h4>
+                    <h4 className="Header supreme">About how often did you feel restless or fidgety?</h4>
                     {answers[4].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -187,9 +187,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel so restless you could not sit still?</h4>
+                    <h4 className="Header supreme">About how often did you feel so restless you could not sit still?</h4>
                     {answers[5].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -202,9 +202,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel depressed?</h4>
+                    <h4 className="Header supreme">About how often did you feel depressed?</h4>
                     {answers[6].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -217,9 +217,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel that everything was an effort?</h4>
+                    <h4 className="Header supreme">About how often did you feel that everything was an effort?</h4>
                     {answers[7].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -232,9 +232,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel so sad that nothing could cheer you up?</h4>
+                    <h4 className="Header supreme">About how often did you feel so sad that nothing could cheer you up?</h4>
                     {answers[8].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -247,9 +247,9 @@ const TestPage = () => {
                     ))}
                 </row>
                 <row>
-                    <h4>About how often did you feel worthless?</h4>
+                    <h4 className="Header supreme">About how often did you feel worthless?</h4>
                     {answers[9].map((item, index) => (
-                        <span key={item.id}>
+                        <span className="Header spanner" key={item.id}>
                         <input
                             type="Checkbox"
                             value={item.id}
@@ -261,13 +261,13 @@ const TestPage = () => {
                     </span>
                     ))}
                 </row>
-                    <row>
-                        <h4></h4>
-                    </row>
+                    <Row>
+                        <h4 className="Header supreme"></h4>
+                    </Row>
 
                 <row>
 
-                    <bt><Button onClick={checkSubmission} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</bt>
+                    <p className="Header buttoner"><Button onClick={checkSubmission} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</p>
                 </row>
                     <row>
                         {checkSubmission()}

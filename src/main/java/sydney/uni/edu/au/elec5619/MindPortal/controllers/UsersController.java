@@ -14,6 +14,7 @@ import sydney.uni.edu.au.elec5619.MindPortal.domain.*;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.UserNotFoundException;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.DiagnosisRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.QuestionnaireResponsesRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
@@ -40,6 +41,9 @@ public class UsersController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    QuestionnaireResponsesRepository questionnaireResponsesRepository;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
@@ -136,7 +140,28 @@ public class UsersController {
         return mediaUrls ;
     }
 
-    
+    @GetMapping("/get_questionnaire_responses_for_user/{id}")
+    public @ResponseBody List<String> getQuestionnaireResponsesByUserId(@PathVariable("id") Integer id){
+
+        Set<QuestionnaireResponses> questionnaireResponses = questionnaireResponsesRepository.findAllByUserId(id);
+        final Iterator<QuestionnaireResponses> questionnaireResponsesIterator = questionnaireResponses.iterator();
+
+        List<QuestionnaireResponses> questionnaireResponsesList = new ArrayList<>();
+
+        QuestionnaireResponses toStore;
+        while (questionnaireResponsesIterator.hasNext()){
+            toStore = questionnaireResponsesIterator.next();
+            questionnaireResponsesList.add(toStore);
+        }
+
+        List<String> responses = new ArrayList<>();
+        for(QuestionnaireResponses questionnaireResponses1: questionnaireResponsesList){
+            responses.add(questionnaireResponses1.getResponses());
+        }
+
+        return responses;
+    }
+
     @PutMapping("/{id}/changePassword")
     public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest){
         User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
