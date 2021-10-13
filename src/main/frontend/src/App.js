@@ -16,6 +16,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import TestPage from "./pages/TestPage";
 import DashBoardPage from "./pages/DashBoardPage";
+import TestOptionsPage from "./pages/TestOptionsPage";
 
 function App() {
     return (
@@ -37,6 +38,11 @@ function App() {
                     <Route path="/signup">
                         {/* <h1>Sign up</h1> */}
                         <SignUpPage />
+                    </Route>
+
+                    <Route path="/testOptions">
+                        {/* <h1>Sign up</h1> */}
+                        <TestOptionsPage />
                     </Route>
 
                     <Route path="/test">
