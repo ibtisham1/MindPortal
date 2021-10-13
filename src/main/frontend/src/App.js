@@ -17,6 +17,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ResultPage from "./pages/ResultPage";
 import TestPage from "./pages/TestPage";
 import DashBoardPage from "./pages/DashBoardPage";
+import TestOptionsPage from "./pages/TestOptionsPage";
 
 
 function App() {
@@ -43,6 +44,11 @@ function App() {
                     <Route path="/result">
                         {/* <h1>Sign up</h1> */}
                         <ResultPage />
+                    </Route>
+
+                    <Route path="/testOptions">
+                        {/* <h1>Sign up</h1> */}
+                        <TestOptionsPage />
                     </Route>
 
                     <Route path="/test">

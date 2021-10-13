@@ -1,0 +1,23 @@
+.Op {
+  &.columns {
+    padding-bottom: 350px;
+    color: grey;
+    text-align: center;
+    padding-top: 200px;
+  }
+  &.imager{
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
+  &.texter{
+    padding-bottom: 50px;
+  }
+
+  &.sideBar2{
+    position: fixed;
+    color: grey;
+    text-align: center;
+    padding-top: 200px;
+  }
+}
