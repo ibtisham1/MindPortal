@@ -102,7 +102,7 @@ const TestPage = () => {
                 <Row>
                     <Col xs={2} style={{backgroundColor: 'black'}}>
                         <h3 className="Header sideBar"> What is the K10 Test </h3>
-                        <st className="Header linker"><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></st>
+                        <p className="Header linker"><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></p>
                     </Col>
             <Col>
                 <Container>
@@ -261,13 +261,13 @@ const TestPage = () => {
                     </span>
                     ))}
                 </row>
-                    <row>
+                    <Row>
                         <h4 className="Header supreme"></h4>
-                    </row>
+                    </Row>
 
                 <row>
 
-                    <bt className="Header buttoner"><Button onClick={checkSubmission} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</bt>
+                    <p className="Header buttoner"><Button onClick={checkSubmission} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</p>
                 </row>
                     <row>
                         {checkSubmission()}
