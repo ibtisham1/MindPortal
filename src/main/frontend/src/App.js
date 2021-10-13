@@ -15,15 +15,18 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import ResultPage from "./pages/ResultPage";
+import TestPage from "./pages/TestPage";
+import DashBoardPage from "./pages/DashBoardPage";
+
 
 function App() {
     return (
         <ProvideAuth>
             <Router>
                 <Switch>
-                    {/* Protected routes */}
+                    {/* Private routes, all pages should be a private route, only login/signup are not */}
                     <PrivateRoute path="/dashboard">
-                        <HomePage />
+                        <DashBoardPage />
                     </PrivateRoute>
                     <PrivateRoute path="/profile">
                         <ProfilePage />
@@ -42,10 +45,14 @@ function App() {
                         <ResultPage />
                     </Route>
 
+                    <Route path="/test">
+                        {/* <h1>Sign up</h1> */}
+                        <TestPage />
+                    </Route>
+
+                    {/* Redirect to dashboard when user is logged in */}
                     <Route path="/">
                         <Redirect to="/dashboard" />
-                        {/* <Route path="/">
-                        <HomePage /> */}
                     </Route>
                 </Switch>
             </Router>

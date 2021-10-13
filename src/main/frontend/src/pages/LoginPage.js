@@ -119,6 +119,14 @@ const LoginPage = () => {
                             Submit
                         </Button>
                     </Form>
+                    <Link
+                        to={{
+                            pathname: "/dashboard",
+                            state: { from: from },
+                        }}
+                    >
+                        test button for dashboard UI
+                    </Link>
                     {fail ? (
                         <div style={{ color: "red" }}>Failed to log in</div>
                     ) : null}

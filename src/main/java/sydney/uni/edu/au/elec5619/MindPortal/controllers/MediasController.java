@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.Media;
 import sydney.uni.edu.au.elec5619.MindPortal.exceptions.MediaNotFoundException;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.MediaRepository;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;

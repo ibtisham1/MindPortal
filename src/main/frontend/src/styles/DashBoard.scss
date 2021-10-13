@@ -1,0 +1,17 @@
+.DashBoard {
+    &.page {
+        height: 100vh;
+        padding: 4em;
+    }
+
+    &.card {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    &.flex {
+        height: 100vh;
+        padding: 4em;
+        margin: 4em;
+    }
+}
