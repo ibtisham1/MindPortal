@@ -18,6 +18,8 @@ import ResultPage from "./pages/ResultPage";
 import TestPage from "./pages/TestPage";
 import DashBoardPage from "./pages/DashBoardPage";
 import TestOptionsPage from "./pages/TestOptionsPage";
+import AudioPage from "./pages/AudioPage";
+
 
 
 function App() {
@@ -44,6 +46,10 @@ function App() {
                     <Route path="/result">
                         {/* <h1>Sign up</h1> */}
                         <ResultPage />
+                    </Route>
+                    <Route path="/audio">
+                        {/* <h1>Sign up</h1> */}
+                        <AudioPage />
                     </Route>
 
                     <Route path="/testOptions">
