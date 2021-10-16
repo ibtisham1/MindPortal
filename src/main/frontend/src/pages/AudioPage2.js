@@ -77,7 +77,7 @@ const AudioPage2 = () => {
                     </Col>
                     <Col className="Audio2 result">
                         <Card className="Audio2 card">
-                            <Card.Img id="card2" variant="top" src="https://i.imgur.com/1QYu9wS.gif" className="Audio2 gif"/>
+                            <Card.Img id="card2" variant="top" src="https://i.imgur.com/F1yv054.jpg" className="Audio2 gif"/>
                             <Card.Body>
                                 <Card.Title>
                                     Alpha Wave Binaural Beats
@@ -92,7 +92,7 @@ const AudioPage2 = () => {
                     </Col>
                     <Col className="Audio2 result">
                         <Card className="Audio2 card">
-                            <Card.Img id="card3" variant="top" src="https://i.imgur.com/Sk8uISa.gif" className="Audio2 gif"/>
+                            <Card.Img id="card3" variant="top" src="https://i.imgur.com/7atDpKE.jpg" className="Audio2 gif"/>
                             <Card.Body>
                                 <Card.Title>
                                     Alpha Wave Binaural Beats
