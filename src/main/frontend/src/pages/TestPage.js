@@ -5,14 +5,33 @@ import {Col, Container, Row,Carousel, Button} from "react-bootstrap";
 import { useState } from "react";
 import ReactDOM from 'react-dom';
 import "../styles/TestForm.scss";
-import { saveResponses } from "../services/saveResponses";
+import { SaveResponses } from "../services/saveResponses";
+import {useLocation} from "react-router";
+import axiosConfig from "../services/axiosConfig";
 
 
 
 
 const TestPage = () => {
 
-    let resp = saveResponses();
+
+    let location = useLocation();
+    const auth = useAuth();
+    const user = auth.user;
+
+    let { from } = location.state || { from: { pathname: "/" } };
+
+    const tokenStorage = localStorage.getItem("jwt-token")
+        ? localStorage.getItem("jwt-token")
+        : "";
+
+    const [token, setToken] = useState(tokenStorage || null);
+
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    };
+
+    let resp = SaveResponses();
     const questionIDs = [[
         { id: 1, name: "None of the time", isChecked: false },
         { id: 2, name: "A little of the time", isChecked: false },
@@ -82,7 +101,37 @@ const TestPage = () => {
 
     function checkSubmission(num){
         //resp.updateResp();
-        saveResponses().putResponse();
+        //SaveResponses().putResponse();
+
+        axiosConfig
+            .post(
+                "/questionnaireResponses",
+                {
+                    responses: "frontendinserttest",
+                    user: {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email
+
+                    }
+
+                },config
+            )
+            .then((result) => {
+                console.log(result);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+
+
+
+
+
+        /////////////////////////////////
 
         let counter=0;
         for(let i=0;i<questionIDs.length;i++){

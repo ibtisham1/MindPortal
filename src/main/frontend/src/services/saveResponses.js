@@ -1,19 +1,30 @@
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 import axiosConfig from "../services/axiosConfig";
+import {useLocation} from "react-router";
+import {useAuth} from "./useAuth";
 
 
 
-export const saveResponses = () => {
+export const SaveResponses = () => {
+
+
+
     //return useContext(respContext);
-    function putResponse() {
+    function PutResponse() {
+        let location = useLocation();
+        const auth = useAuth();
+        const user = auth.user;
+
+        let { from } = location.state || { from: { pathname: "/" } };
         console.log("i am here");
         axiosConfig
             .put(
                 "/questionnaireResponses",
                 {
-                    questionnaireResponsesId: 43,
-                    response: "aaaaaa"
+                    responses: "frontendinsert",
+                    user: user
+
                 }
             )
             .then((result) => {
@@ -25,8 +36,8 @@ export const saveResponses = () => {
             });
     }
     return {
-        putResponse,
+        putResponse: PutResponse,
     };
 };
 
-export default saveResponses;
+export default SaveResponses;
