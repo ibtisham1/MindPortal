@@ -26,6 +26,9 @@ public class QuestionnaireResponsesController {
 
     @PostMapping
     public ResponseEntity<QuestionnaireResponses> addQuestionnaireResponses(@Valid @RequestBody QuestionnaireResponses newQuestionnaireResponses){
+
+        System.out.println(newQuestionnaireResponses.getUser());
+
         questionnaireResponsesRepo.save(newQuestionnaireResponses);
         return new ResponseEntity<>(newQuestionnaireResponses, HttpStatus.CREATED);
     }

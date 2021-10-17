@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@JsonIgnoreProperties({"password", "diagnoses", "questionnaireResponses"})
+@JsonIgnoreProperties({"diagnoses", "questionnaireResponses"})
 @Entity
 @Table(name = "user")
 public class User {
