@@ -29,6 +29,7 @@ public class CovidController {
         return new ResponseEntity<>(newCovid, HttpStatus.CREATED);
     }
 
+
 //    @GetMapping("/{id}")
 //    public ResponseEntity<Diagnosis> getDiagnosisById(@PathVariable("id") Integer id){
 //        Optional<Diagnosis> optionalDiagnosis = diagnosisRepo.findById(id);
