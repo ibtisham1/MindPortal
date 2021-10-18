@@ -5,8 +5,7 @@ import {Col, Container, Row,Carousel, Button} from "react-bootstrap";
 import { useState } from "react";
 import ReactDOM from 'react-dom';
 import "../styles/TestForm.scss";
-import { SaveResponses } from "../services/saveResponses";
-import {useLocation} from "react-router";
+import { useHistory, useLocation } from "react-router";
 import axiosConfig from "../services/axiosConfig";
 
 
@@ -16,22 +15,16 @@ const TestPage = () => {
 
 
     let location = useLocation();
+    let history = useHistory();
     const auth = useAuth();
     const user = auth.user;
 
     let { from } = location.state || { from: { pathname: "/" } };
 
-    const tokenStorage = localStorage.getItem("jwt-token")
-        ? localStorage.getItem("jwt-token")
-        : "";
-
-    const [token, setToken] = useState(tokenStorage || null);
-
     const config = {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${auth.token}` },
     };
 
-    let resp = SaveResponses();
     const questionIDs = [[
         { id: 1, name: "None of the time", isChecked: false },
         { id: 2, name: "A little of the time", isChecked: false },
@@ -100,14 +93,84 @@ const TestPage = () => {
 
 
     function checkSubmission(num){
-        //resp.updateResp();
-        //SaveResponses().putResponse();
 
+        let counter=0;
+        for(let i=0;i<questionIDs.length;i++){
+            answers[i].map((item) => {
+                if (item.isChecked==true){
+                    counter++;
+                }
+            });
+        }
+        if(num=="1"){
+            if(!(counter<10)){
+                resultCalculation();
+            }
+
+        }
+        if(num=="0") {
+            if (counter < 10) {
+                return <p className="Header message" style={{color: "red"}}>Please fill up all the questions in the
+                    form</p>;
+            }
+            return <p className="Header secondMessage" style={{color: "green"}}>Eligible for submission</p>;
+        }
+
+    }
+    function resultCalculation(){
+        const allAnswers=[]; //All the answers of the questionnaire
+        for(let i=0;i<questionIDs.length;i++){
+            answers[i].map((item) => {
+                if (item.isChecked==true){
+                    allAnswers.push(item.id);
+                }
+            });
+        }
+        let finalAnswer=0; //the final calculation
+        for(let i=0;i<allAnswers.length;i++){
+            finalAnswer+=allAnswers[i];
+        }
+        let stringAnswer=finalAnswer.toString();
+        let diagnosis;
+        if((finalAnswer>=10) &&(finalAnswer<=19)){
+            diagnosis="well";
+        }
+        else if ((finalAnswer>=20) &&(finalAnswer<=24)){
+            diagnosis="mild";
+        }
+        else if ((finalAnswer>=25) &&(finalAnswer<=29)){
+            diagnosis="moderate";
+        }
+        else{
+            diagnosis="severe";
+        }
         axiosConfig
             .post(
                 "/questionnaireResponses",
                 {
-                    responses: "frontendinserttest",
+                    responses: stringAnswer,
+                    user: {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email
+
+                    }
+
+                },config
+            )
+            .then((result) => {
+                console.log(result);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        axiosConfig
+            .post(
+                "/diagnoses",
+                {
+                    diagnosisType: diagnosis,
                     user: {
                         id: user.id,
                         firstName: user.firstName,
@@ -126,54 +189,8 @@ const TestPage = () => {
                 console.log(err);
             });
 
+        history.push("/result");
 
-
-
-
-
-        /////////////////////////////////
-
-        let counter=0;
-        for(let i=0;i<questionIDs.length;i++){
-            answers[i].map((item) => {
-                if (item.isChecked==true){
-                    counter++;
-                }
-            });
-        }
-        //console.log("aaa");
-        if(num=="1"){
-            //console.log("aaa");
-            if(!(counter<10)){
-                resultCalculation();
-            }
-
-        }
-        if(num=="0") {
-            if (counter < 10) {
-                return <p className="Header message" style={{color: "red"}}>Please fill up all the questions in the
-                    form</p>;
-            }
-            return <p className="Header secondMessage" style={{color: "green"}}>Eligible for submission</p>;
-        }
-
-    }
-    function resultCalculation(){
-
-        const allAnswers=[]; //All the answers of the questionnaire
-        for(let i=0;i<questionIDs.length;i++){
-            answers[i].map((item) => {
-                if (item.isChecked==true){
-                    //console.log(item.id);
-                    allAnswers.push(item.id);
-                }
-            });
-        }
-        let finalAnswer=0; //the final calculation
-        for(let i=0;i<allAnswers.length;i++){
-            finalAnswer+=allAnswers[i];
-        }
-        console.log(finalAnswer);
 
 
 

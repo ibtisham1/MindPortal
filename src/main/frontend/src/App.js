@@ -18,7 +18,6 @@ import ResultPage from "./pages/ResultPage";
 import TestPage from "./pages/TestPage";
 import DashBoardPage from "./pages/DashBoardPage";
 import TestOptionsPage from "./pages/TestOptionsPage";
-//import {ProvideResp} from "./services/saveResponses";
 
 
 function App() {
