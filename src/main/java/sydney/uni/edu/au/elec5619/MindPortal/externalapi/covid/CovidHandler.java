@@ -27,11 +27,7 @@ public class CovidHandler {
 
         List<CovidLocationDetails> formatted = new ArrayList<>();
         for(int i = 0; i<data.getData().getMonitor().size()-2; i++ ){
-            System.out.println(data.getData().getMonitor().get(i).getVenue());
-            System.out.println(data.getData().getMonitor().get(i+1).getVenue());
 
-            System.out.println(!(data.getData().getMonitor().get(i).getVenue().equals(data.getData().getMonitor().get(i+1).getVenue())));
-            System.out.println();
             if(!(data.getData().getMonitor().get(i).getVenue().equals(data.getData().getMonitor().get(i+1).getVenue()))){
                 formatted.add(data.getData().getMonitor().get(i));
             }
