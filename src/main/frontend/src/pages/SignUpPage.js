@@ -22,9 +22,11 @@ const SignUpPage = () => {
 
     const findErrors = () => {
         const errors = {};
+
         if (firstName === "") errors.firstName = "First name cannot be blank";
         if (lastName === "") errors.lastName = "Last name cannot be blank";
         if (email === "") errors.email = "Username cannot be blank";
+        else if (typeof email !== String) errors.email = "Enter only string";
         else if (email.length < 3) errors.email = "Enter a valid email";
         if (password === "") errors.password = "Password cannot be blank";
         else if (password.length < 4)
