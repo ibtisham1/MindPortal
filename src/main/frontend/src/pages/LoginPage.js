@@ -28,8 +28,6 @@ const LoginPage = () => {
         const errors = {};
         if (email === "") errors.email = "Email cannot be blank";
         else if (email.length < 3) errors.email = "Enter a valid email";
-        else if (typeof email !== typeof string)
-            errors.email = "Enter only string";
         if (password === "") errors.password = "Password cannot be blank";
 
         return errors;

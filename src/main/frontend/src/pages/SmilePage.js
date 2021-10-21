@@ -140,59 +140,6 @@ const SmilePage = () => {
                 console.log(err);
             });
 
-        // store this in the backend and retrieve for security.
-        // let key = "6e4ccc74ec694dce89968a7db92f9660";
-        // const headers = {
-        //     "Content-Type": "application/octet-stream",
-        //     "Ocp-Apim-Subscription-Key": `${key}`,
-        // };
-
-        // let url =
-        //     "https://mindportal.cognitiveservices.azure.com/face/v1.0/detect";
-
-        // axios
-        //     .post(url, toSend, { headers: headers, params: params })
-        //     .then((result) => {
-        //         // console.log(result);
-        //         console.log(result.data[0]);
-        //         let imgResult = result.data[0];
-
-        //         let txt = document.createElement("p");
-        //         txt.id = "image-result";
-        //         let str;
-
-        //         if (imgResult === undefined) {
-        //             str = "please try again";
-        //         } else {
-        //             let smileValue = Number(imgResult.faceAttributes.smile);
-        //             console.log("smile value: " + smileValue);
-
-        //             if (smileValue < 0.85 && smileValue >= 0.5) {
-        //                 str = "Almost there, little more smile";
-        //             }
-
-        //             if (smileValue < 0.5) {
-        //                 // more smile
-        //                 str = "more smile!";
-        //             }
-
-        //             if (smileValue >= 0.85) {
-        //                 // passed
-        //                 str = `Congratulations, smile value: ${smileValue}`;
-        //             }
-        //         }
-
-        //         txt.innerHTML = `${str}`;
-        //         let old = document.getElementById("image-result");
-        //         if (old == null) {
-        //             imageResultRef.current.appendChild(txt);
-        //         } else {
-        //             imageResultRef.current.replaceChild(txt, old);
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
     };
 
     const stop = (e) => {
