@@ -27,8 +27,6 @@ const LoginPage = () => {
         const errors = {};
         if (email === "") errors.email = "Email cannot be blank";
         else if (!isValidEmail()) errors.email = "Enter a valid email";
-        else if (email.length < 3) errors.email = "Enter a valid email";
-
         if (password === "") errors.password = "Password cannot be blank";
 
         return errors;

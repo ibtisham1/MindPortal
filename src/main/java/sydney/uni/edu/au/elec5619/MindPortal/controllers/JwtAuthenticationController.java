@@ -73,7 +73,7 @@ public class JwtAuthenticationController {
     @RequestMapping(value="/register")
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception{
-        
+
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 new LengthRule(6, 30),
                 new UppercaseCharacterRule(1),
@@ -89,7 +89,23 @@ public class JwtAuthenticationController {
 
         try {
             User newUser = userDetailsService.save(user);
-            return ResponseEntity.ok(newUser);
+
+            authenticate(newUser.getEmail(), user.getPassword());
+
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+
+            Map<String, Object> response = new HashMap<String, Object>();
+
+            if(newUser != null){
+                response.put("user", newUser);
+                response.put("token", new JwtResponse(token));
+            } else {
+                System.out.println("Somehow we got here and the user is null....");
+            }
+
+
+            return ResponseEntity.ok(response);
         }catch (Exception e){
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error creating user");
@@ -99,6 +115,7 @@ public class JwtAuthenticationController {
 
     private void authenticate(String email, String password) throws Exception {
         try {
+            System.out.println("email: " + email + " password: " + password);
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
         } catch(DisabledException e){

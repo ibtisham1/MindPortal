@@ -57,7 +57,7 @@ const SignUpPage = () => {
     };
 
     const success = () => {
-        history.push("/login");
+        history.push("/dashboard");
     };
 
     const failure = () => {
