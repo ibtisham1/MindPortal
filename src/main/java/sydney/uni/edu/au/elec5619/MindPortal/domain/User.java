@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@JsonIgnoreProperties({ "diagnoses", "questionnaireResponses"})
+@JsonIgnoreProperties({"diagnoses", "questionnaireResponses"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -82,7 +82,6 @@ public class User {
         this.email = email;
     }
 
-    @JsonIgnore
     public String getPassword() {
         return password;
     }

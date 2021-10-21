@@ -5,11 +5,26 @@ import {Col, Container, Row,Carousel, Button} from "react-bootstrap";
 import { useState } from "react";
 import ReactDOM from 'react-dom';
 import "../styles/TestForm.scss";
+import { useHistory, useLocation } from "react-router";
+import axiosConfig from "../services/axiosConfig";
 
 
 
 
 const TestPage = () => {
+
+
+    let location = useLocation();
+    let history = useHistory();
+    const auth = useAuth();
+    const user = auth.user;
+
+    let { from } = location.state || { from: { pathname: "/" } };
+
+    const config = {
+        headers: { Authorization: `Bearer ${auth.token}` },
+    };
+
     const questionIDs = [[
         { id: 1, name: "None of the time", isChecked: false },
         { id: 2, name: "A little of the time", isChecked: false },
@@ -77,7 +92,8 @@ const TestPage = () => {
 
 
 
-    function checkSubmission(){
+    function checkSubmission(num){
+
         let counter=0;
         for(let i=0;i<questionIDs.length;i++){
             answers[i].map((item) => {
@@ -86,10 +102,98 @@ const TestPage = () => {
                 }
             });
         }
-        if(counter<10){
-            return <p className="Header message" style={{color: "red"}}>Please fill up all the questions in the form</p>;
+        if(num=="1"){
+            if(!(counter<10)){
+                resultCalculation();
+            }
+
         }
-        return <p className="Header secondMessage" style={{color: "green"}}>Eligible for submission</p>;
+        if(num=="0") {
+            if (counter < 10) {
+                return <p className="Header message" style={{color: "red"}}>Please fill up all the questions in the
+                    form</p>;
+            }
+            return <p className="Header secondMessage" style={{color: "green"}}>Eligible for submission</p>;
+        }
+
+    }
+    function resultCalculation(){
+        const allAnswers=[]; //All the answers of the questionnaire
+        for(let i=0;i<questionIDs.length;i++){
+            answers[i].map((item) => {
+                if (item.isChecked==true){
+                    allAnswers.push(item.id);
+                }
+            });
+        }
+        let finalAnswer=0; //the final calculation
+        for(let i=0;i<allAnswers.length;i++){
+            finalAnswer+=allAnswers[i];
+        }
+        let stringAnswer=finalAnswer.toString();
+        let diagnosis;
+        if((finalAnswer>=10) &&(finalAnswer<=19)){
+            diagnosis="well";
+        }
+        else if ((finalAnswer>=20) &&(finalAnswer<=24)){
+            diagnosis="mild";
+        }
+        else if ((finalAnswer>=25) &&(finalAnswer<=29)){
+            diagnosis="moderate";
+        }
+        else{
+            diagnosis="severe";
+        }
+        axiosConfig
+            .post(
+                "/questionnaireResponses",
+                {
+                    responses: stringAnswer,
+                    user: {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email
+
+                    }
+
+                },config
+            )
+            .then((result) => {
+                console.log(result);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        axiosConfig
+            .post(
+                "/diagnoses",
+                {
+                    diagnosisType: diagnosis,
+                    user: {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email
+
+                    }
+
+                },config
+            )
+            .then((result) => {
+                console.log(result);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        history.push("/result");
+
+
+
+
     }
 
 
@@ -267,10 +371,10 @@ const TestPage = () => {
 
                 <row>
 
-                    <p className="Header buttoner"><Button onClick={checkSubmission} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</p>
+                    <p className="Header buttoner"><Button onClick={() => checkSubmission("1")} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</p>
                 </row>
                     <row>
-                        {checkSubmission()}
+                        {checkSubmission("0")}
                     </row>
                 </Container>
             </Col>
