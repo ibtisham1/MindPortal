@@ -49,7 +49,6 @@ public class JwtAuthenticationController {
     @RequestMapping(value="/authenticate")
     @PostMapping
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception{
-        System.out.println("HERE");
         System.out.println(authenticationRequest.getUsername() + " "+  authenticationRequest.getPassword());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
@@ -72,6 +71,8 @@ public class JwtAuthenticationController {
     @RequestMapping(value="/register")
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception{
+
+
         try {
             User newUser = userDetailsService.save(user);
             return ResponseEntity.ok(newUser);

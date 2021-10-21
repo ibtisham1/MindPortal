@@ -24,17 +24,18 @@ const LoginPage = () => {
     let { from } = location.state || { from: { pathname: "/" } };
 
     const findErrors = () => {
-        console.log(typeof email);
-
         const errors = {};
         if (email === "") errors.email = "Email cannot be blank";
+        else if (!isValidEmail()) errors.email = "Enter a valid email";
         else if (email.length < 3) errors.email = "Enter a valid email";
+
         if (password === "") errors.password = "Password cannot be blank";
 
         return errors;
     };
 
-    let login = () => {
+    let login = (e) => {
+        e.preventDefault();
         console.log(`email: ${email} password: ${password}`);
         // console.log(history);
         console.log(location);
@@ -47,6 +48,12 @@ const LoginPage = () => {
             setLoading(true);
             auth.signin(email, password, success, failure);
         }
+    };
+
+    const isValidEmail = () => {
+        return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)
+            ? true
+            : false;
     };
 
     // useEffect(() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useAuth } from "../services/useAuth";
@@ -29,7 +29,7 @@ const SignUpPage = () => {
         if (firstName === "") errors.firstName = "First name cannot be blank";
         if (lastName === "") errors.lastName = "Last name cannot be blank";
         if (email === "") errors.email = "Username cannot be blank";
-        else if (email.length < 3) errors.email = "Enter a valid email";
+        else if (!isValidEmail()) errors.email = "Enter a valid email";
         if (password === "") errors.password = "Password cannot be blank";
         else if (password.length < 4)
             errors.password = "Password should be a minimum of 4 characters";
@@ -37,7 +37,14 @@ const SignUpPage = () => {
         return errors;
     };
 
-    let signup = () => {
+    const isValidEmail = () => {
+        return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)
+            ? true
+            : false;
+    };
+
+    let signup = (e) => {
+        e.preventDefault();
         console.log(`email: ${email} password: ${password}`);
         // going back two as we will always route to /login before /signup.
 
