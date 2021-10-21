@@ -1,5 +1,6 @@
 package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 
+import org.passay.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +73,19 @@ public class JwtAuthenticationController {
     @RequestMapping(value="/register")
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception{
+        
+        PasswordValidator validator = new PasswordValidator(Arrays.asList(
+                new LengthRule(6, 30),
+                new UppercaseCharacterRule(1),
+                new DigitCharacterRule(1)
 
+        ));
+
+        RuleResult result = validator.validate(new PasswordData(user.getPassword()));
+
+        if(!result.isValid()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insufficient password strength");
+        }
 
         try {
             User newUser = userDetailsService.save(user);

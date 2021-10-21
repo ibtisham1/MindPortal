@@ -1,13 +1,14 @@
 package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@JsonIgnoreProperties({"password", "diagnoses", "questionnaireResponses"})
+@JsonIgnoreProperties({ "diagnoses", "questionnaireResponses"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -25,6 +26,7 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "password is mandatory")
     private String password;
 

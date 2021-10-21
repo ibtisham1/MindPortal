@@ -176,6 +176,14 @@ const SignUpPage = () => {
                                         }
                                         isInvalid={!!errors.password}
                                     />
+                                    <Form.Text
+                                        className="text-muted"
+                                        style={{ fontStyle: "italic" }}
+                                    >
+                                        Password must be longer than 6
+                                        characters, contain at least 1 uppercase
+                                        character and at least 1 digit.
+                                    </Form.Text>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.password}
                                     </Form.Control.Feedback>
