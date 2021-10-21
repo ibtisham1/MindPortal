@@ -86,6 +86,12 @@ const PasswordChangeTab = (props) => {
         <div className="reset-password">
             <Form>
                 <Row>
+                    <p>
+                        To change your password simply enter your current
+                        password and what you would like to change it to.
+                    </p>
+                </Row>
+                <Row>
                     <Col sm={6}>
                         {" "}
                         {pageState === STATES.LOADING ? (

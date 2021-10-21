@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 // import Header from "../components/Header";
 import useAuth from "../../services/useAuth";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import "../../styles/Profile.scss";
+import CheckMarkSVG from "../CheckMarkSVG";
+import { motion } from "framer-motion";
+import CrossSVG from "../CrossSVG";
+
+const STATES = {
+    LOADING: "LOADING",
+    SUCCESS: "SUCCESS",
+    FAILURE: "FAILURE",
+    DEFAULT: "DEFAULT",
+};
 
 const ProfileEditTab = (props) => {
     const [loading, setLoading] = useState(false);
@@ -14,32 +24,34 @@ const ProfileEditTab = (props) => {
     const [lastName, setLastName] = useState(user.lastName || "");
     const [errors, setErrors] = useState({});
     const [isEnabled, setIsEnabled] = useState(true);
+    const [pageState, setPageState] = useState(STATES.DEFAULT);
 
     useEffect(() => {
-        if (loading) {
+        if (pageState === STATES.LOADING) {
             setIsEnabled(false);
         } else {
             setIsEnabled(true);
         }
-    }, [loading]);
+    }, [pageState]);
 
     const update = () => {
         const newErrors = findErrors();
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
-            setLoading(true);
+            setErrors({});
+            setPageState(STATES.LOADING);
             updateDetails(firstName, lastName, email, onSuccess, onFailure);
         }
     };
 
     const onSuccess = () => {
-        setLoading(false);
+        setPageState(STATES.SUCCESS);
         console.log("success");
     };
 
     const onFailure = () => {
-        setLoading(false);
+        setPageState(STATES.FAILURE);
         console.log("failure");
     };
 
@@ -58,68 +70,134 @@ const ProfileEditTab = (props) => {
         return errors;
     };
 
-    function isValidEmailFormat() {
-        return false;
-    }
-
     return (
         <div className="edit form">
-            <Form.Group as={Row} className="edit form__row align-items-center">
-                <Col sm={2}>
-                    <Form.Label className="edit form__label">
-                        First Name
-                    </Form.Label>
+            <Row>
+                <p>Make any edits to your profile information here.</p>
+            </Row>
+            <Row>
+                <Col sm={6}>
+                    {pageState === STATES.LOADING ? (
+                        <Spinner animation="border" variant="info" size="lg" />
+                    ) : (
+                        <>
+                            <Form.Group
+                                as={Row}
+                                className="edit form__row align-items-center"
+                            >
+                                <Col sm={3}>
+                                    <Form.Label className="edit form__label">
+                                        First Name
+                                    </Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Control
+                                        className="edit form__input"
+                                        type="text"
+                                        placeholder={firstName}
+                                        onChange={(e) =>
+                                            setFirstName(e.target.value)
+                                        }
+                                        isInvalid={!!errors.firstName}
+                                        value={firstName}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.firstName}
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Form.Group>
+                            <Form.Group
+                                as={Row}
+                                className="edit form__row align-items-center"
+                            >
+                                <Col sm={3}>
+                                    <Form.Label className="edit form__label">
+                                        Last Name
+                                    </Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder={lastName}
+                                        onChange={(e) =>
+                                            setLastName(e.target.value)
+                                        }
+                                        isInvalid={!!errors.lastName}
+                                        value={lastName}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.lastName}
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Form.Group>
+                            <Form.Group
+                                as={Row}
+                                className="edit form__row align-items-center"
+                            >
+                                <Col sm={3}>
+                                    <Form.Label className="edit form__label">
+                                        Email
+                                    </Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder={email}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        isInvalid={!!errors.email}
+                                        value={email}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.email}
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Form.Group>
+                        </>
+                    )}
                 </Col>
-                <Col sm={{ span: 3 }}>
-                    <Form.Control
-                        className="edit form__input"
-                        type="text"
-                        placeholder={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        isInvalid={!!errors.firstName}
-                        value={firstName}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.firstName}
-                    </Form.Control.Feedback>
+                <Col sm={6} className="align-self-center">
+                    {pageState === STATES.SUCCESS && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.75 }}
+                        >
+                            <CheckMarkSVG />
+                            <div
+                                style={{
+                                    display: "inline-block",
+                                    marginLeft: 10,
+                                    color: "#0c3",
+                                }}
+                            >
+                                Successful change.
+                            </div>
+                        </motion.div>
+                    )}
+                    {pageState === STATES.FAILURE && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.75 }}
+                        >
+                            <CrossSVG />
+                            <div
+                                style={{
+                                    display: "inline-block",
+                                    marginLeft: 10,
+                                    color: "#F36363",
+                                }}
+                            >
+                                Unsuccessful change. Check password and try
+                                again.
+                            </div>
+                        </motion.div>
+                    )}
                 </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="edit form__row align-items-center">
-                <Col sm={2}>
-                    <Form.Label className="edit form__label">
-                        Last Name
-                    </Form.Label>
-                </Col>
-                <Col sm={{ span: 3 }}>
-                    <Form.Control
-                        type="text"
-                        placeholder={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        isInvalid={!!errors.lastName}
-                        value={lastName}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.lastName}
-                    </Form.Control.Feedback>
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="edit form__row align-items-center">
-                <Col sm={2}>
-                    <Form.Label className="edit form__label">Email</Form.Label>
-                </Col>
-                <Col sm={{ span: 3 }}>
-                    <Form.Control
-                        type="email"
-                        placeholder={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        isInvalid={!!errors.email}
-                        value={email}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.email}
-                    </Form.Control.Feedback>
-                </Col>
-            </Form.Group>
+            </Row>
+
             <div style={{ marginTop: "1rem" }}>
                 {/* {loading ? <div>Loading</div> : ""} */}
                 <Button onClick={update} disabled={!isEnabled}>
