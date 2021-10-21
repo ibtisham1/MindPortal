@@ -4,6 +4,7 @@ import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import "../../styles/Profile.scss";
 import CheckMarkSVG from "../CheckMarkSVG";
 import { motion } from "framer-motion";
+import CrossSVG from "../CrossSVG";
 
 const STATES = {
     LOADING: "LOADING",
@@ -16,10 +17,8 @@ const PasswordChangeTab = (props) => {
     const user = props.user;
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const auth = useAuth();
     const { changePassword } = auth;
-    const [userFeedback, setUserFeedback] = useState(null);
     const [isEnabled, setIsEnabled] = useState(true);
     const [errors, setErrors] = useState({});
 
@@ -57,13 +56,13 @@ const PasswordChangeTab = (props) => {
     };
 
     const savePassword = () => {
-        setUserFeedback(null);
         setPageState(STATES.DEFAULT);
         const newErrors = findErrors();
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
             // setLoading(true);
+            setErrors({});
             setPageState(STATES.LOADING);
             changePassword(oldPassword, newPassword, onSuccess, onFailure);
         }
@@ -73,18 +72,14 @@ const PasswordChangeTab = (props) => {
         // setLoading(false);
         setPageState(STATES.SUCCESS);
         // display a success message
-        setUserFeedback("Successful change");
         setNewPassword("");
         setOldPassword("");
-        console.log("YAY changed");
     };
 
     const onFailure = () => {
         // setLoading(false);
         setPageState(STATES.FAILURE);
         // set any errors
-        setUserFeedback("Unsuccesful change");
-        console.log("NOPE");
     };
 
     return (
@@ -152,24 +147,48 @@ const PasswordChangeTab = (props) => {
                         )}
                     </Col>
 
-                    <Col sm={2}>
+                    <Col sm={6}>
                         {pageState === STATES.SUCCESS && (
-                            <motion.div>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.75 }}
+                            >
                                 <CheckMarkSVG />
-                                Sucessful change
+                                <div
+                                    style={{
+                                        display: "inline-block",
+                                        marginLeft: 10,
+                                        color: "#0c3",
+                                    }}
+                                >
+                                    Successful change.
+                                </div>
                             </motion.div>
                         )}
                         {pageState === STATES.FAILURE && (
-                            <motion.div>
-                                <CheckMarkSVG />
-                                Unsuccessful change.
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.75 }}
+                            >
+                                <CrossSVG />
+                                <div
+                                    style={{
+                                        display: "inline-block",
+                                        marginLeft: 10,
+                                        color: "#F36363",
+                                    }}
+                                >
+                                    Unsuccessful change. Check password and try
+                                    again.
+                                </div>
                             </motion.div>
                         )}
                     </Col>
                 </Row>
 
                 <Button onClick={savePassword}>Confirm</Button>
-                <div>{userFeedback ?? <div>{userFeedback}</div>}</div>
             </Form>
         </div>
     );
