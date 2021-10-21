@@ -31,8 +31,13 @@ const SignUpPage = () => {
         if (email === "") errors.email = "Username cannot be blank";
         else if (!isValidEmail()) errors.email = "Enter a valid email";
         if (password === "") errors.password = "Password cannot be blank";
-        else if (password.length < 4)
-            errors.password = "Password should be a minimum of 4 characters";
+        else if (password.length < 6)
+            errors.password = "Password should be a minimum of 6 characters";
+        else if (!hasUpperCase()) {
+            errors.password = "Password must contain 1 uppercase character";
+        } else if (!hasDigit()) {
+            errors.password = "Password must contain 1 digit";
+        }
 
         return errors;
     };
@@ -41,6 +46,14 @@ const SignUpPage = () => {
         return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)
             ? true
             : false;
+    };
+
+    const hasUpperCase = () => {
+        return /[A-Z]/.test(password) ? true : false;
+    };
+
+    const hasDigit = () => {
+        return /\d/.test(password) ? true : false;
     };
 
     let signup = (e) => {
@@ -180,7 +193,7 @@ const SignUpPage = () => {
                                         className="text-muted"
                                         style={{ fontStyle: "italic" }}
                                     >
-                                        Password must be longer than 6
+                                        Password must be longer than 5
                                         characters, contain at least 1 uppercase
                                         character and at least 1 digit.
                                     </Form.Text>
