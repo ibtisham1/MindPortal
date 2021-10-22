@@ -42,13 +42,14 @@ const DashBoardPage = () => {
                     <p></p>
                     <h2>Hello {user.firstName}</h2>
                     <p></p>
+                    <h4>(Note: It is essential for you to have done at least one K-10 test! Please take one if you have not.)</h4>
+                    <p></p>
                     <h3>
                         <Card>
                             <Card.Body>
                                 <Card.Title>Mental Health Test</Card.Title>
                                 <Card.Title>
-                                    You have not taken a mental health test yet,
-                                    click 'Take Test' to continue
+                                    Click 'Take Test' to initiate the K-10 mental health test
                                 </Card.Title>
                                 <Link to="/testOptions" className="btn btn-primary">Take Test</Link>
                             </Card.Body>
