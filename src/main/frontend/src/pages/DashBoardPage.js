@@ -39,7 +39,9 @@ const DashBoardPage = () => {
 
                 <Col className="DashBoard card">
                     <h1>Welcome to Dashboard</h1>
+                    <p></p>
                     <h2>Hello {user.firstName}</h2>
+                    <p></p>
                     <h3>
                         <Card>
                             <Card.Body>
@@ -52,7 +54,9 @@ const DashBoardPage = () => {
                             </Card.Body>
                         </Card>
                     </h3>
+                    <p></p>
                     <h4>Suggested Actions</h4>
+                    <p></p>
                     <h3>
                         <Card>
                             <Card.Body>
@@ -61,6 +65,7 @@ const DashBoardPage = () => {
                                 <Button variant={"secondary"}>Go</Button>
                             </Card.Body>
                         </Card>
+                        <p></p>
                         <Card>
                             <Card.Body>
                                 <Card.Title>Moments To Appreciate</Card.Title>
@@ -68,13 +73,13 @@ const DashBoardPage = () => {
                                 <Button variant={"secondary"}>Go</Button>
                             </Card.Body>
                         </Card>
-                        <Card>
-                            <Card.Body>
-                                <Card.Title>Other Suggestion</Card.Title>
-                                <Card.Title>feature description ...</Card.Title>
-                                <Button variant={"secondary"}>Go</Button>
-                            </Card.Body>
-                        </Card>
+                        {/*<Card>*/}
+                        {/*    <Card.Body>*/}
+                        {/*        <Card.Title>Other Suggestion</Card.Title>*/}
+                        {/*        <Card.Title>feature description ...</Card.Title>*/}
+                        {/*        <Button variant={"secondary"}>Go</Button>*/}
+                        {/*    </Card.Body>*/}
+                        {/*</Card>*/}
                     </h3>
                 </Col>
             </Row>
