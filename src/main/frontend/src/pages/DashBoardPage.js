@@ -48,9 +48,11 @@ const DashBoardPage = () => {
                         <Card>
                             <Card.Body>
                                 <Card.Title>Mental Health Test</Card.Title>
+                                <p></p>
                                 <Card.Title>
                                     Click 'Take Test' to initiate the K-10 mental health test
                                 </Card.Title>
+                                <p></p>
                                 <Link to="/testOptions" className="btn btn-primary">Take Test</Link>
                             </Card.Body>
                         </Card>
@@ -62,15 +64,19 @@ const DashBoardPage = () => {
                         <Card>
                             <Card.Body>
                                 <Card.Title>Moments To Appreciate</Card.Title>
-                                <Card.Title>feature description ...</Card.Title>
+                                <p></p>
+                                <Card.Title>Videos of cute animals to brighten up your day!</Card.Title>
+                                <p></p>
                                 <Button variant={"secondary"}>Go</Button>
                             </Card.Body>
                         </Card>
                         <p></p>
                         <Card>
                             <Card.Body>
-                                <Card.Title>Moments To Appreciate</Card.Title>
-                                <Card.Title>feature description ...</Card.Title>
+                                <Card.Title>Mindfulness Space</Card.Title>
+                                <p></p>
+                                <Card.Title>Scientifically researched binaural beats with Alpha wave to relax yourself, better result when used with earphones!</Card.Title>
+                                <p></p>
                                 <Button variant={"secondary"}>Go</Button>
                             </Card.Body>
                         </Card>
