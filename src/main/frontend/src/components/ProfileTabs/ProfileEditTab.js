@@ -190,8 +190,7 @@ const ProfileEditTab = (props) => {
                                     color: "#F36363",
                                 }}
                             >
-                                Unsuccessful change. Check password and try
-                                again.
+                                Unsuccessful change.
                             </div>
                         </motion.div>
                     )}

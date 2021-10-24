@@ -22,7 +22,7 @@ import java.net.http.HttpResponse;
 public class SmileController {
 
     @PostMapping(value = "/getResult", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<?> getResult(@RequestBody byte[] byteArray){
+    public ResponseEntity<?> getResult(@RequestBody byte[] byteArray) {
 
         System.out.println("started method");
         String key = "6e4ccc74ec694dce89968a7db92f9660";

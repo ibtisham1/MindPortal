@@ -20,7 +20,6 @@ import DashBoardPage from "./pages/DashBoardPage";
 import SmilePage from "./pages/SmilePage";
 import TestOptionsPage from "./pages/TestOptionsPage";
 
-
 function App() {
     return (
         <ProvideAuth>
@@ -42,21 +41,18 @@ function App() {
                         <LoginPage />
                     </Route>
                     <Route path="/signup">
-                        {/* <h1>Sign up</h1> */}
                         <SignUpPage />
                     </Route>
+
                     <Route path="/result">
-                        {/* <h1>Sign up</h1> */}
                         <ResultPage />
                     </Route>
 
                     <Route path="/testOptions">
-                        {/* <h1>Sign up</h1> */}
                         <TestOptionsPage />
                     </Route>
 
                     <Route path="/test">
-                        {/* <h1>Sign up</h1> */}
                         <TestPage />
                     </Route>
 

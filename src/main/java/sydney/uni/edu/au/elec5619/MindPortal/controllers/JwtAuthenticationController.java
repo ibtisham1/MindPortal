@@ -28,7 +28,6 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-
 public class JwtAuthenticationController {
 
     @Autowired
@@ -48,10 +47,10 @@ public class JwtAuthenticationController {
 
     Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
 
-    @RequestMapping(value="/authenticate")
+    @RequestMapping(value = "/authenticate")
     @PostMapping
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception{
-        System.out.println(authenticationRequest.getUsername() + " "+  authenticationRequest.getPassword());
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+        System.out.println(authenticationRequest.getUsername() + " " + authenticationRequest.getPassword());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
@@ -60,7 +59,7 @@ public class JwtAuthenticationController {
         Map<String, Object> response = new HashMap<String, Object>();
         User user = userRepo.findByEmail(authenticationRequest.getUsername());
 
-        if(user != null){
+        if (user != null) {
             response.put("user", user);
             response.put("token", new JwtResponse(token));
         } else {
@@ -70,9 +69,9 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(value="/register")
+    @RequestMapping(value = "/register")
     @PostMapping
-    public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception{
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception {
 
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 new LengthRule(6, 30),
@@ -83,13 +82,12 @@ public class JwtAuthenticationController {
 
         RuleResult result = validator.validate(new PasswordData(user.getPassword()));
 
-        if(!result.isValid()){
+        if (!result.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insufficient password strength");
         }
 
         try {
             User newUser = userDetailsService.save(user);
-
             authenticate(newUser.getEmail(), user.getPassword());
 
             final UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getEmail());
@@ -97,16 +95,12 @@ public class JwtAuthenticationController {
 
             Map<String, Object> response = new HashMap<String, Object>();
 
-            if(newUser != null){
-                response.put("user", newUser);
-                response.put("token", new JwtResponse(token));
-            } else {
-                System.out.println("Somehow we got here and the user is null....");
-            }
+            response.put("user", newUser);
+            response.put("token", new JwtResponse(token));
 
 
             return ResponseEntity.ok(response);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error creating user");
         }
@@ -118,9 +112,9 @@ public class JwtAuthenticationController {
             System.out.println("email: " + email + " password: " + password);
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
-        } catch(DisabledException e){
+        } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
-        } catch(BadCredentialsException e){
+        } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
