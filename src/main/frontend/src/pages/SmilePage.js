@@ -12,6 +12,8 @@ const SmilePage = () => {
     const imageResultRef = useRef(null);
     const [isStreaming, setIsStreaming] = useState(false);
     const [hasPhoto, setHasPhoto] = useState(false);
+
+    // get auth context
     const auth = useAuth();
 
     useEffect(() => {
@@ -81,14 +83,6 @@ const SmilePage = () => {
 
     const analyse = (data) => {
         let toSend = convertToByteArr(data);
-        let faceAttribs = "smile, emotion, age, gender";
-        let params = {
-            returnFaceId: "true",
-            returnFaceLandmarks: "false",
-            returnFaceAttributes: `${faceAttribs}`,
-            faceIdTimeToLive: "86400",
-            processData: false,
-        };
 
         const config = {
             headers: {
@@ -98,7 +92,7 @@ const SmilePage = () => {
         };
 
         axiosConfig
-            .post("/api/smile/getResult", toSend, config)
+            .post(`/api/smile/${auth.user.id}/getResult`, toSend, config)
             .then((result) => {
                 console.log(result);
                 let imgResult = result.data[0];
@@ -124,7 +118,9 @@ const SmilePage = () => {
 
                     if (smileValue >= 0.85) {
                         // passed
-                        str = `Congratulations, smile value: ${smileValue}`;
+                        str = `Congratulations, smile score: ${
+                            smileValue * 100
+                        }`;
                     }
                 }
 
@@ -139,7 +135,6 @@ const SmilePage = () => {
             .catch((err) => {
                 console.log(err);
             });
-
     };
 
     const stop = (e) => {
