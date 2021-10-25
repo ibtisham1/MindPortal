@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import sydney.uni.edu.au.elec5619.MindPortal.domain.FaceAPIValues;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.FaceAPIResponse;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.FaceAttributes;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.SmileResponse;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
@@ -54,10 +54,10 @@ public class SmileController {
         try {
 
             HttpEntity<byte[]> entity = new HttpEntity<byte[]>(byteArray, headers);
-            FaceAPIValues[] faceAPIValues = restTemplate.postForObject(uri, entity, FaceAPIValues[].class);
+            FaceAPIResponse[] faceAPIResponses = restTemplate.postForObject(uri, entity, FaceAPIResponse[].class);
 
-            if (faceAPIValues != null && faceAPIValues.length != 0) {
-                FaceAPIValues result = faceAPIValues[0];
+            if (faceAPIResponses != null && faceAPIResponses.length != 0) {
+                FaceAPIResponse result = faceAPIResponses[0];
                 if (result != null) {
                     if (result.getFaceAttributes() != null) {
                         FaceAttributes faceAttributes = result.getFaceAttributes();
