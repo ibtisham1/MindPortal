@@ -95,16 +95,17 @@ const SmilePage = () => {
             .post(`/api/smile/${auth.user.id}/getResult`, toSend, config)
             .then((result) => {
                 console.log(result);
-                let imgResult = result.data[0];
+                let imgResult = result.data;
+                let smileValue = result.data.score;
 
                 let txt = document.createElement("p");
                 txt.id = "image-result";
                 let str;
 
-                if (imgResult === undefined) {
+                if (smileValue === undefined) {
                     str = "please try again";
                 } else {
-                    let smileValue = Number(imgResult.faceAttributes.smile);
+                    // let smileValue = Number(imgResult.faceAttributes.smile);
                     console.log("smile value: " + smileValue);
 
                     if (smileValue < 0.85 && smileValue >= 0.5) {

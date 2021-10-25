@@ -15,7 +15,6 @@ import sydney.uni.edu.au.elec5619.MindPortal.domain.SmileResponse;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/smile/{id}")
@@ -71,7 +70,6 @@ public class SmileController {
             FaceAPIValues[] faceAPIValues = restTemplate.postForObject(uri, entity, FaceAPIValues[].class);
 
             if (faceAPIValues != null) {
-                System.out.println(Arrays.toString(faceAPIValues));
                 FaceAPIValues result = faceAPIValues[0];
                 for(FaceAPIValues val :faceAPIValues){
                     if (result != null) {
@@ -79,12 +77,9 @@ public class SmileController {
                             System.out.println("id" + result.getFaceId());
                         }
                         if (result.getFaceAttributes() != null) {
-                            System.out.println("got attributes");
-                            System.out.println(result.getFaceAttributes());
                             FaceAttributes faceAttributes = result.getFaceAttributes();
                             if(faceAttributes != null){
                                 System.out.println("smile score: " + faceAttributes.getSmile());
-
                                 double score = faceAttributes.getSmile();
 
                                 // if score > 85 add to user
