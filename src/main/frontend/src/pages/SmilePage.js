@@ -15,6 +15,7 @@ const SmilePage = () => {
 
     // get auth context
     const auth = useAuth();
+    const { getSmileResult } = auth;
 
     useEffect(() => {
         getVideo();
@@ -81,61 +82,47 @@ const SmilePage = () => {
         return byteArr;
     };
 
+    const onImageResult = (smileValue) => {
+        // set loading false;
+        let txt = document.createElement("p");
+        txt.id = "image-result";
+        let str;
+
+        if (smileValue === undefined) {
+            str = "please try again";
+        } else {
+            // let smileValue = Number(imgResult.faceAttributes.smile);
+            console.log("smile value: " + smileValue);
+
+            if (smileValue < 0.85 && smileValue >= 0.5) {
+                str = "Almost there, little more smile";
+            }
+
+            if (smileValue < 0.5) {
+                // more smile
+                str = "more smile!";
+            }
+
+            if (smileValue >= 0.85) {
+                // passed
+                str = `Congratulations, smile score: ${smileValue * 100}`;
+                // refresh user
+            }
+        }
+
+        txt.innerHTML = `${str}`;
+        let old = document.getElementById("image-result");
+        if (old == null) {
+            imageResultRef.current.appendChild(txt);
+        } else {
+            imageResultRef.current.replaceChild(txt, old);
+        }
+    };
+
     const analyse = (data) => {
         let toSend = convertToByteArr(data);
 
-        const config = {
-            headers: {
-                Authorization: `Bearer ${auth.token}`,
-                "Content-Type": "application/octet-stream",
-            },
-        };
-
-        axiosConfig
-            .post(`/api/smile/${auth.user.id}/getResult`, toSend, config)
-            .then((result) => {
-                console.log(result);
-                let imgResult = result.data;
-                let smileValue = result.data.score;
-
-                let txt = document.createElement("p");
-                txt.id = "image-result";
-                let str;
-
-                if (smileValue === undefined) {
-                    str = "please try again";
-                } else {
-                    // let smileValue = Number(imgResult.faceAttributes.smile);
-                    console.log("smile value: " + smileValue);
-
-                    if (smileValue < 0.85 && smileValue >= 0.5) {
-                        str = "Almost there, little more smile";
-                    }
-
-                    if (smileValue < 0.5) {
-                        // more smile
-                        str = "more smile!";
-                    }
-
-                    if (smileValue >= 0.85) {
-                        // passed
-                        str = `Congratulations, smile score: ${
-                            smileValue * 100
-                        }`;
-                    }
-                }
-
-                txt.innerHTML = `${str}`;
-                let old = document.getElementById("image-result");
-                if (old == null) {
-                    imageResultRef.current.appendChild(txt);
-                } else {
-                    imageResultRef.current.replaceChild(txt, old);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        getSmileResult(toSend, onImageResult);
     };
 
     const stop = (e) => {

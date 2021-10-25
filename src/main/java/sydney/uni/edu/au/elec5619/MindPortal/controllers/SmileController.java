@@ -12,9 +12,12 @@ import org.springframework.web.client.RestTemplate;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.FaceAPIValues;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.FaceAttributes;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.SmileResponse;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
+import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 
 @RestController
 @RequestMapping("/api/smile/{id}")
@@ -22,6 +25,9 @@ public class SmileController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    UserRepository userRepo;
 
    
     @PostMapping(value = "/getResult")
@@ -83,8 +89,15 @@ public class SmileController {
                                 double score = faceAttributes.getSmile();
 
                                 // if score > 85 add to user
+                                if(score > 0.85){
+                                    // find user and set most recent date to e erg
+                                    User user = userRepo.findById(id).get();
+                                    user.setMostRecentSmileChallengePass(new Timestamp(System.currentTimeMillis()));
+                                    userRepo.save(user);
+                                }
 
                                 SmileResponse smileResponse = new SmileResponse(score);
+
 
                                 return new ResponseEntity<>(smileResponse, HttpStatus.OK);
                             }
