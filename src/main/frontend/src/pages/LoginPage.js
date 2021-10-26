@@ -55,7 +55,7 @@ const LoginPage = () => {
     };
 
     const isValidEmail = () => {
-        return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)
+        return /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(email)
             ? true
             : false;
     };
