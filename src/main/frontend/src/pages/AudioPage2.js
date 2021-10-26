@@ -20,6 +20,26 @@ const AudioPage2 = () => {
         card3.src = "https://i.imgur.com/7atDpKE.jpg";
     }
 
+    //https://music2relax.com/wp-content/uploads/2017/12/Happiness-Frequency-396hz-Boost-Dopamin-Release.mp3
+    //https://music2relax.com/wp-content/uploads/2017/12/Celectial-Ocean-Stress-Relief-Music-with-Theta-Waves.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Positive-Energy-Music-Therapy-with-Binaural-Beats-for-Wellbeing-no-1-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Theta-Brain-waves-Zen-Meditation-Music-Binaural-Beats-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2018/02/Blue-River-Nature-Sounds.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Relaxing-Nature-Sounds-Soothing-Rain-50-min-no-music.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Relaxing-Nature-Sounds-Rainforest-Waterfall-50-min-no-music.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Sounds-of-Nature-Gentle-Ocean-Waves-50-min-no-music.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Classical-Music-for-Study-with-Ocean-Waves-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2018/02/Study-to-Beethoven-Symphony-No-6-Op-68.mp3
+    //https://music2relax.com/wp-content/uploads/2017/08/Classical-Music-Study-Aid.mp3
+    //https://music2relax.com/wp-content/uploads/2017/12/Creativity-and-Focus-Alfa-Waves-Relaxing-Music.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Lucid-Dreams-Music-with-Delta-brainwaves-for-Sleep-no-1-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Lucid-Dreams-Music-with-Delta-brainwaves-for-Sleep-no-2-37-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Lucid-Dreams-Music-with-Delta-brainwaves-for-Sleep-no-3-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Deep-Sleep-Music-Soothing-Waterfall-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Deep-Sleep-Music-Calming-River-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Deep-Sleep-Music-Gentle-Rain-45-min.mp3
+    //https://music2relax.com/wp-content/uploads/2017/04/Deep-Sleep-Music-Soft-Ocean-Waves-50min.mp3
+
     function Play(num){
         var audioPlayer = document.getElementById("music");
         var card1 = document.getElementById("card1");

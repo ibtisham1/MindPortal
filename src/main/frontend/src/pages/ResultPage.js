@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Header from "../components/Header";
-import {Col, Container, Row,Carousel, Card} from "react-bootstrap";
+import {Col, Container, Row,Carousel, Card, Button} from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../styles/Result.scss";
 
 
@@ -77,8 +78,15 @@ const ResultPage = () => {
                             <Card.Body>
                                 <Card.Title>
                                     Suggestions
+
                                 </Card.Title>
                                 <Card.Text>
+                                    <Link
+                                        to={{
+                                            pathname: "/audio",
+                                            state: [{diagnosis: 'well'}]
+                                        }}
+                                    >Link to audio page</Link>
                                     Type of Suggestions
                                 </Card.Text>
                             </Card.Body>
