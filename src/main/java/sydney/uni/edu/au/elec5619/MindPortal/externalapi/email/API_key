@@ -1,0 +1,9 @@
+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
+
+
+
+curl --request POST \
+--url https://api.sendgrid.com/v3/mail/send \
+--header 'Authorization: Bearer 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' \
+--header 'Content-Type: application/json' \
+--data '{"personalizations":[{"to":[{"email":"shahrukhimam2000@gmail.com","name":"Syed"}],"subject":"Hello, World!"}],"content":[{"type":"text/plain","value":"Heya!"}],"from":{"email":"sima3098@uni.sydney.edu.au","name":"Mind Portal Test Email"},"reply_to":{"email":"sima3098@uni.sydney.edu.au","name":"Mind Portal"}}'
