@@ -59,13 +59,13 @@ const ProfilePage = () => {
                         <ProfileEditTab user={user} />
                     </Tab>
                     <Tab
-                        eventKey="reset"
+                        eventKey="change"
                         title={
                             <>
                                 <span className="profile__tab__icon">
                                     <BsFillShieldLockFill />
                                 </span>
-                                Reset Password
+                                Change Password
                             </>
                         }
                         className="profile__tab"

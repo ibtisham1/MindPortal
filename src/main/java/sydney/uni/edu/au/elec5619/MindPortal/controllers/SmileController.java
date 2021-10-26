@@ -61,20 +61,19 @@ public class SmileController {
                 if (result != null) {
                     if (result.getFaceAttributes() != null) {
                         FaceAttributes faceAttributes = result.getFaceAttributes();
-                        if (faceAttributes != null) {
-                            System.out.println("smile score: " + faceAttributes.getSmile());
-                            double score = faceAttributes.getSmile();
-                            // if score > 85 add to user
-                            if (score >= 0.85) {
-                                // find user and set most recent date to e erg
-                                User user = userRepo.findById(id).get();
-                                user.setMostRecentSmileChallengePass(new Timestamp(System.currentTimeMillis()));
-                                userRepo.save(user);
-                            }
 
-                            SmileResponse smileResponse = new SmileResponse(score);
-                            return new ResponseEntity<>(smileResponse, HttpStatus.OK);
+                        double score = faceAttributes.getSmile();
+                        // if score > 85 add to user
+                        if (score >= 0.85) {
+                            // find user and set most recent date to e erg
+                            User user = userRepo.findById(id).get();
+                            user.setMostRecentSmileChallengePass(new Timestamp(System.currentTimeMillis()));
+                            userRepo.save(user);
                         }
+
+                        SmileResponse smileResponse = new SmileResponse(score);
+                        return new ResponseEntity<>(smileResponse, HttpStatus.OK);
+
                     }
                 }
             }
