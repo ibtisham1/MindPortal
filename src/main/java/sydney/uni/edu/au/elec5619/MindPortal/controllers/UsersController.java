@@ -1,5 +1,6 @@
 package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 
+import org.passay.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,6 +167,20 @@ public class UsersController {
     public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest){
         User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
         Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
+
+        PasswordValidator validator = new PasswordValidator(Arrays.asList(
+                new LengthRule(6, 30),
+                new UppercaseCharacterRule(1),
+                new DigitCharacterRule(1)
+
+        ));
+
+        RuleResult result = validator.validate(new PasswordData(passwordChangeRequest.getNewPassword()));
+
+        if(!result.isValid()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insufficient password strength");
+        }
+
 
         if(bcryptEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())){
             // matching password, update the users password

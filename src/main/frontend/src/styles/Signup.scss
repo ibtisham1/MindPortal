@@ -1,4 +1,40 @@
+$brandColor: #fbdfb6;
+$textColor: #2e2d2d;
+
 .signup {
+    &__container {
+        background-image: url("../components/LightSource2.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position-x: 10px;
+        background-position-y: 15px;
+        background-color: #2e2d2d;
+        height: 100vh;
+        padding-left: 0px;
+    }
+
+    &__form {
+        &__title {
+            font-size: 1.5rem;
+            color: rgb(29, 28, 28);
+            font-weight: 100;
+            text-align: center;
+        }
+
+        &__subtitle {
+            text-align: center;
+        }
+
+        &__link {
+            text-decoration: none;
+            font-weight: bold;
+            color: darken($brandColor, 10%);
+            &:hover {
+                color: darken($brandColor, 20%);
+            }
+        }
+    }
+
     &.banner {
         background-color: rgb(29, 28, 28);
         height: 100vh;
@@ -13,8 +49,12 @@
     }
 
     &.form {
-        padding-top: 10vh;
-        padding-left: 10em;
+        box-shadow: 3px 5px 5px 0px rgba(255, 255, 255, 0.2);
+        // padding-top: 10vh;
+        // padding-left: 10em;
+        background-color: white;
+        border-radius: 10px;
+        padding: 2rem;
 
         &__label {
             font-weight: bold;
@@ -23,6 +63,20 @@
 
         &__btn {
             margin-top: 0.5em;
+            background-color: #fbdfb6;
+            border-color: #fbdfb6;
+            border: none;
+            color: #2e2d2d;
+            padding: 10px 30px;
+            border-radius: 10px;
+            width: 200px;
+
+            &:hover {
+                background-color: darken($brandColor, 10%);
+                color: white;
+                box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.1);
+                transform: translateY(-0.1em);
+            }
         }
     }
 }

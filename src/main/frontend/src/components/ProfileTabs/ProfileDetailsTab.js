@@ -9,7 +9,7 @@ const ProfileDetailsTab = (props) => {
     return (
         <Container className="details">
             <Row>
-                <Col sm={4} className="justify-items-center align-self-center">
+                <Col sm={3} className="justify-items-center align-self-center">
                     <Row>
                         <BsPersonCircle size={60} color={"grey"} />
                     </Row>

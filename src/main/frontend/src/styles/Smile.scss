@@ -1,0 +1,50 @@
+.smile {
+    background-color: #f4f4f4;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    &__title {
+    }
+
+    &__description {
+    }
+
+    &__btn {
+    }
+
+    &__video {
+        border-radius: 1em;
+    }
+
+    &__controls {
+        // border: 1px solid grey;
+        background-color: white;
+        border-radius: 0.5em;
+        padding: 0.5em;
+        box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &__result {
+        // border: 1px solid black;
+    }
+
+    &__captured {
+        // border: 1px solid black;
+
+        background-color: white;
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // justify-content: center;
+        min-width: 240px;
+
+        box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.1);
+        img {
+            height: 180px;
+            border-radius: 8px;
+        }
+    }
+}

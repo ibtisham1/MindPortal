@@ -6,6 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @JsonIgnoreProperties({"diagnoses", "questionnaireResponses"})
@@ -39,6 +40,8 @@ public class User {
     @OneToMany()
     @JoinColumn(name = "id")
     private Set<QuestionnaireResponses> questionnaireResponses;
+
+    private Timestamp mostRecentSmileChallengePass;
 
     public User(){}
 
@@ -88,6 +91,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Timestamp getMostRecentSmileChallengePass() {
+        return mostRecentSmileChallengePass;
+    }
+
+    public void setMostRecentSmileChallengePass(Timestamp mostRecentSmileChallengePass) {
+        this.mostRecentSmileChallengePass = mostRecentSmileChallengePass;
     }
 
     @JsonIgnore
