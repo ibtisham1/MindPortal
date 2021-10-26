@@ -24,7 +24,7 @@ public class EmailService {
 
     public String sendTextEmail(String senderEmail, String emailBody) throws IOException {
         // the sender email should be the same as we used to Create a Single Sender Verification
-        Email from = new Email("sima3098@uni.sydney.edu.au");
+        Email from = new Email("sima3098@uni.sydney.edu.au", "Mind Portal");
         String subject = "Mind Portal: Your K10 results are here!";
         Email to = new Email(senderEmail);
         Content content = new Content("text/plain", emailBody);
