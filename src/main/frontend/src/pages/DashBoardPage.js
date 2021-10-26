@@ -26,13 +26,8 @@ const DashBoardPage = () => {
     if (!post) return null;
 
     const monitorData = post.data.monitor;
-    console.log(monitorData);
+    // console.log(monitorData);
 
-    // const api_response = axios.create({
-    //     baseURL: 'https://data.nsw.gov.au/data/dataset/0a52e6c1-bc0b-48af-8b45-d791a6d8e289/resource/f3a28eed-8c2a-437b-8ac1-2d ab3cf760f9/download/covid-case-locations-20210717-1753.json'
-    // }).get('').then(res => {
-    //     console.log(res.data)
-    // })
 
     return (
         <Container fluid className="Dashboard page p-0">
@@ -43,19 +38,87 @@ const DashBoardPage = () => {
 
                     <Card>
                         <Card.Body>
-                            <Card.Title>Covid updates</Card.Title>
-                            {/*<Card.Text>*/}
-                            {/*    Covid updates explained here ...*/}
-                            {/*</Card.Text>*/}
-                            <Card.Img
-                                src={
-                                    "https://imageresizer.static9.net.au/JoiR0Yy7d3c-sKWPOZs74n1WrGA=/1600x0/https%3A%2F%2Fprod.static9.net.au%2Ffs%2Fb329d945-649a-41e0-89a2-6f4ea7aa821c"
-                                }
-                            />
-                            <h1>{post.title}</h1>
-                            <div>
-                                {JSON.stringify(post.data.monitor)}
-                            </div>
+                            <Card.Title style={{ color: 'red' }}>New Covid Venue Alert!</Card.Title>
+                            <h6>
+                                Venue: {JSON.stringify(post.data.monitor[50].Venue)}
+                            </h6>
+                            <h6>
+                                Address: {JSON.stringify(post.data.monitor[50].Address)}
+                            </h6>
+                            <h6>
+                                Suburb: {JSON.stringify(post.data.monitor[50].Suburb)}
+                            </h6>
+                            <h6 style={{ color: 'red' }}>
+                                Alert: {JSON.stringify(post.data.monitor[50].Alert)}
+                            </h6>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title style={{ color: 'red' }}>New Covid Venue Alert!</Card.Title>
+                            <h6>
+                                Venue: {JSON.stringify(post.data.monitor[80].Venue)}
+                            </h6>
+                            <h6>
+                                Address: {JSON.stringify(post.data.monitor[80].Address)}
+                            </h6>
+                            <h6>
+                                Suburb: {JSON.stringify(post.data.monitor[80].Suburb)}
+                            </h6>
+                            <h6 style={{ color: 'red' }}>
+                                Alert: {JSON.stringify(post.data.monitor[80].Alert)}
+                            </h6>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title style={{ color: 'red' }}>New Covid Venue Alert!</Card.Title>
+                            <h6>
+                                Venue: {JSON.stringify(post.data.monitor[120].Venue)}
+                            </h6>
+                            <h6>
+                                Address: {JSON.stringify(post.data.monitor[120].Address)}
+                            </h6>
+                            <h6>
+                                Suburb: {JSON.stringify(post.data.monitor[120].Suburb)}
+                            </h6>
+                            <h6 style={{ color: 'red' }}>
+                                Alert: {JSON.stringify(post.data.monitor[120].Alert)}
+                            </h6>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title style={{ color: 'red' }}>New Covid Venue Alert!</Card.Title>
+                            <h6>
+                                Venue: {JSON.stringify(post.data.monitor[150].Venue)}
+                            </h6>
+                            <h6>
+                                Address: {JSON.stringify(post.data.monitor[150].Address)}
+                            </h6>
+                            <h6>
+                                Suburb: {JSON.stringify(post.data.monitor[150].Suburb)}
+                            </h6>
+                            <h6 style={{ color: 'red' }}>
+                                Alert: {JSON.stringify(post.data.monitor[150].Alert)}
+                            </h6>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title style={{ color: 'red' }}>New Covid Venue Alert!</Card.Title>
+                            <h6>
+                                Venue: {JSON.stringify(post.data.monitor[180].Venue)}
+                            </h6>
+                            <h6>
+                                Address: {JSON.stringify(post.data.monitor[180].Address)}
+                            </h6>
+                            <h6>
+                                Suburb: {JSON.stringify(post.data.monitor[180].Suburb)}
+                            </h6>
+                            <h6 style={{ color: 'red' }}>
+                                Alert: {JSON.stringify(post.data.monitor[180].Alert)}
+                            </h6>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -65,7 +128,7 @@ const DashBoardPage = () => {
                     <p></p>
                     <h2>Hello {user.firstName}</h2>
                     <p></p>
-                    <h4>(Note: It is essential for you to have done at least one K-10 test! Please take one if you have not.)</h4>
+                    <h4 style={{ color: 'red' }}>(Note: It is essential for you to have done at least one K-10 test! Please take one if you have not.)</h4>
                     <p></p>
                     <h3>
                         <Card>
