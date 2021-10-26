@@ -62,8 +62,8 @@ const ProfileDetailsTab = (props) => {
                         </Col>
                         <Col className="details__value">
                             {completedSmileChallenge
-                                ? "has completed in past day"
-                                : "not not completed - try a smile challenge"}
+                                ? "completed"
+                                : "not completed"}
                         </Col>
                     </Row>
                 </Col>
