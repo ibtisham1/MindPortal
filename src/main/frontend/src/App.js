@@ -20,7 +20,6 @@ import DashBoardPage from "./pages/DashBoardPage";
 import SmilePage from "./pages/SmilePage";
 import TestOptionsPage from "./pages/TestOptionsPage";
 import AudioPage from "./pages/AudioPage";
-import AudioPage2 from "./pages/AudioPage2";
 import VideoPage from "./pages/VideoPage";
 
 
@@ -53,7 +52,7 @@ function App() {
                     </Route>
                     <Route path="/audio">
                         {/* <h1>Sign up</h1> */}
-                        <AudioPage2 />
+                        <AudioPage />
                     </Route>
                     <Route path="/video">
                         {/* <h1>Sign up</h1> */}
