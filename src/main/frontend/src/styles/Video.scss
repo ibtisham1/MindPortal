@@ -1,0 +1,29 @@
+.Video {
+    &.video {
+        padding: 4em;
+        text-align: center;
+    }
+
+    &.result {
+        padding: 4em;
+    }
+
+    &.page {
+        padding: 9em;
+        text-align: center;
+        display: block;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.card {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    &.flex {
+        height: 100vh;
+        padding: 4em;
+        margin: 4em;
+    }
+}

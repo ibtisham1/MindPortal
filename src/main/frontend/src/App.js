@@ -19,6 +19,9 @@ import TestPage from "./pages/TestPage";
 import DashBoardPage from "./pages/DashBoardPage";
 import SmilePage from "./pages/SmilePage";
 import TestOptionsPage from "./pages/TestOptionsPage";
+import AudioPage from "./pages/AudioPage";
+import VideoPage from "./pages/VideoPage";
+
 
 function App() {
     return (
@@ -46,6 +49,14 @@ function App() {
 
                     <Route path="/result">
                         <ResultPage />
+                    </Route>
+                    <Route path="/audio">
+                        {/* <h1>Sign up</h1> */}
+                        <AudioPage />
+                    </Route>
+                    <Route path="/video">
+                        {/* <h1>Sign up</h1> */}
+                        <VideoPage />
                     </Route>
 
                     <Route path="/testOptions">

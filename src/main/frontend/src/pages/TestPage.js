@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import "../styles/TestForm.scss";
 import { useHistory, useLocation } from "react-router";
 import axiosConfig from "../services/axiosConfig";
+import ResultDiagnosis from "../services/resultDiagnosis";
 
 
 
@@ -18,6 +19,8 @@ const TestPage = () => {
     let history = useHistory();
     const auth = useAuth();
     const user = auth.user;
+    let rD =ResultDiagnosis();
+
 
     let { from } = location.state || { from: { pathname: "/" } };
 
@@ -144,50 +147,7 @@ const TestPage = () => {
         else{
             diagnosis="severe";
         }
-        axiosConfig
-            .post(
-                "/questionnaireResponses",
-                {
-                    responses: stringAnswer,
-                    user: {
-                        id: user.id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email
-
-                    }
-
-                },config
-            )
-            .then((result) => {
-                console.log(result);
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        axiosConfig
-            .post(
-                "/diagnoses",
-                {
-                    diagnosisType: diagnosis,
-                    user: {
-                        id: user.id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email
-
-                    }
-
-                },config
-            )
-            .then((result) => {
-                console.log(result);
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        rD.postResult(stringAnswer,diagnosis);
 
         history.push("/result");
 
