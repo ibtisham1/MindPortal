@@ -12,7 +12,7 @@ import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 import java.util.ArrayList;
 
 @Service
-public class JwtUserDetailsService  implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepo;
 
@@ -22,13 +22,13 @@ public class JwtUserDetailsService  implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(username);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User not found with that email/username");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
 
-    public User save(User user){
+    public User save(User user) {
         User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setFirstName(user.getFirstName());

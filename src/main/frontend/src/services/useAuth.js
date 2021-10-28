@@ -7,6 +7,7 @@ const dummy_user = {
     lastName: "DummyUserLast",
     email: "DummyUserEmail",
 };
+//TODO: add an axios interceptor that logs the user out when the JWT has expired.
 
 const authContext = createContext();
 
@@ -34,8 +35,6 @@ function useProvideAuth() {
     const config = {
         headers: { Authorization: `Bearer ${token}` },
     };
-
-    //TODO: add an axios interceptor that logs the user out when the JWT has expired.
 
     const updateDetails = (firstName, lastName, email, success, failure) => {
         axiosConfig
@@ -127,7 +126,6 @@ function useProvideAuth() {
             })
             .then((result) => {
                 console.log(result);
-                // setUser(dummy_user);
                 setUser(result.data.user);
                 setToken(result.data.token.token);
                 localStorage.setItem("jwt-token", result.data.token.token);
@@ -154,7 +152,48 @@ function useProvideAuth() {
         }
     };
 
-    useEffect(() => {}, [user]);
+    const getSmileResult = (imageToSend, cb) => {
+        const smileConfig = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/octet-stream",
+            },
+        };
+
+        axiosConfig
+            .post(`/api/smile/${user.id}/getResult`, imageToSend, smileConfig)
+            .then((result) => {
+                console.log(result);
+
+                let smileValue = result.data.score;
+                ///
+                cb(smileValue);
+
+                if (smileValue > 0.85) {
+                    refreshUser();
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const refreshUser = () => {
+        axiosConfig
+            .get(`/api/users/${user.id}`, config)
+            .then((result) => {
+                console.log(result);
+                setUser(result.data);
+                localStorage.setItem("user", JSON.stringify(result.data));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        // get user again.
+    }, [user]);
 
     return {
         user,
@@ -162,6 +201,7 @@ function useProvideAuth() {
         signup,
         signout,
         updateDetails,
+        getSmileResult,
         changePassword,
         token,
     };

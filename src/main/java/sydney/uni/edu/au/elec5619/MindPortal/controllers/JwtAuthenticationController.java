@@ -1,5 +1,6 @@
 package sydney.uni.edu.au.elec5619.MindPortal.controllers;
 
+import org.passay.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,12 @@ import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @CrossOrigin
-
 public class JwtAuthenticationController {
 
     @Autowired
@@ -46,11 +47,10 @@ public class JwtAuthenticationController {
 
     Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
 
-    @RequestMapping(value="/authenticate")
+    @RequestMapping(value = "/authenticate")
     @PostMapping
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception{
-        System.out.println("HERE");
-        System.out.println(authenticationRequest.getUsername() + " "+  authenticationRequest.getPassword());
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+        System.out.println(authenticationRequest.getUsername() + " " + authenticationRequest.getPassword());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
@@ -59,7 +59,7 @@ public class JwtAuthenticationController {
         Map<String, Object> response = new HashMap<String, Object>();
         User user = userRepo.findByEmail(authenticationRequest.getUsername());
 
-        if(user != null){
+        if (user != null) {
             response.put("user", user);
             response.put("token", new JwtResponse(token));
         } else {
@@ -69,13 +69,38 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(value="/register")
+    @RequestMapping(value = "/register")
     @PostMapping
-    public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception{
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception {
+
+        PasswordValidator validator = new PasswordValidator(Arrays.asList(
+                new LengthRule(6, 30),
+                new UppercaseCharacterRule(1),
+                new DigitCharacterRule(1)
+
+        ));
+
+        RuleResult result = validator.validate(new PasswordData(user.getPassword()));
+
+        if (!result.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insufficient password strength");
+        }
+
         try {
             User newUser = userDetailsService.save(user);
-            return ResponseEntity.ok(newUser);
-        }catch (Exception e){
+            authenticate(newUser.getEmail(), user.getPassword());
+
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+
+            Map<String, Object> response = new HashMap<String, Object>();
+
+            response.put("user", newUser);
+            response.put("token", new JwtResponse(token));
+
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error creating user");
         }
@@ -84,11 +109,12 @@ public class JwtAuthenticationController {
 
     private void authenticate(String email, String password) throws Exception {
         try {
+            System.out.println("email: " + email + " password: " + password);
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
-        } catch(DisabledException e){
+        } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
-        } catch(BadCredentialsException e){
+        } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }

@@ -20,9 +20,10 @@ public class QuestionnaireResponses {
 
     public QuestionnaireResponses(){}
 
-    public QuestionnaireResponses(Integer questionnaireResponsesId, String responses){
+    public QuestionnaireResponses(Integer questionnaireResponsesId, String responses, User user){
         this.questionnaireResponsesId = questionnaireResponsesId;
         this.responses = responses;
+        this.user = user;
     }
 
 
