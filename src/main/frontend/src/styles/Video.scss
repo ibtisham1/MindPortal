@@ -9,8 +9,11 @@
     }
 
     &.page {
-        height: 100vh;
-        padding: 4em;
+        padding: 9em;
+        text-align: center;
+        display: block;
+        align-items: center;
+        justify-content: center;
     }
 
     &.card {

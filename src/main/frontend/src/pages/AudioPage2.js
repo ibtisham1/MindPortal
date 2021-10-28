@@ -81,7 +81,7 @@ const AudioPage2 = () => {
                 <p></p>
                 <Row>
                     <Col className="Audio2 result">
-                        <Card className="Audio2 card">
+                        <Card className="Audio2 card border border-2">
                             <Card.Img id="card1" variant="top" src="https://i.pinimg.com/originals/4f/c9/81/4fc981a8d2c3d6eead0c3dfc27b5904a.gif" className="Audio2 gif"/>
                             <Card.Body>
                                 <Card.Title>
@@ -96,7 +96,7 @@ const AudioPage2 = () => {
                         </Card>
                     </Col>
                     <Col className="Audio2 result">
-                        <Card className="Audio2 card">
+                        <Card className="Audio2 card border border-2">
                             <Card.Img id="card2" variant="top" src="https://i.imgur.com/F1yv054.jpg" className="Audio2 gif"/>
                             <Card.Body>
                                 <Card.Title>
@@ -111,7 +111,7 @@ const AudioPage2 = () => {
                         </Card>
                     </Col>
                     <Col className="Audio2 result">
-                        <Card className="Audio2 card">
+                        <Card className="Audio2 card border border-2">
                             <Card.Img id="card3" variant="top" src="https://i.imgur.com/7atDpKE.jpg" className="Audio2 gif"/>
                             <Card.Body>
                                 <Card.Title>

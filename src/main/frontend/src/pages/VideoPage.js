@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Header from "../components/Header";
-import {Col, Container, Row,Carousel, Card, Button} from "react-bootstrap";
+import {Col, Container, Row, Carousel, Card, Button, Jumbotron} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../styles/Video.scss";
 
@@ -22,21 +22,21 @@ const VideoPage = () => {
             <Carousel id="videos" activeIndex={index} onSelect={handleSelect} interval={null}>
                 <Carousel.Item>
                     <iframe id = "test"
-                            width="80%" height="700" src = "https://www.youtube.com/embed/XyNlqQId-nk"
+                            width="90%" height="700" src = "https://www.youtube.com/embed/XyNlqQId-nk"
                             title="YouTube video player" frameBorder="0"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen>
                     </iframe>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <iframe width="80%" height="700" src="https://www.youtube.com/embed/DXUAyRRkI6k"
+                    <iframe width="90%%" height="700" src="https://www.youtube.com/embed/DXUAyRRkI6k"
                             title="YouTube video player" frameBorder="0"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen>
                     </iframe>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <iframe width="80%" height="700" src="https://www.youtube.com/embed/eX2qFMC8cFo"
+                    <iframe width="90%%" height="700" src="https://www.youtube.com/embed/eX2qFMC8cFo"
                             title="YouTube video player" frameBorder="0"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen>
@@ -50,12 +50,19 @@ const VideoPage = () => {
         <div>
             <Header />
             <Container fluid className="Video page">
-                <Row>
-                    <Col className="Video video">
-                        <h2>We are here to help you!</h2>
-                        <ControlledCarousel />
-                    </Col>
-                </Row>
+                <Jumbotron>
+                    <Row>
+                        <Col className="Video video">
+                            <h2>Enjoy these funny cat videos!</h2>
+                            <p>  </p>
+                            <p>  </p>
+                            <p>  </p>
+                            <p>  </p>
+                            <ControlledCarousel />
+                        </Col>
+                    </Row>
+                </Jumbotron>
+
             </Container>
 
         </div>
