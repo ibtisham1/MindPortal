@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAuth from "../services/useAuth";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Nav } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
 
 const SignoutButton = ({ callback }) => {
     let auth = useAuth();
@@ -13,13 +14,19 @@ const SignoutButton = ({ callback }) => {
 
     return (
         <>
-            <Button
-                variant="outline-light"
+            <Nav.Link
+                className="header__link"
+                onClick={() => setShowModal(true)}
+            >
+                Sign out
+            </Nav.Link>
+
+            {/* variant="outline-light"
                 style={{ marginLeft: 3 }}
                 onClick={() => setShowModal(true)}
             >
                 Sign out
-            </Button>
+            </Button> */}
 
             <Modal
                 show={showModal}

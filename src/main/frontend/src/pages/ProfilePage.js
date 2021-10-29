@@ -33,12 +33,14 @@ const ProfilePage = () => {
                     <Tab
                         eventKey="profile"
                         title={
-                            <>
+                            <div className="profile__tab__link">
                                 <span className="profile__tab__icon">
                                     <BsFillPersonFill />
                                 </span>
-                                Profile
-                            </>
+                                <span className="profile__tab__text">
+                                    Profile
+                                </span>
+                            </div>
                         }
                         className="profile__tab"
                     >
@@ -51,7 +53,9 @@ const ProfilePage = () => {
                                 <span className="profile__tab__icon">
                                     <BsFillPencilFill />
                                 </span>
-                                Edit Profile
+                                <span className="profile__tab__text">
+                                    Edit Profile
+                                </span>
                             </>
                         }
                         className="profile__tab"
@@ -65,7 +69,9 @@ const ProfilePage = () => {
                                 <span className="profile__tab__icon">
                                     <BsFillShieldLockFill />
                                 </span>
-                                Change Password
+                                <span className="profile__tab__text">
+                                    Change Password
+                                </span>
                             </>
                         }
                         className="profile__tab"

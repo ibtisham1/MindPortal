@@ -108,7 +108,6 @@ function useProvideAuth() {
                 setToken(null);
                 failure();
             });
-
         // return user;
         // return user deatils from server.
     };

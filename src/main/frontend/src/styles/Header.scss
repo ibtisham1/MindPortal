@@ -1,3 +1,18 @@
+@import "Base";
 .header {
-    // any future header styles
+    background-color: $brandColor;
+    color: $textColor;
+
+    &__brand {
+        &__text {
+            color: $textColor;
+            display: inline;
+        }
+
+        &__logo {
+            max-height: 30px;
+            color: $textColor;
+            display: inline;
+        }
+    }
 }

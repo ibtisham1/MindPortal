@@ -197,13 +197,18 @@ const ProfileEditTab = (props) => {
                 </Col>
             </Row>
 
-            <div style={{ marginTop: "1rem" }}>
-                {/* {loading ? <div>Loading</div> : ""} */}
-                <Button onClick={update} disabled={!isEnabled}>
-                    {" "}
-                    Save{" "}
-                </Button>
-            </div>
+            <Row className="mt-2">
+                <Col sm={6}>
+                    <Button
+                        className="edit save__btn"
+                        onClick={update}
+                        disabled={!isEnabled}
+                    >
+                        {" "}
+                        Save{" "}
+                    </Button>
+                </Col>
+            </Row>
         </div>
     );
 };

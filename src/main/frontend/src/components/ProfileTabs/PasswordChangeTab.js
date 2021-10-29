@@ -194,7 +194,12 @@ const PasswordChangeTab = (props) => {
                     </Col>
                 </Row>
 
-                <Button onClick={savePassword}>Confirm</Button>
+                <button
+                    className="mindPortalButton primary"
+                    onClick={savePassword}
+                >
+                    Confirm
+                </button>
             </Form>
         </div>
     );

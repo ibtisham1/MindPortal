@@ -4,7 +4,7 @@ import { useAuth } from "../../services/useAuth";
 
 const PrivateRoute = ({ children, ...rest }) => {
     let auth = useAuth();
-    console.log(auth);
+    // console.log(auth);
     return (
         <Route
             {...rest}

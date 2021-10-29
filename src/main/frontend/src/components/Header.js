@@ -14,6 +14,8 @@ import {
     Container,
 } from "react-bootstrap";
 import SignoutButton from "./SignoutButton";
+import "../styles/Header.scss";
+import { FaBrain } from "react-icons/fa";
 
 const Header = (props) => {
     const auth = useAuth();
@@ -24,24 +26,27 @@ const Header = (props) => {
     };
 
     return (
-        <Navbar
-            fluid
-            className="header"
-            bg="dark"
-            variant="dark"
-            expand="lg"
-            sticky="top"
-        >
+        <Navbar fluid className="header" expand="lg" sticky="top">
             <Container fluid>
-                <Nav className="header__brand">
-                    <Nav.Link to="/">
-                        <NavbarBrand>MindPortal</NavbarBrand>
+                <Nav>
+                    <Nav.Link as={Link} to="/dashboard">
+                        <NavbarBrand className="header__brand">
+                            <FaBrain
+                                className="header__brand__logo"
+                                size="large"
+                            />{" "}
+                            <p className="header__brand__text">MindPortal</p>
+                        </NavbarBrand>
                     </Nav.Link>
                 </Nav>
 
                 <Nav className="justify-content-end">
                     {/* Note: Need to use as={Link} from react-router so the routing works */}
-                    <Nav.Link as={Link} to="/">
+                    <Nav.Link
+                        as={Link}
+                        to="/dashboard"
+                        className="header__link"
+                    >
                         Home
                     </Nav.Link>
                     <Nav.Link as={Link} to="/audio">

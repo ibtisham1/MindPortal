@@ -1,11 +1,17 @@
+@import "Base";
 .smile {
-    background-color: #f4f4f4;
+    // background-color: #f2f2f2;
+
     padding: 1.5rem;
     border-radius: 1rem;
     &__title {
+        color: $textColor;
+        font-weight: $titleFontWeight;
     }
 
     &__description {
+        color: $textColor;
+        font-weight: $titleFontWeight;
     }
 
     &__btn {
@@ -17,7 +23,8 @@
 
     &__controls {
         // border: 1px solid grey;
-        background-color: white;
+        // background-color: white;
+        background-color: $brandBackgroundColor;
         border-radius: 0.5em;
         padding: 0.5em;
         box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.1);
@@ -31,8 +38,8 @@
 
     &__captured {
         // border: 1px solid black;
-
-        background-color: white;
+        background-color: $brandBackgroundColor;
+        // background-color: white;
         border-radius: 8px;
         padding: 1rem;
         display: flex;
@@ -47,4 +54,10 @@
             border-radius: 8px;
         }
     }
+}
+
+.smile__container {
+    padding-top: 2rem;
+    // background-color: $brandBackgroundColor;
+    // height: 100vh;
 }
