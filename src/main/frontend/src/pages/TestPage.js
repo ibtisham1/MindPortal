@@ -1,13 +1,18 @@
-import React from "react";
+//import React from "react";
 import { useAuth } from "../services/useAuth";
 import Header from "../components/Header";
-import {Col, Container, Row,Carousel, Button} from "react-bootstrap";
+import {Col, Container, Row,Carousel, Button, Form} from "react-bootstrap";
 import { useState } from "react";
 import ReactDOM from 'react-dom';
 import "../styles/TestForm.scss";
 import { useHistory, useLocation } from "react-router";
 import axiosConfig from "../services/axiosConfig";
 import ResultDiagnosis from "../services/resultDiagnosis";
+
+
+import React, { Component } from 'react';
+
+
 
 
 
@@ -34,7 +39,7 @@ const TestPage = () => {
         { id: 3, name: "Some of the time", isChecked: false },
         { id: 4, name: "Most of the time", isChecked: false },
         { id: 5, name: "All of the time", isChecked: false }
-        ],
+    ],
         [{ id: 1, name: "None of the time", isChecked: false },
             { id: 2, name: "A little of the time", isChecked: false },
             { id: 3, name: "Some of the time", isChecked: false },
@@ -96,7 +101,6 @@ const TestPage = () => {
 
 
     function checkSubmission(num){
-
         let counter=0;
         for(let i=0;i<questionIDs.length;i++){
             answers[i].map((item) => {
@@ -109,7 +113,6 @@ const TestPage = () => {
             if(!(counter<10)){
                 resultCalculation();
             }
-
         }
         if(num=="0") {
             if (counter < 10) {
@@ -118,8 +121,8 @@ const TestPage = () => {
             }
             return <p className="Header secondMessage" style={{color: "green"}}>Eligible for submission</p>;
         }
-
     }
+
     function resultCalculation(){
         const allAnswers=[]; //All the answers of the questionnaire
         for(let i=0;i<questionIDs.length;i++){
@@ -151,9 +154,6 @@ const TestPage = () => {
 
         history.push("/result");
 
-
-
-
     }
 
 
@@ -163,182 +163,198 @@ const TestPage = () => {
         <div>
 
             <Header />
-                <Row>
-                    <Col xs={2} style={{backgroundColor: 'black'}}>
-                        <h3 className="Header sideBar"> What is the K10 Test </h3>
-                        <p className="Header linker"><a href="https://www.tac.vic.gov.au/files-to-move/media/upload/k10_english.pdf" target="_blank">Learn more here</a></p>
-                    </Col>
-            <Col>
-                <Container>
+            <Row >
+                <Col >
+                    <Container>
 
-                <h1 className="Header headings">K10 TEST</h1>
-                <row>
+                        <h1 className="Header headings">K10 TEST</h1>
+                        <row>
 
-
-                <h4 className="Header supreme">About how often did you feel tired out for no good reason?</h4>
-                {answers[0].map((item, index) => (
-                    <span className="Header spanner" key={item.id}>
-                        <input
-                            type="Checkbox"
+                            <h3 className="Header supreme">About how often did you feel tired out for no good reason?*</h3>
+                            {answers[0].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
+                            type="checkbox"
+                            inline
                             value={item.id}
                             onChange={(e) => record(e, 0)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                        {item.name}  &nbsp; &nbsp; &nbsp;
+
 
                     </span>
 
-                ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel nervous?</h4>
-                    {answers[1].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel nervous?*</h3>
+                            {answers[1].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
                             onChange={(e) => record(e, 1)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel so nervous that nothing could calm you down?</h4>
-                    {answers[2].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel so nervous that nothing could calm you down?*</h3>
+                            {answers[2].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,2)}
+                            onChange={(e) => record(e, 2)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel hopeless?</h4>
-                    {answers[3].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel hopeless?*</h3>
+                            {answers[3].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,3)}
+                            onChange={(e) => record(e, 3)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel restless or fidgety?</h4>
-                    {answers[4].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel restless or fidgety?*</h3>
+                            {answers[4].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,4)}
+                            onChange={(e) => record(e, 4)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel so restless you could not sit still?</h4>
-                    {answers[5].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel so restless you could not sit still?*</h3>
+                            {answers[5].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,5)}
+                            onChange={(e) => record(e, 5)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel depressed?</h4>
-                    {answers[6].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel depressed?*</h3>
+                            {answers[6].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,6)}
+                            onChange={(e) => record(e, 6)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel that everything was an effort?</h4>
-                    {answers[7].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel that everything was an effort?*</h3>
+                            {answers[7].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,7)}
+                            onChange={(e) => record(e, 7)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel so sad that nothing could cheer you up?</h4>
-                    {answers[8].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel so sad that nothing could cheer you up?*</h3>
+                            {answers[8].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,8)}
+                            onChange={(e) => record(e, 8)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                <row>
-                    <h4 className="Header supreme">About how often did you feel worthless?</h4>
-                    {answers[9].map((item, index) => (
-                        <span className="Header spanner" key={item.id}>
-                        <input
+                            ))}
+                        </row>
+                        <row>
+                            <h3 className="Header supreme">About how often did you feel worthless?*</h3>
+                            {answers[9].map((item, index) => (
+                                <span className="Header spanner" key={item.id}>
+                        <Form.Check
+                            size={20}
                             type="Checkbox"
+                            inline
                             value={item.id}
-                            onChange={(e) => record(e,9)}
+                            onChange={(e) => record(e, 9)}
                             checked={item.isChecked}
+                            label={item.name}
                         />
-                            {item.name}  &nbsp; &nbsp; &nbsp;
 
                     </span>
-                    ))}
-                </row>
-                    <Row>
-                        <h4 className="Header supreme"></h4>
-                    </Row>
+                            ))}
+                        </row>
+                        <Row>
+                            <h4 className="Header supreme"></h4>
+                        </Row>
 
-                <row>
+                        <row>
 
-                    <p className="Header buttoner"><Button onClick={() => checkSubmission("1")} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</p>
-                </row>
-                    <row>
-                        {checkSubmission("0")}
-                    </row>
-                </Container>
-            </Col>
-                </Row>
+                            <p className="Header buttoner"><Button onClick={() => checkSubmission("1")} variant="primary" size="lg" as="input" type="submit" value="Submit" />{''}</p>
+                        </row>
+                        <row>
+                            {checkSubmission("0")}
+                        </row>
+                    </Container>
+                </Col>
+            </Row>
         </div>
     );
 
