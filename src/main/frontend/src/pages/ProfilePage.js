@@ -22,7 +22,10 @@ const ProfilePage = () => {
     return (
         <div className="profile">
             <Header />
-            <h1 className="profile__title">My Profile</h1>
+            <Container>
+                <h1 className="profile__title">My Profile</h1>
+            </Container>
+
             <Container className="profile__tab__container">
                 <Tabs
                     id="profile-tabs"
