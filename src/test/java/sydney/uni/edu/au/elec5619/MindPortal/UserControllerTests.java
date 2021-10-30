@@ -78,16 +78,16 @@ public class UserControllerTests {
      * Tests attempting to register a user with a bad password
      */
     @Test
-    private void testRegisterUserBadPassword() throws Exception{
+    public void testRegisterUserBadPassword() throws Exception{
         Map<String, String> userToSend = new HashMap<>();
         userToSend.put("firstName", "John");
         userToSend.put("lastName", "Smith");
         userToSend.put("password", "Pas");
-        userToSend.put("email", "johnsmith11@organisation.com");
+        userToSend.put("email", "johnsmith12@organisation.com");
 
         String url = "http://localhost:8080/register";
 
-        ResponseEntity<RegisterResponse> response = restTemplate.postForEntity(url, userToSend, RegisterResponse.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, userToSend, String.class);
 
         Assertions.assertEquals(400, response.getStatusCode().value());
 
