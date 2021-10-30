@@ -72,6 +72,15 @@ p {
     width: 300px;
     text-decoration: none;
 }
+//K10 test suggestion
+.mindPortalSuggest {
+    background-color: darken($brandColor, 5%);
+    border-color: #fbdfb6;
+    color: $textColor;
+    padding: 20px 40px;
+    border-radius: 10px;
+    width: 800px;
+}
 
 // &__btn {
 //     margin-top: 0.5em;

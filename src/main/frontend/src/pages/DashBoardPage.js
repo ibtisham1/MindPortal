@@ -98,13 +98,13 @@ const DashBoardPage = () => {
                             {/*<p className="Dashboard__main__description">*/}
                             {/*    This is your MindPortal dashboard.*/}
                             {/*</p>*/}
-                            <p
-                                className="Dashboard__main__description"
+                            <h5
+                                className="mindPortalSuggest"
                                 style={{ marginTop: 0 }}
                             >
                                 Take a step towards better mental health by
                                 taking a daily confidential K-10 test.
-                            </p>
+                            </h5>
                             {/* <p
                                 className="Dashboard__main__description"
                                 style={{ margin: 0 }}
