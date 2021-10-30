@@ -2,19 +2,23 @@ package sydney.uni.edu.au.elec5619.MindPortal;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -29,6 +33,7 @@ public class UserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
 
 
     /**
@@ -54,34 +59,41 @@ public class UserControllerTests {
 
         // then
         mockMvc.perform(mockRequest)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user.firstName", Matchers.equalTo("John")));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.user.firstName", equalTo("John")))
+                .andExpect(jsonPath("$.user.lastName", equalTo("Smith")))
+                .andExpect(jsonPath("$.user.email", equalTo("johnsmith14@organisation.com")));
 
     }
 
 
-    public void testRegisterUserBadPassword() {
-        //
+    /**
+     * Tests registering a user with an insufficient password strength.
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testRegisterUserBadPassword() throws Exception {
+
+        // given
+        User user = new User("John", "Smith", "johnsmith14@organisation.com", "Pass");
+
+        // when
+        objectMapper.disable(MapperFeature.USE_ANNOTATIONS);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user));
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        assertEquals(response, "insufficient password strength");
     }
-//
-//    /**
-//     * Tests attempting to register a user with a bad password
-//     */
-//    @Test
-//    public void testRegisterUserBadPassword() throws Exception{
-//        Map<String, String> userToSend = new HashMap<>();
-//        userToSend.put("firstName", "John");
-//        userToSend.put("lastName", "Smith");
-//        userToSend.put("password", "Pas");
-//        userToSend.put("email", "johnsmith12@organisation.com");
-//
-//        String url = "http://localhost:8080/register";
-//
-//        ResponseEntity<String> response = restTemplate.postForEntity(url, userToSend, String.class);
-//
-//        Assertions.assertEquals(400, response.getStatusCode().value());
-//
-//    }
+
 
 
     public void testDeleteUser(){
