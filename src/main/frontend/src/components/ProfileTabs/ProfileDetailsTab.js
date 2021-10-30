@@ -27,8 +27,8 @@ const ProfileDetailsTab = (props) => {
 
     return (
         <Container className="details">
-            <Row>
-                <Col sm={3} className="justify-items-center align-self-center">
+            <Row className="mt-5" sm={7}>
+                <Col sm={2} className="justify-items-center align-self-center">
                     <Row>
                         <BsPersonCircle size={60} color={"grey"} />
                     </Row>

@@ -178,88 +178,110 @@ const SmilePage = () => {
     return (
         <>
             <Header />
-            <Container className="smile mt-3 px-5">
-                <Row>
-                    <h1 className="smile__title">Smile challenge</h1>
-                </Row>
-                <Row className="mb-3">
-                    <Col sm={8}>
-                        <div className="smile__description">
-                            Studies show that even fake smiles can release
-                            chemicals to help you feel happier.
-                        </div>
-                        <div className="smile__description">
-                            Take a photo and convince the smile cam for a daily
-                            happiness boost.
-                        </div>
-                    </Col>
-                    {/* <Col>
+            <Container fluid className="smile__container px-0">
+                <Container className="px-5">
+                    <Row>
+                        <h1 className="smile__title">Smile challenge</h1>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col sm={8}>
+                            <div className="smile__description">
+                                Studies show that even fake smiles can release
+                                chemicals to help you feel happier.
+                            </div>
+                            <div className="smile__description">
+                                Take a photo and convince the smile cam for a
+                                daily happiness boost.
+                            </div>
+                        </Col>
+                        {/* <Col>
                         <p className="smile__description">
                             Take a photo and convince the smile cam for a daily
                             happiness boost.
                         </p>
                     </Col> */}
-                </Row>
+                    </Row>
+                </Container>
 
-                <Row className="justify-content-center">
-                    <Col sm={8}>
-                        <Row className="justify-content-center">
-                            <Col sm={8}>
-                                <video
-                                    className="smile__video"
-                                    ref={videoRef}
-                                    onCanPlay={() => paintToCanvas()}
-                                />
-                            </Col>{" "}
-                        </Row>
-                    </Col>
-                    <Col sm={4}>
-                        <div className="smile__captured">
-                            <div ref={capturedRef}></div>
-                            <div className="smile__result" ref={imageResultRef}>
-                                <div id="image-result">Press take a photo</div>
+                <Container className="smile px-5">
+                    {/* <Row>
+                        <h1 className="smile__title">Smile challenge</h1>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col sm={8}>
+                            <div className="smile__description">
+                                Studies show that even fake smiles can release
+                                chemicals to help you feel happier.
                             </div>
-                        </div>
+                            <div className="smile__description">
+                                Take a photo and convince the smile cam for a
+                                daily happiness boost.
+                            </div>
+                        </Col>
+                    </Row> */}
 
-                        <Row></Row>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <div className="smile__controls">
-                            {isStreaming ? (
-                                <>
-                                    <Button
-                                        size="sm"
-                                        variant="outline-primary"
-                                        className="smile__btn"
-                                        onClick={() => takePhoto()}
-                                    >
-                                        Take a photo
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="outline-secondary"
-                                        className="smile__btn"
-                                        onClick={() => stop()}
-                                    >
-                                        Stop camera
-                                    </Button>
-                                </>
-                            ) : (
-                                <Button
-                                    size="sm"
-                                    variant="outline-primary"
-                                    className="smile__btn"
-                                    onClick={() => start()}
+                    <Row className="justify-content-center">
+                        <Col sm={8}>
+                            <Row className="mb-3">
+                                <Col sm={8}>
+                                    <video
+                                        className="smile__video"
+                                        ref={videoRef}
+                                        onCanPlay={() => paintToCanvas()}
+                                    />
+                                </Col>{" "}
+                            </Row>
+                        </Col>
+                        <Col sm={4}>
+                            <div className="smile__captured">
+                                <div ref={capturedRef}></div>
+                                <div
+                                    className="smile__result"
+                                    ref={imageResultRef}
                                 >
-                                    Start Camera
-                                </Button>
-                            )}
-                        </div>
-                    </Col>
-                </Row>
-                <Row></Row>
+                                    <div id="image-result">
+                                        Press take a photo
+                                    </div>
+                                </div>
+                            </div>
+
+                            <Row></Row>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <div className="smile__controls">
+                                {isStreaming ? (
+                                    <>
+                                        <button
+                                            size="sm"
+                                            className="mindPortalButton secondary"
+                                            onClick={() => takePhoto()}
+                                        >
+                                            Take a photo
+                                        </button>
+                                        <button
+                                            size="sm"
+                                            className="mindPortalButton secondary"
+                                            onClick={() => stop()}
+                                        >
+                                            Stop camera
+                                        </button>
+                                    </>
+                                ) : (
+                                    <button
+                                        size="sm"
+                                        className="mindPortalButton secondary"
+                                        onClick={() => start()}
+                                    >
+                                        Start Camera
+                                    </button>
+                                )}
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row></Row>
+                </Container>
             </Container>
 
             <canvas hidden ref={photoRef} />

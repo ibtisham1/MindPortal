@@ -33,7 +33,6 @@ public class UsersController {
     @Autowired
     MediaRepository mediaRepository;
 
-
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
@@ -51,7 +50,6 @@ public class UsersController {
         List<User> users = userRepo.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Integer id){
@@ -87,7 +85,6 @@ public class UsersController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        
     }
 
     @DeleteMapping("/{id}")

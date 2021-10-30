@@ -22,7 +22,6 @@ import TestOptionsPage from "./pages/TestOptionsPage";
 import AudioPage from "./pages/AudioPage";
 import VideoPage from "./pages/VideoPage";
 
-
 function App() {
     return (
         <ProvideAuth>
@@ -32,11 +31,33 @@ function App() {
                     <PrivateRoute path="/dashboard">
                         <DashBoardPage />
                     </PrivateRoute>
+
                     <PrivateRoute path="/profile">
                         <ProfilePage />
                     </PrivateRoute>
+
                     <PrivateRoute path="/smile">
                         <SmilePage />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/result">
+                        <ResultPage />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/audio">
+                        <AudioPage />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/video">
+                        <VideoPage />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/testOptions">
+                        <TestOptionsPage />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/test">
+                        <TestPage />
                     </PrivateRoute>
 
                     {/* Public routes */}
@@ -45,26 +66,6 @@ function App() {
                     </Route>
                     <Route path="/signup">
                         <SignUpPage />
-                    </Route>
-
-                    <Route path="/result">
-                        <ResultPage />
-                    </Route>
-                    <Route path="/audio">
-                        {/* <h1>Sign up</h1> */}
-                        <AudioPage />
-                    </Route>
-                    <Route path="/video">
-                        {/* <h1>Sign up</h1> */}
-                        <VideoPage />
-                    </Route>
-
-                    <Route path="/testOptions">
-                        <TestOptionsPage />
-                    </Route>
-
-                    <Route path="/test">
-                        <TestPage />
                     </Route>
 
                     {/* Redirect to dashboard when user is logged in */}

@@ -1,17 +1,55 @@
-.DashBoard {
-    &.page {
-        height: 100vh;
-        padding: 4em;
+@import "Base";
+.Dashboard {
+    background-color: $brandBackgroundColor;
+    height: 100vh;
+    // &.page {
+    //     height: 100vh;
+    //     padding: 4em;
+    // }
+
+    // &.card {
+    //     margin-top: 1em;
+    //     margin-bottom: 1em;
+    //     background: $brandBackgroundColor;
+    // }
+
+    // &.flex {
+    //     height: 100vh;
+    //     padding: 4em;
+    //     margin: 4em;
+    // }
+    &__sidebar {
+        // background-color: pink;
+        // color: teal;
+        background-color: $textColor;
+        padding-bottom: 10rem;
+        padding-top: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2);
     }
 
-    &.card {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
+    &__main {
+        border-radius: 10px;
+        box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2);
+        background-color: white;
 
-    &.flex {
-        height: 100vh;
-        padding: 4em;
-        margin: 4em;
+        &__title {
+            font-weight: $titleFontWeight;
+        }
+
+        &__description {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        &__heading {
+            font-weight: 300;
+        }
+
+        &__highlight {
+        }
+
+        &__card {
+            border-radius: 20px;
+        }
     }
 }

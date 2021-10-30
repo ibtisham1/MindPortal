@@ -22,7 +22,10 @@ const ProfilePage = () => {
     return (
         <div className="profile">
             <Header />
-            <h1 className="profile__title">My Profile</h1>
+            <Container>
+                <h1 className="profile__title">My Profile</h1>
+            </Container>
+
             <Container className="profile__tab__container">
                 <Tabs
                     id="profile-tabs"
@@ -33,12 +36,14 @@ const ProfilePage = () => {
                     <Tab
                         eventKey="profile"
                         title={
-                            <>
+                            <div className="profile__tab__link">
                                 <span className="profile__tab__icon">
                                     <BsFillPersonFill />
                                 </span>
-                                Profile
-                            </>
+                                <span className="profile__tab__text">
+                                    Profile
+                                </span>
+                            </div>
                         }
                         className="profile__tab"
                     >
@@ -51,7 +56,9 @@ const ProfilePage = () => {
                                 <span className="profile__tab__icon">
                                     <BsFillPencilFill />
                                 </span>
-                                Edit Profile
+                                <span className="profile__tab__text">
+                                    Edit Profile
+                                </span>
                             </>
                         }
                         className="profile__tab"
@@ -65,7 +72,9 @@ const ProfilePage = () => {
                                 <span className="profile__tab__icon">
                                     <BsFillShieldLockFill />
                                 </span>
-                                Change Password
+                                <span className="profile__tab__text">
+                                    Change Password
+                                </span>
                             </>
                         }
                         className="profile__tab"
