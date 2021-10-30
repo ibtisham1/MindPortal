@@ -26,6 +26,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * The JWT AuthenticationController is responsible for authenticating existing users and registering new ones.
+ */
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {

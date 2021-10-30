@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Map;
 
+/**
+ * The RegisterResponse class is responsible for the response to the frontend with a user and token object.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RegisterResponse {
 
     User user;
-//    JwtResponse token;
     Map<String, String> token;
 
-    public RegisterResponse(){}
+    public RegisterResponse() {
+    }
 
     public User getUser() {
         return user;

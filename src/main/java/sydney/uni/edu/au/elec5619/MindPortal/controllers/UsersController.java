@@ -21,6 +21,10 @@ import sydney.uni.edu.au.elec5619.MindPortal.service.JwtUserDetailsService;
 
 import java.util.*;
 
+/**
+ * The UsersController controls api routes dealing with users. Adding, modifying, deleting, and returning
+ * multiple and single users are contained within the logic of this class.
+ */
 @RestController
 @RequestMapping("/api/users")
 public class UsersController {
@@ -45,34 +49,51 @@ public class UsersController {
     @Autowired
     QuestionnaireResponsesRepository questionnaireResponsesRepository;
 
+    /**
+     * Gets all users
+     *
+     * @return response entity of the users and a http status
+     */
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepo.findAll();
-        if(users != null && !users.isEmpty()){
+        if (users != null && !users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 //        return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
 
+    /**
+     * Gets a single user by their id.
+     *
+     * @param id id of the user
+     * @return response entity of the user and a status
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Integer id){
+    public ResponseEntity<User> getUserById(@PathVariable("id") Integer id) {
         Optional<User> optionalUser = userRepo.findById(id);
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             return new ResponseEntity<User>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Updates a single user through a put request body.
+     *
+     * @param user the user with updated details
+     * @return an object containing the user and a refreshed token, along with a http status code.
+     */
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user){
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
         // create custom validation as we can't use the @Valid annotation with password field missing.
         // user find by email or id
         Optional<User> updatedUserOpt = userRepo.findById(user.getId());
-        if(updatedUserOpt.isPresent()){
+        if (updatedUserOpt.isPresent()) {
             User oldUser = updatedUserOpt.get();
             oldUser.setFirstName(user.getFirstName());
             oldUser.setLastName(user.getLastName());
@@ -93,59 +114,69 @@ public class UsersController {
         }
     }
 
+    /**
+     * Deletes a user given a valid user id.
+     *
+     * @param id the user to delete
+     * @return http status code depending on if successful or not.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id){
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
         try {
             User userToDelete = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
             userRepo.delete(userToDelete);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch(UserNotFoundException ex){
+        } catch (UserNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
 
     }
 
+    /**
+     * Gets all media for a user given an id
+     *
+     * @param id the id of the user
+     * @return list of media urls
+     */
     @GetMapping("/get_media_for_user/{id}")
-    public @ResponseBody List<String> getMediaByUserId(@PathVariable("id") Integer id){
+    public @ResponseBody
+    List<String> getMediaByUserId(@PathVariable("id") Integer id) {
 
         List<Media> mediaList = new ArrayList<Media>();
 
         Set<Diagnosis> diagnosisSet = diagnosisRepository.findAllByUserId(id);
         final Iterator<Diagnosis> iterator = diagnosisSet.iterator();
         Diagnosis lastItem = iterator.next();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             lastItem = iterator.next();
         }
 
         Set<Media> mediaSet = mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId());
         final Iterator<Media> mediaIterator = mediaSet.iterator();
         Media toStore;
-        while (mediaIterator.hasNext()){
+        while (mediaIterator.hasNext()) {
             toStore = mediaIterator.next();
             mediaList.add(toStore);
         }
 
 
-
-
-//        List<Media> mediaList = new ArrayList<Media>(mediaRepository.findAllByDiagnosisDiagnosisId(lastItem.getDiagnosisId()));
-//
-       // System.out.println(mediaList);
-       // System.out.println(lastItem.getDiagnosisId());
-//        for (Media media:mediaList){
-//            System.out.println(media.getMediaURL());
-//        }
-
         List<String> mediaUrls = new ArrayList<>();
-        for (Media media: mediaList){
+        for (Media media : mediaList) {
             mediaUrls.add(media.getMediaURL());
         }
-        return mediaUrls ;
+        return mediaUrls;
     }
 
+    /**
+     * Gets the questionnaire responses for a user given an id
+     *
+     * @param id the id of the user
+     * @return the questionnaire responses for this user.
+     */
     @GetMapping("/get_questionnaire_responses_for_user/{id}")
-    public @ResponseBody List<String> getQuestionnaireResponsesByUserId(@PathVariable("id") Integer id){
+    public @ResponseBody
+    List<String> getQuestionnaireResponsesByUserId(@PathVariable("id") Integer id) {
 
         Set<QuestionnaireResponses> questionnaireResponses = questionnaireResponsesRepository.findAllByUserId(id);
         final Iterator<QuestionnaireResponses> questionnaireResponsesIterator = questionnaireResponses.iterator();
@@ -153,21 +184,29 @@ public class UsersController {
         List<QuestionnaireResponses> questionnaireResponsesList = new ArrayList<>();
 
         QuestionnaireResponses toStore;
-        while (questionnaireResponsesIterator.hasNext()){
+        while (questionnaireResponsesIterator.hasNext()) {
             toStore = questionnaireResponsesIterator.next();
             questionnaireResponsesList.add(toStore);
         }
 
         List<String> responses = new ArrayList<>();
-        for(QuestionnaireResponses questionnaireResponses1: questionnaireResponsesList){
+        for (QuestionnaireResponses questionnaireResponses1 : questionnaireResponsesList) {
             responses.add(questionnaireResponses1.getResponses());
         }
 
         return responses;
     }
 
+
+    /**
+     * Modifies the password for a given user.
+     *
+     * @param id                    the id of the users password to change
+     * @param passwordChangeRequest {@link PasswordChangeRequest} an object in the form of {oldPassword: value, newPassword: value}
+     * @return http status depending on if the password was successfully changed.
+     */
     @PutMapping("/{id}/changePassword")
-    public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest){
+    public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest) {
         User user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User of id:" + id + " not found"));
         Logger logger = LoggerFactory.getLogger(MindPortalApplication.class);
 
@@ -180,24 +219,23 @@ public class UsersController {
 
         RuleResult result = validator.validate(new PasswordData(passwordChangeRequest.getNewPassword()));
 
-        if(!result.isValid()){
+        if (!result.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insufficient password strength");
         }
 
 
-        if(bcryptEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())){
+        if (bcryptEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())) {
             // matching password, update the users password
             user.setPassword(bcryptEncoder.encode(passwordChangeRequest.getNewPassword()));
             userRepo.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        } else {
             logger.warn("Password incorrect");
             // bad response
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("incorrect password");
         }
 
     }
-
 
 
 }

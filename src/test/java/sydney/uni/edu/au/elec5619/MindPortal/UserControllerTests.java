@@ -24,7 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+/**
+ * UserControllerTests tests the functionality of the
+ * {@link sydney.uni.edu.au.elec5619.MindPortal.controllers.UsersController} class.
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 public class UserControllerTests {
@@ -151,11 +154,12 @@ public class UserControllerTests {
 
     /**
      * Tests that the user can correctly get all users if needed.
+     *
      * @throws Exception
      */
     @Test
     @Transactional
-    public void testGetAllUsers() throws Exception{
+    public void testGetAllUsers() throws Exception {
         // given
         // when
         objectMapper.enable(MapperFeature.USE_ANNOTATIONS);
@@ -172,14 +176,19 @@ public class UserControllerTests {
     }
 
 
+    /**
+     * Tests correct return of user given an id.
+     *
+     * @throws Exception
+     */
     @Test
     @Transactional
-    public void testGetUserById() throws Exception{
+    public void testGetUserById() throws Exception {
         // given
         int id = testUser.getId();
 
         // when
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/api/users/"+id)
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/api/users/" + id)
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -191,7 +200,11 @@ public class UserControllerTests {
 
     }
 
-
+    /**
+     * Tests correct usage of changing a password
+     *
+     * @throws Exception
+     */
     @Test
     @Transactional
     public void testChangePassword() throws Exception {
@@ -200,7 +213,7 @@ public class UserControllerTests {
         PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pass1234,", "Pass5678,");
 
         // when
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/"+id+"/changePassword")
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/" + id + "/changePassword")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -210,9 +223,162 @@ public class UserControllerTests {
         MvcResult result = mockMvc.perform(mockRequest)
                 .andExpect(status().isOk())
                 .andReturn();
+
+
+    }
+
+    /**
+     * Tests an insufficient password length
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testChangePasswordBadStrength() throws Exception {
+        int id = testUser.getId();
+
+        PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pass1234,", "Pa");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/" + id + "/changePassword")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(passwordChangeRequest));
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        assertEquals(response, "insufficient password strength");
+    }
+
+    /**
+     * Tests a password without a digit
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testChangePasswordBadStrength2() throws Exception {
+        int id = testUser.getId();
+
+        PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pass1234,", "Passsssss");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/" + id + "/changePassword")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(passwordChangeRequest));
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        assertEquals(response, "insufficient password strength");
+    }
+
+    /**
+     * Tests a password with insufficient length and no uppercase characters
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testChangePasswordBadStrength3() throws Exception {
+        int id = testUser.getId();
+
+        PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pass1234,", "123");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/" + id + "/changePassword")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(passwordChangeRequest));
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        assertEquals(response, "insufficient password strength");
     }
 
 
+    /**
+     * Tests a password with no uppercase characters
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testChangePasswordBadStrength4() throws Exception {
+        int id = testUser.getId();
+
+        PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pass1234,", "12345678");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/" + id + "/changePassword")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(passwordChangeRequest));
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        assertEquals(response, "insufficient password strength");
+    }
+
+
+    /**
+     * Tests attempting to change a password with an incorrect old password
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testChangePasswordBadOldPassword() throws Exception {
+        int id = testUser.getId();
+
+        PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pas", "Pass5678,");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/" + id + "/changePassword")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(passwordChangeRequest));
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        assertEquals(response, "incorrect password");
+    }
+
+    /**
+     * Sets up a user for testing purposes. Needs to be refreshed to avoid duplicate user error.
+     *
+     * @throws Exception
+     */
     @BeforeEach
     @Transactional
     public void setupUserToken() throws Exception {
@@ -242,19 +408,6 @@ public class UserControllerTests {
         this.token = tk;
         System.out.println(tk);
     }
-
-//    @AfterEach
-//    public void deleteTestUser() throws Exception {
-//
-//        int id = testUser.getId();
-//        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/api/users/"+id)
-//                .header("Authorization", "Bearer " + token)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON);
-//
-//        // delete user if stil present otherwise ignore
-//        mockMvc.perform(mockRequest);
-//    }
 
 
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @NotBlank(message = "First name is mandatory")
@@ -46,9 +46,10 @@ public class User {
 
     private Timestamp mostRecentSmileChallengePass;
 
-    public User(){}
+    public User() {
+    }
 
-    public User( String firstName, String lastName, String email, String password){
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -2,6 +2,9 @@ package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Helper class for the Azure Face API. Nested object of face attributes.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FaceAttributes {
     private double age;
