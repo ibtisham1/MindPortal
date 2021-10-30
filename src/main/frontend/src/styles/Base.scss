@@ -61,6 +61,17 @@ p {
         transform: translateY(-0.05em);
     }
 }
+//Covid alert
+.mindPortalAlert {
+    background-color: darken($brandColor, 5%);
+    border-color: #fbdfb6;
+    border: none;
+    color: $textColor;
+    padding: 10px 30px;
+    border-radius: 10px;
+    width: 300px;
+    text-decoration: none;
+}
 
 // &__btn {
 //     margin-top: 0.5em;
