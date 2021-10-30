@@ -118,4 +118,19 @@ public class User {
     public void setQuestionnaireResponses(Set<QuestionnaireResponses> questionnaireResponses) {
         this.questionnaireResponses = questionnaireResponses;
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", diagnoses=" + diagnoses +
+                ", questionnaireResponses=" + questionnaireResponses +
+                ", mostRecentSmileChallengePass=" + mostRecentSmileChallengePass +
+                '}';
+    }
 }

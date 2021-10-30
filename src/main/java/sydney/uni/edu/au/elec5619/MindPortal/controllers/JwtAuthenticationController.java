@@ -72,7 +72,7 @@ public class JwtAuthenticationController {
     @RequestMapping(value = "/register")
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception {
-
+        
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 new LengthRule(6, 30),
                 new UppercaseCharacterRule(1),
@@ -101,6 +101,7 @@ public class JwtAuthenticationController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error creating user");
         }
