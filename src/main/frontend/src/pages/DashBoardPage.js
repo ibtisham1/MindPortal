@@ -17,6 +17,10 @@ import {
 import Header from "../components/Header";
 import axios from "axios";
 import "../styles/Dashboard.scss";
+import { FiAlertCircle } from "react-icons/fi";
+import { BsShop } from "react-icons/bs";
+import { MdLocationOn } from "react-icons/md";
+import { AiFillHome } from "react-icons/ai";
 
 const DashBoardPage = () => {
     let location = useLocation();
@@ -56,26 +60,46 @@ const DashBoardPage = () => {
      */
     const renderCovidInfoCard = (index) => {
         return (
-            <Card style={{ borderRadius: 10, marginTop: 5 }}>
+            <Card
+                style={{
+                    borderRadius: 10,
+                    marginBottom: 8,
+                }}
+            >
                 <Card.Body>
-                    <Card.Title style={{ color: "rgba(242,109,113,1)" }}>
-                        New Covid Venue Alert!
+                    <Card.Title
+                        style={{
+                            color: "black",
+                            fontWeight: "300",
+                            textAlign: "center",
+                            backgroundColor: "#fad49e",
+                        }}
+                        className="mindPortalAlert"
+                    >
+                        <FiAlertCircle style={{ marginRight: "0.3rem" }} />
+                        New Covid Venue Alert
                     </Card.Title>
                     <p style={{ marginBottom: 0 }}>
-                        <span style={{ fontWeight: "bold" }}>Venue:</span>{" "}
-                        {JSON.stringify(post.data.monitor[index].Venue)}
+                        <span style={{ fontWeight: "bold" }}>
+                            <BsShop />
+                        </span>{" "}
+                        {post.data.monitor[index].Venue}
                     </p>
                     <p style={{ marginBottom: 0 }}>
-                        <span style={{ fontWeight: "bold" }}>Address</span>{" "}
-                        {JSON.stringify(post.data.monitor[index].Address)}
+                        <span style={{ fontWeight: "bold" }}>
+                            <MdLocationOn />
+                        </span>{" "}
+                        {post.data.monitor[index].Address}
                     </p>
                     <p style={{ marginBottom: 0 }}>
-                        <span style={{ fontWeight: "bold" }}>Suburb:</span>{" "}
-                        {JSON.stringify(post.data.monitor[index].Suburb)}
+                        <span style={{ fontWeight: "bold" }}>
+                            <AiFillHome />
+                        </span>{" "}
+                        {post.data.monitor[index].Suburb}
                     </p>
-                    <p style={{ marginBottom: 0 }}>
+                    <p style={{ marginBottom: 0 }} className="mindPortalAlert">
                         <span style={{ fontWeight: "bold" }}>Alert:</span>{" "}
-                        {JSON.stringify(post.data.monitor[index].Alert)}
+                        {post.data.monitor[index].Alert}
                     </p>
                 </Card.Body>
             </Card>
@@ -89,22 +113,22 @@ const DashBoardPage = () => {
                 "loading"
             ) : (
                 <Row className="m-0">
-                    <Col lg={9} className="Dashboard__main">
+                    <Col className="Dashboard__main mx-3 mt-2">
                         <Container fluid>
                             <h1 className="Dashboard__main__title mt-3">
                                 Welcome {user.firstName},
                             </h1>
 
-                            <p className="Dashboard__main__description">
-                                This is your MindPortal dashboard.
-                            </p>
-                            <p
-                                className="Dashboard__main__description"
+                            {/*<p className="Dashboard__main__description">*/}
+                            {/*    This is your MindPortal dashboard.*/}
+                            {/*</p>*/}
+                            <h5
+                                className="mindPortalSuggest"
                                 style={{ marginTop: 0 }}
                             >
                                 Take a step towards better mental health by
                                 taking a daily confidential K-10 test.
-                            </p>
+                            </h5>
                             {/* <p
                                 className="Dashboard__main__description"
                                 style={{ margin: 0 }}
@@ -228,14 +252,14 @@ const DashBoardPage = () => {
                             </CardGroup>
                         </Container>
                     </Col>
-                    <Col lg={3} className="Dashboard__sidebar">
+                    <Col lg={3} className="Dashboard__sidebar mt-2 mx-1">
                         {post != null && (
                             <>
                                 {renderCovidInfoCard(50)}
                                 {renderCovidInfoCard(80)}
                                 {renderCovidInfoCard(120)}
-                                {renderCovidInfoCard(150)}
-                                {renderCovidInfoCard(180)}
+                                {/*{renderCovidInfoCard(150)}*/}
+                                {/*{renderCovidInfoCard(180)}*/}
                             </>
                         )}
                     </Col>

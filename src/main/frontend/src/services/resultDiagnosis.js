@@ -20,7 +20,28 @@ export const ResultDiagnosis=()=>{
         headers: { Authorization: `Bearer ${auth.token}` },
     };
 
-    function postResult(stringAnswer, diagnosis){
+    function postResult(stringAnswer, diagnosis, willSendEmail){
+        if(willSendEmail=="true"){
+            console.log("I am here");
+            axiosConfig
+                .post(
+                    "/email/send_results",
+                    {
+                        senderEmail: user.email,
+                        emailBody: "Hi "+user.firstName+",\n"+
+                            "Your total score was "+stringAnswer+". We are here to inform you that your results are "+diagnosis+
+                            ". Please sign in back to the application to view the recommended steps for your diagnosis",
+
+                    }, config
+                )
+                .then((result) => {
+                    console.log(result);
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
         localStorage.setItem("name", diagnosis);
             axiosConfig
                 .post(
