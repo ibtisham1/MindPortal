@@ -3,6 +3,7 @@ package sydney.uni.edu.au.elec5619.MindPortal.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -34,11 +35,13 @@ public class User {
     @JsonIgnore
     @OneToMany()
     @JoinColumn(name = "id")
+    @JsonManagedReference
     private Set<Diagnosis> diagnoses;
 
     @JsonIgnore
     @OneToMany()
     @JoinColumn(name = "id")
+    @JsonManagedReference
     private Set<QuestionnaireResponses> questionnaireResponses;
 
     private Timestamp mostRecentSmileChallengePass;

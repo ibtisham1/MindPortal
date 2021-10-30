@@ -2,6 +2,8 @@ package sydney.uni.edu.au.elec5619.MindPortal;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,6 +14,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.PasswordChangeRequest;
+import sydney.uni.edu.au.elec5619.MindPortal.domain.RegisterResponse;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 
@@ -34,6 +38,8 @@ public class UserControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
+    private String token;
+    private User testUser;
 
 
     /**
@@ -63,12 +69,12 @@ public class UserControllerTests {
                 .andExpect(jsonPath("$.user.firstName", equalTo("John")))
                 .andExpect(jsonPath("$.user.lastName", equalTo("Smith")))
                 .andExpect(jsonPath("$.user.email", equalTo("johnsmith14@organisation.com")));
-
     }
 
 
     /**
      * Tests registering a user with an insufficient password strength.
+     *
      * @throws Exception
      */
     @Test
@@ -95,38 +101,160 @@ public class UserControllerTests {
     }
 
 
+    /**
+     * Tests a well constructed request to delete a user.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testDeleteUser() throws Exception {
+        int id = testUser.getId();
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/api/users/" + id)
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
 
-    public void testDeleteUser(){
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk());
+
+    }
+
+    /**
+     * Tests updating a user with good construction.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testUpdateUser() throws Exception {
+        // given
+        testUser.setLastName("Smooth");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(testUser));
+
+        // then
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.user.lastName", equalTo("Smooth")));
+
+    }
+
+    public void testUpdateUserBad() {
         //
     }
 
+    /**
+     * Tests that the user can correctly get all users if needed.
+     * @throws Exception
+     */
+    @Test
+    @Transactional
+    public void testGetAllUsers() throws Exception{
+        // given
+        // when
+        objectMapper.enable(MapperFeature.USE_ANNOTATIONS);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/api/users")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+        // then
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk());
+        objectMapper.disable(MapperFeature.USE_ANNOTATIONS);
 
-    public void testUpdateUser(){
-        //
+
     }
 
-    public void testUpdateUserBad(){
-        //
+
+    @Test
+    @Transactional
+    public void testGetUserById() throws Exception{
+        // given
+        int id = testUser.getId();
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/api/users/"+id)
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk());
+
+
     }
 
-    public void testGetAllUsers(){
-        //
+
+    @Test
+    @Transactional
+    public void testChangePassword() throws Exception {
+        int id = testUser.getId();
+
+        PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("Pass1234,", "Pass5678,");
+
+        // when
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/users/"+id+"/changePassword")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(passwordChangeRequest));
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
 
-    public void testCorrectHeaders(){
-        // test that you need authorization for everything besides register/authentication (to do with users)
+    @BeforeEach
+    @Transactional
+    public void setupUserToken() throws Exception {
+        // given
+        User user = new User("John", "Smith", "johnsmith15@organisation.com", "Pass1234,");
+
+        // when
+        objectMapper.disable(MapperFeature.USE_ANNOTATIONS);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user));
+
+        System.out.println("Sending");
+        System.out.println(objectMapper.writeValueAsString(user).toString());
+
+        // then
+        MvcResult result = mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+
+        RegisterResponse registerResponse = objectMapper.readValue(response, RegisterResponse.class);
+        this.testUser = registerResponse.getUser();
+        String tk = JsonPath.parse(response).read("$.token.token");
+        this.token = tk;
+        System.out.println(tk);
     }
 
-//    private void cleanupUser(int id, String token){
-//        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-//        HttpEntity<?> entity = new HttpEntity<>(headers);
-//        headers.add("Authorization", "Bearer " + token);
-//        ResponseEntity<?> responseDel = restTemplate.exchange("http://localhost:8080/api/users/" + id, HttpMethod.DELETE,entity, String.class);
-//        System.out.println(responseDel.getStatusCode());
+//    @AfterEach
+//    public void deleteTestUser() throws Exception {
+//
+//        int id = testUser.getId();
+//        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/api/users/"+id)
+//                .header("Authorization", "Bearer " + token)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON);
+//
+//        // delete user if stil present otherwise ignore
+//        mockMvc.perform(mockRequest);
 //    }
-
-
 
 
 }

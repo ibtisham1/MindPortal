@@ -48,7 +48,13 @@ public class UsersController {
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userRepo.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        if(users != null && !users.isEmpty()){
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+//        return new ResponseEntity<>(users, HttpStatus.OK);
+
     }
 
     @GetMapping("/{id}")

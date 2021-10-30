@@ -1,5 +1,7 @@
 package sydney.uni.edu.au.elec5619.MindPortal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -15,6 +17,7 @@ public class QuestionnaireResponses {
 
     @ManyToOne
     @JoinColumn(name = "id")
+    @JsonIgnore
     private User user;
 
 
