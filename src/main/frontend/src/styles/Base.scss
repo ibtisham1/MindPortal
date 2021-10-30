@@ -3,6 +3,7 @@ $brandColor: #fbdfb6;
 $textColor: #2e2d2d;
 $brandBackgroundColor: #fcf7f0;
 $lightSecondaryColor: rgba(46, 45, 45, 0.7);
+$blueColor: rgb(133, 193, 233);
 
 // Typography
 $titleFontWeight: 200;
@@ -16,6 +17,7 @@ body {
 
 body {
     // background-color: $brandBackgroundColor;
+    height: 100%;
 }
 h1,
 p {
@@ -63,11 +65,13 @@ p {
 }
 //Covid alert
 .mindPortalAlert {
-    background-color: darken($brandColor, 5%);
+    // background-color: lighten($blueColor, 20%);
+    // background-color: darken($brandColor, 5%);
     border-color: #fbdfb6;
+
     border: none;
     color: $textColor;
-    padding: 10px 30px;
+    padding: 10px 0px;
     border-radius: 10px;
     // width: 300px;
     text-decoration: none;

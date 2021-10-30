@@ -1,6 +1,7 @@
 @import "Base";
 .Dashboard {
-    // background-color: $brandBackgroundColor;
+    background-color: $brandBackgroundColor;
+    height: 100vh;
     // &.page {
     //     height: 100vh;
     //     padding: 4em;
@@ -20,9 +21,18 @@
     &__sidebar {
         // background-color: pink;
         // color: teal;
+        background-color: $textColor;
+        padding-bottom: 10rem;
+        padding-top: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2);
     }
 
     &__main {
+        border-radius: 10px;
+        box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2);
+        background-color: white;
+
         &__title {
             font-weight: $titleFontWeight;
         }
