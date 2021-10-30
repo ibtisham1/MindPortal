@@ -84,7 +84,25 @@ const TestPage = () => {
             { id: 2, name: "A little of the time", isChecked: false },
             { id: 3, name: "Some of the time", isChecked: false },
             { id: 4, name: "Most of the time", isChecked: false },
-            { id: 5, name: "All of the time", isChecked: false }]];
+            { id: 5, name: "All of the time", isChecked: false }],
+        [{id:1, name: "Yes, I would like to be sent the results to my email.", isChecked: false}]];
+
+    // const emailCheckbox=[[{id:1, name: "Send the results and final diagnosis to your email.", isChecked: false}]];
+    // const [emailPre, emailPro]=useState(emailCheckbox);
+    //
+    // function recordEmailCheck(e){
+    //     const value = e.target.value;
+    //     const newEmail=[...emailPre];
+    //     newEmail[0].map((item) => {
+    //         item.isChecked = item.id === +value;
+    //         return item;
+    //     });
+    //     console.log("aa");
+    //     //console.log(newEmail[0][0].name);
+    //     console.log(newEmail[0][0].isChecked);
+    //
+    //     emailPro(newEmail);
+    // }
 
     const [answers, setAnswers] = useState(questionIDs);
 
@@ -102,7 +120,7 @@ const TestPage = () => {
 
     function checkSubmission(num){
         let counter=0;
-        for(let i=0;i<questionIDs.length;i++){
+        for(let i=0;i<questionIDs.length-1;i++){
             answers[i].map((item) => {
                 if (item.isChecked==true){
                     counter++;
@@ -125,7 +143,7 @@ const TestPage = () => {
 
     function resultCalculation(){
         const allAnswers=[]; //All the answers of the questionnaire
-        for(let i=0;i<questionIDs.length;i++){
+        for(let i=0;i<questionIDs.length-1;i++){
             answers[i].map((item) => {
                 if (item.isChecked==true){
                     allAnswers.push(item.id);
@@ -150,7 +168,14 @@ const TestPage = () => {
         else{
             diagnosis="severe";
         }
-        rD.postResult(stringAnswer,diagnosis);
+
+        let willSendEmail="false";
+        answers[10].map((item) => {
+            if (item.isChecked==true){
+                willSendEmail="true";
+            }
+        });
+        rD.postResult(stringAnswer,diagnosis, willSendEmail);
 
         history.push("/result");
 
@@ -343,6 +368,22 @@ const TestPage = () => {
                         </row>
                         <Row>
                             <h4 className="Header supreme"></h4>
+                        </Row>
+                        <Row>
+                            {answers[10].map((item, index) => (
+                                <span className="Header EmailSpanner" key={item.id}>
+                        <Form.Check
+                            size={20}
+                            type="Checkbox"
+                            inline
+                            value={item.id}
+                            onChange={(e) => record(e, 10)}
+                            checked={item.isChecked}
+                            label={item.name}
+                        />
+
+                    </span>
+                            ))}
                         </Row>
 
                         <row>
