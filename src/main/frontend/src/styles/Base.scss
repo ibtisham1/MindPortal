@@ -69,7 +69,7 @@ p {
     color: $textColor;
     padding: 10px 30px;
     border-radius: 10px;
-    width: 300px;
+    // width: 300px;
     text-decoration: none;
 }
 //K10 test suggestion
@@ -79,23 +79,5 @@ p {
     color: $textColor;
     padding: 20px 40px;
     border-radius: 10px;
-    width: 800px;
+    // width: 800px;
 }
-
-// &__btn {
-//     margin-top: 0.5em;
-//     background-color: #fbdfb6;
-//     border-color: #fbdfb6;
-//     border: none;
-//     color: #2e2d2d;
-//     padding: 10px 30px;
-//     border-radius: 10px;
-//     width: 200px;
-
-//     &:hover {
-//         background-color: darken($brandColor, 10%);
-//         color: white;
-//         box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.1);
-//         transform: translateY(-0.1em);
-//     }
-// }

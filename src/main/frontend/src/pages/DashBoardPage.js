@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import Header from "../components/Header";
 import axios from "axios";
-import "../styles/DashBoard.scss";
+import "../styles/Dashboard.scss";
 
 const DashBoardPage = () => {
     let location = useLocation();
@@ -58,7 +58,13 @@ const DashBoardPage = () => {
         return (
             <Card style={{ borderRadius: 10, marginTop: 5 }}>
                 <Card.Body>
-                    <Card.Title style={{ color: "rgba(242,109,113,1)" ,textAlign: "center" }} className="mindPortalAlert">
+                    <Card.Title
+                        style={{
+                            color: "rgba(242,109,113,1)",
+                            textAlign: "center",
+                        }}
+                        className="mindPortalAlert"
+                    >
                         New Covid Venue Alert
                     </Card.Title>
                     <p style={{ marginBottom: 0 }}>
