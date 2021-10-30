@@ -234,7 +234,7 @@ const DashBoardPage = () => {
                                 {renderCovidInfoCard(50)}
                                 {renderCovidInfoCard(80)}
                                 {renderCovidInfoCard(120)}
-                                {renderCovidInfoCard(150)}
+                                {/*{renderCovidInfoCard(150)}*/}
                                 {/*{renderCovidInfoCard(180)}*/}
                             </>
                         )}
