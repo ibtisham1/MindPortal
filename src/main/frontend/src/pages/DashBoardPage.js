@@ -59,7 +59,7 @@ const DashBoardPage = () => {
             <Card style={{ borderRadius: 10, marginTop: 5 }}>
                 <Card.Body>
                     <Card.Title style={{ color: "rgba(242,109,113,1)" ,textAlign: "center" }} className="mindPortalAlert">
-                        New Covid Venue Alert!
+                        New Covid Venue Alert
                     </Card.Title>
                     <p style={{ marginBottom: 0 }}>
                         <span style={{ fontWeight: "bold" }}>Venue:</span>{" "}
@@ -73,7 +73,7 @@ const DashBoardPage = () => {
                         <span style={{ fontWeight: "bold" }}>Suburb:</span>{" "}
                         {JSON.stringify(post.data.monitor[index].Suburb)}
                     </p>
-                    <p style={{ marginBottom: 0 }}>
+                    <p style={{ marginBottom: 0 }} className="mindPortalAlert">
                         <span style={{ fontWeight: "bold" }}>Alert:</span>{" "}
                         {JSON.stringify(post.data.monitor[index].Alert)}
                     </p>
