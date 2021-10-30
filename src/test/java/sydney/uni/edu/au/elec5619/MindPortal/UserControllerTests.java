@@ -2,18 +2,16 @@ package sydney.uni.edu.au.elec5619.MindPortal;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 import sydney.uni.edu.au.elec5619.MindPortal.domain.User;
 import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
@@ -54,16 +52,10 @@ public class UserControllerTests {
         System.out.println("Sending");
         System.out.println(objectMapper.writeValueAsString(user).toString());
 
-        MvcResult result = mockMvc.perform(mockRequest).andReturn();
-        MockHttpServletResponse re = result.getResponse();
-
         // then
-        Assertions.assertThat(re.getStatus()).isEqualTo(HttpStatus.OK.value());
-        // read the string and make other assertions.
-
-        System.out.println("MOCK MVC RESPONSE");
-        System.out.println(re.getContentAsString());
-
+        mockMvc.perform(mockRequest)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.user.firstName", Matchers.equalTo("John")));
 
     }
 

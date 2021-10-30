@@ -72,7 +72,7 @@ public class JwtAuthenticationController {
     @RequestMapping(value = "/register")
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody User user) throws Exception {
-        
+
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 new LengthRule(6, 30),
                 new UppercaseCharacterRule(1),
