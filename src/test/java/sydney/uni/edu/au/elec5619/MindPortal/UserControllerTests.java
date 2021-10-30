@@ -94,6 +94,28 @@ public class UserControllerTests {
     }
 
 
+    public void testDeleteUser(){
+        //
+    }
+
+
+    public void testUpdateUser(){
+        //
+    }
+
+    public void testUpdateUserBad(){
+        //
+    }
+
+    public void testGetAllUsers(){
+        //
+    }
+
+
+    public void testCorrectHeaders(){
+        // test that you need authorization for everything besides register/authentication (to do with users)
+    }
+
     private void cleanupUser(int id, String token){
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         HttpEntity<?> entity = new HttpEntity<>(headers);
