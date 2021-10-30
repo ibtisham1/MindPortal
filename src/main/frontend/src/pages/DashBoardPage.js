@@ -95,9 +95,9 @@ const DashBoardPage = () => {
                                 Welcome {user.firstName},
                             </h1>
 
-                            <p className="Dashboard__main__description">
-                                This is your MindPortal dashboard.
-                            </p>
+                            {/*<p className="Dashboard__main__description">*/}
+                            {/*    This is your MindPortal dashboard.*/}
+                            {/*</p>*/}
                             <p
                                 className="Dashboard__main__description"
                                 style={{ marginTop: 0 }}
@@ -235,7 +235,7 @@ const DashBoardPage = () => {
                                 {renderCovidInfoCard(80)}
                                 {renderCovidInfoCard(120)}
                                 {renderCovidInfoCard(150)}
-                                {renderCovidInfoCard(180)}
+                                {/*{renderCovidInfoCard(180)}*/}
                             </>
                         )}
                     </Col>
