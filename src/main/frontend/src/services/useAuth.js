@@ -22,7 +22,7 @@ export const useAuth = () => {
 
 function useProvideAuth() {
     const tokenStorage = localStorage.getItem("jwt-token")
-        ? localStorage.getItem("jwt-token")
+        ? JSON.parse(localStorage.getItem("jwt-token"))
         : "";
 
     const userStorage = localStorage.getItem("user")
