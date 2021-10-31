@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import Header from "../components/Header";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import "../styles/Smile.scss";
 import axiosConfig from "../services/axiosConfig";
 import useAuth from "../services/useAuth";
@@ -12,6 +12,8 @@ const SmilePage = () => {
     const imageResultRef = useRef(null);
     const [isStreaming, setIsStreaming] = useState(false);
     const [hasPhoto, setHasPhoto] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [imageResult, setImageResult] = useState("Press take a photo");
 
     // get auth context
     const auth = useAuth();
@@ -38,6 +40,7 @@ const SmilePage = () => {
     };
 
     const takePhoto = () => {
+        setIsLoading(true);
         let photo = photoRef.current;
         let captured = capturedRef.current;
 
@@ -84,8 +87,8 @@ const SmilePage = () => {
 
     const onImageResult = (smileValue) => {
         // set loading false;
-        let txt = document.createElement("p");
-        txt.id = "image-result";
+        setIsLoading(false);
+
         let str;
 
         if (smileValue === undefined) {
@@ -105,18 +108,13 @@ const SmilePage = () => {
 
             if (smileValue >= 0.85) {
                 // passed
-                str = `Congratulations, smile score: ${smileValue * 100}`;
+                str = `Congratulations, smile score: ${(
+                    smileValue * 100
+                ).toFixed(2)}`;
                 // refresh user
             }
         }
-
-        txt.innerHTML = `${str}`;
-        let old = document.getElementById("image-result");
-        if (old == null) {
-            imageResultRef.current.appendChild(txt);
-        } else {
-            imageResultRef.current.replaceChild(txt, old);
-        }
+        setImageResult(str);
     };
 
     const analyse = (data) => {
@@ -204,22 +202,6 @@ const SmilePage = () => {
                 </Container>
 
                 <Container className="smile px-5">
-                    {/* <Row>
-                        <h1 className="smile__title">Smile challenge</h1>
-                    </Row>
-                    <Row className="mb-3">
-                        <Col sm={8}>
-                            <div className="smile__description">
-                                Studies show that even fake smiles can release
-                                chemicals to help you feel happier.
-                            </div>
-                            <div className="smile__description">
-                                Take a photo and convince the smile cam for a
-                                daily happiness boost.
-                            </div>
-                        </Col>
-                    </Row> */}
-
                     <Row className="justify-content-center">
                         <Col sm={8}>
                             <Row className="mb-3">
@@ -235,14 +217,21 @@ const SmilePage = () => {
                         <Col sm={4}>
                             <div className="smile__captured">
                                 <div ref={capturedRef}></div>
-                                <div
+                                <div className="smile__result">
+                                    {isLoading ? (
+                                        <Spinner animation="border" />
+                                    ) : (
+                                        imageResult
+                                    )}
+                                </div>
+                                {/* <div
                                     className="smile__result"
                                     ref={imageResultRef}
                                 >
                                     <div id="image-result">
                                         Press take a photo
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
 
                             <Row></Row>
