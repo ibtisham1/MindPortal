@@ -216,9 +216,11 @@ const DashBoardPage = () => {
                                     <Card.Footer
                                         style={{ textAlign: "center" }}
                                     >
-                                        <button className="mindPortalButton primary">
-                                            Go
-                                        </button>
+                                        <Link to="/video">
+                                            <button className="mindPortalButton primary">
+                                                Go
+                                            </button>
+                                        </Link>
                                     </Card.Footer>
                                 </Card>
                                 <Card
@@ -244,9 +246,11 @@ const DashBoardPage = () => {
                                     <Card.Footer
                                         style={{ textAlign: "center" }}
                                     >
-                                        <button className="mindPortalButton primary">
-                                            Go
-                                        </button>
+                                        <Link to="/audio">
+                                            <button className="mindPortalButton primary">
+                                                Go
+                                            </button>
+                                        </Link>
                                     </Card.Footer>
                                 </Card>
                             </CardGroup>
