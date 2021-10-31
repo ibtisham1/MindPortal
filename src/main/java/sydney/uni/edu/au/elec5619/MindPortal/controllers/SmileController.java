@@ -19,6 +19,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
+/**
+ * The Smile controller is a RestController that manages the interaction between Azure Cognitive Services Face Api
+ * and this application.
+ */
 @RestController
 @RequestMapping("/api/smile/{id}")
 public class SmileController {

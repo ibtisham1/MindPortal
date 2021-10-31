@@ -11,6 +11,9 @@ import sydney.uni.edu.au.elec5619.MindPortal.repositories.UserRepository;
 
 import java.util.ArrayList;
 
+/**
+ * JWTUserDetailsService is a helper service used when generating a jwt request/response.
+ */
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired

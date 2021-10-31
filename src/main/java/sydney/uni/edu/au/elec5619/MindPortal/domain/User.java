@@ -3,6 +3,7 @@ package sydney.uni.edu.au.elec5619.MindPortal.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @NotBlank(message = "First name is mandatory")
@@ -34,18 +35,21 @@ public class User {
     @JsonIgnore
     @OneToMany()
     @JoinColumn(name = "id")
+    @JsonManagedReference
     private Set<Diagnosis> diagnoses;
 
     @JsonIgnore
     @OneToMany()
     @JoinColumn(name = "id")
+    @JsonManagedReference
     private Set<QuestionnaireResponses> questionnaireResponses;
 
     private Timestamp mostRecentSmileChallengePass;
 
-    public User(){}
+    public User() {
+    }
 
-    public User( String firstName, String lastName, String email, String password){
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -117,5 +121,20 @@ public class User {
 
     public void setQuestionnaireResponses(Set<QuestionnaireResponses> questionnaireResponses) {
         this.questionnaireResponses = questionnaireResponses;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", diagnoses=" + diagnoses +
+                ", questionnaireResponses=" + questionnaireResponses +
+                ", mostRecentSmileChallengePass=" + mostRecentSmileChallengePass +
+                '}';
     }
 }
