@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import Header from "../components/Header";
 import axios from "axios";
-import "../styles/Dashboard.scss";
+import "../styles/DashBoard.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { BsShop } from "react-icons/bs";
 import { MdLocationOn } from "react-icons/md";
@@ -216,9 +216,11 @@ const DashBoardPage = () => {
                                     <Card.Footer
                                         style={{ textAlign: "center" }}
                                     >
-                                        <button className="mindPortalButton primary">
-                                            Go
-                                        </button>
+                                        <Link to="/video">
+                                            <button className="mindPortalButton primary">
+                                                Go
+                                            </button>
+                                        </Link>
                                     </Card.Footer>
                                 </Card>
                                 <Card
@@ -244,9 +246,11 @@ const DashBoardPage = () => {
                                     <Card.Footer
                                         style={{ textAlign: "center" }}
                                     >
-                                        <button className="mindPortalButton primary">
-                                            Go
-                                        </button>
+                                        <Link to="/audio">
+                                            <button className="mindPortalButton primary">
+                                                Go
+                                            </button>
+                                        </Link>
                                     </Card.Footer>
                                 </Card>
                             </CardGroup>
